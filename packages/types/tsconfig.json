@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "useDefineForClassFields": true,
+    "module": "nodenext",
+    "outDir": "dist",
+    "baseUrl": "./src",
+    "skipLibCheck": true,
+
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "declaration": true,
+    "declarationMap": true,
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true
+  },
+  "include": ["src/**/*"]
+}
