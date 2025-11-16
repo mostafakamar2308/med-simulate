@@ -1,12 +1,19 @@
-import { isBlank } from '@osce-prep/types';
+import CTA from '@/components/landing/CTA';
+import Features from '@/components/landing/Features';
+import Hero from '@/components/landing/Hero';
+import Story from '@/components/landing/Story';
+import Value from '@/components/landing/Value';
 
-export default function Home() {
+const Page = () => {
   return (
-    <>
-      <p>undefined isBlank - {isBlank(undefined) ? 'true' : 'false'}</p>
-      <p>false isBlank - {isBlank(false) ? 'true' : 'false'}</p>
-      <p>true isBlank - {isBlank(true) ? 'true' : 'false'}</p>
-      <p>Empty object isBlank - {isBlank({}) ? 'true' : 'false'}</p>
-    </>
+    <div className="min-h-screen" dir="rtl">
+      <Hero />
+      <Value />
+      <Features />
+      <Story />
+      <CTA />
+    </div>
   );
-}
+};
+
+export default Page;
