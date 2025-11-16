@@ -1,20 +1,10 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/sonner';
 import Footer from '@/components/layout/Footer';
 import Head from 'next/head';
 import { NextIntlClientProvider } from 'next-intl';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+import Providers from '@/components/layout/ClientProviders';
 
 export const metadata: Metadata = {
   title: 'Med Simulate | تدرّب على الحالات قبل أن تواجهها',
@@ -28,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html className="scroll-smooth" lang="en">
       <Head>
         <meta name="author" content="Med Simulate" />
         <meta
@@ -56,14 +46,14 @@ export default function RootLayout({
           content="منصّة محاكاة طبية تفاعلية لأطباء الامتياز"
         />
       </Head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <NextIntlClientProvider>
-          {children}
-          <Footer />
-          <Toaster richColors />
-        </NextIntlClientProvider>
+      <body className={`font-cairo antialiased`}>
+        <Providers>
+          <NextIntlClientProvider>
+            {children}
+            <Footer />
+            <Toaster richColors />
+          </NextIntlClientProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -6,150 +6,196 @@ import {
   Zap,
   TrendingUp,
 } from 'lucide-react';
+import { useFormatMessage } from '@/hooks/intl';
+
+type Feature = {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  details: string[];
+  gradient: string;
+};
 
 const Features = () => {
+  const intl = useFormatMessage();
+
   const features = [
     {
       icon: MessageSquare,
-      title: 'محادثة تفاعلية مع مريض افتراضي',
-      description: 'تتحدث مع الحالة بصوتك',
+      title: intl('home/features/1/title'),
+      description: intl('home/features/1/description'),
       details: [
-        'تُجيب كما تفعل في غرفة الكشف',
-        'تستلم معلومات حسب طريقة أسئلتك فقط',
-        'تجربة واقعية تحاكي اللقاء الحقيقي مع المريض',
+        intl('home/features/1/detail-1'),
+        intl('home/features/1/detail-2'),
+        intl('home/features/1/detail-3'),
       ],
       gradient: 'from-primary to-accent',
     },
     {
       icon: Brain,
-      title: 'مسار تفكير سريري كامل',
-      description: 'Clinical Reasoning Engine',
+      title: intl('home/features/2/title'),
+      description: intl('home/features/2/description'),
       details: [
-        'هل سؤالُك كان صحيحاً؟',
-        'هل يوجد سؤال أهم كان عليك أن تسأله؟',
-        'كيف يغيّر هذا السؤال قائمة التشخيص التفريقي؟',
+        intl('home/features/2/detail-1'),
+        intl('home/features/2/detail-2'),
+        intl('home/features/2/detail-3'),
       ],
       gradient: 'from-secondary to-primary',
     },
     {
       icon: TestTube,
-      title: 'جناح التحقيقات',
-      description: 'Investigation Suite',
+      title: intl('home/features/3/title'),
+      description: intl('home/features/3/description'),
       details: [
-        'طلب التحاليل والفحوصات بشكل تفاعلي',
-        'رؤية النتائج كما لو كانت حقيقية',
-        "تعلّم 'لماذا' تطلب كل فحص وفهم البيانات",
+        intl('home/features/3/detail-1'),
+        intl('home/features/3/detail-2'),
+        intl('home/features/3/detail-3'),
       ],
       gradient: 'from-accent to-secondary',
     },
     {
       icon: FileText,
-      title: 'دليل إدارة الحالة',
-      description: 'Interactive Management Guide',
+      title: intl('home/features/4/title'),
+      description: intl('home/features/4/description'),
       details: [
-        'خطوات العلاج المناسبة للحالة',
-        'تنبيهات في حال اختيار علاج غير مناسب',
-        'خيارات تعتمد على Guidelines مع تفسير سريري',
+        intl('home/features/4/detail-1'),
+        intl('home/features/4/detail-2'),
+        intl('home/features/4/detail-3'),
       ],
       gradient: 'from-primary to-secondary',
     },
     {
       icon: Zap,
-      title: 'تغذية راجعة فورية ودقيقة',
-      description: 'Immediate Feedback',
+      title: intl('home/features/5/title'),
+      description: intl('home/features/5/description'),
       details: [
-        'تحليل لطريقة تفكيرك ونقاط القوة والضعف',
-        'أين أخطأت ولماذا',
-        'كيف يمكن أن تؤدي بشكل أفضل في المرة القادمة',
+        intl('home/features/5/detail-1'),
+        intl('home/features/5/detail-2'),
+        intl('home/features/5/detail-3'),
       ],
       gradient: 'from-secondary to-accent',
     },
     {
       icon: TrendingUp,
-      title: 'لوحة تقدّم ذكية',
-      description: 'Smart Progress Panel',
+      title: intl('home/features/6/title'),
+      description: intl('home/features/6/description'),
       details: [
-        'عدد الحالات التي أنهيتها ومتوسط الأداء',
-        'أكثر الأخطاء شيوعاً لديك',
-        'منحنى تطور الثقة السريرية',
+        intl('home/features/6/detail-1'),
+        intl('home/features/6/detail-2'),
+        intl('home/features/6/detail-3'),
       ],
       gradient: 'from-accent to-primary',
     },
   ];
 
   return (
-    <section className="py-24 relative overflow-hidden" dir="rtl">
-      {/* Background */}
-      <div className="absolute inset-0 bg-linear-to-b from-background via-primary/5 to-background" />
-
+    <section
+      id="features"
+      className="py-24 max-w-5xl mx-auto relative overflow-hidden"
+      dir="rtl"
+    >
+      <BackgroundDecor />
       <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
-        <div className="text-right mb-16 space-y-4 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full">
-            <span className="text-sm font-semibold text-primary">
-              الخصائص الأساسية
-            </span>
-            <Zap className="w-4 h-4 text-primary" />
-          </div>
-
-          <h2 className="text-4xl md:text-5xl font-bold">
-            <span className="bg-linear-to-l from-primary to-secondary bg-clip-text text-transparent">
-              كل ما تحتاجه
-            </span>
-            <br />
-            <span className="text-foreground">لتصبح طبيباً واثقاً</span>
-          </h2>
-          <p className="text-xl text-muted-foreground">
-            ست خصائص قوية تحوّل طريقة تدريبك الطبي
-          </p>
-        </div>
-
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="group glass-strong p-8 rounded-3xl hover:glow-medical transition-all duration-500 hover:scale-[1.02]"
-            >
-              {/* Icon */}
-              <div
-                className={`inline-flex p-4 rounded-2xl bg-linear-to-br ${feature.gradient} mb-6 glow-medical`}
-              >
-                <feature.icon className="w-7 h-7 text-white" />
-              </div>
-
-              {/* Title & Description */}
-              <div className="space-y-3 mb-6">
-                <h3 className="text-xl font-bold text-foreground leading-tight">
-                  {feature.title}
-                </h3>
-                <p className="text-sm text-primary font-medium">
-                  {feature.description}
-                </p>
-              </div>
-
-              {/* Details */}
-              <ul className="space-y-3">
-                {feature.details.map((detail, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                    <span className="text-sm text-muted-foreground leading-relaxed">
-                      {detail}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              {/* Hover Gradient Line */}
-              <div
-                className={`h-1 w-0 group-hover:w-full transition-all duration-500 bg-linear-to-l ${feature.gradient} rounded-full mt-6`}
-              />
-            </div>
-          ))}
-        </div>
+        <SectionHeader />
+        <FeaturesGrid features={features} />
       </div>
     </section>
   );
 };
+
+const BackgroundDecor = () => (
+  <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
+);
+
+const SectionHeader = () => {
+  const intl = useFormatMessage();
+
+  return (
+    <div className="text-right mb-16 space-y-4 max-w-3xl">
+      <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full">
+        <span className="text-sm font-semibold text-primary">
+          {intl('home/features/section-tag')}
+        </span>
+        <Zap className="w-4 h-4 text-primary" />
+      </div>
+
+      <h2 className="text-4xl md:text-5xl font-bold">
+        <span className="bg-gradient-to-l from-primary to-secondary bg-clip-text text-transparent">
+          {intl('home/features/section-title-1')}
+        </span>
+        <br />
+        <span className="text-foreground">
+          {intl('home/features/section-title-2')}
+        </span>
+      </h2>
+
+      <p className="text-xl text-muted-foreground">
+        {intl('home/features/section-subtitle')}
+      </p>
+    </div>
+  );
+};
+
+const FeaturesGrid: React.FC<{
+  features: Feature[];
+}> = ({ features }) => (
+  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {features.map((feature, index) => (
+      <FeatureCard key={index} feature={feature} />
+    ))}
+  </div>
+);
+
+const FeatureCard: React.FC<{ feature: Feature }> = ({ feature }) => (
+  <div className="group glass-strong p-8 rounded-3xl hover:glow-medical transition-all duration-500 hover:scale-[1.02]">
+    <FeatureIcon icon={feature.icon} gradient={feature.gradient} />
+
+    <FeatureTitle title={feature.title} description={feature.description} />
+
+    <FeatureDetails details={feature.details} />
+
+    <HoverLine gradient={feature.gradient} />
+  </div>
+);
+
+const FeatureIcon: React.FC<{ icon: React.ElementType; gradient: string }> = ({
+  icon: Icon,
+  gradient,
+}) => (
+  <div
+    className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${gradient} mb-6 glow-medical`}
+  >
+    <Icon className="w-7 h-7 text-white" />
+  </div>
+);
+
+const FeatureTitle: React.FC<{ title: string; description: string }> = ({
+  title,
+  description,
+}) => (
+  <div className="space-y-3 mb-6">
+    <h3 className="text-xl font-bold text-foreground leading-tight">{title}</h3>
+    <p className="text-sm text-primary font-medium">{description}</p>
+  </div>
+);
+
+const FeatureDetails: React.FC<{ details: string[] }> = ({ details }) => (
+  <ul className="space-y-3">
+    {details.map((detail, idx) => (
+      <li key={idx} className="flex items-start gap-2">
+        <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
+        <span className="text-sm text-muted-foreground leading-relaxed">
+          {detail}
+        </span>
+      </li>
+    ))}
+  </ul>
+);
+
+const HoverLine: React.FC<{ gradient: string }> = ({ gradient }) => (
+  <div
+    className={`h-1 w-0 group-hover:w-full transition-all duration-500 bg-gradient-to-l ${gradient} rounded-full mt-6`}
+  />
+);
 
 export default Features;
