@@ -10,15 +10,14 @@ const Hero = () => {
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero"
       dir="rtl"
     >
-      {/* Background decorative elements */}
+      {/* Background decorative elements
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float" />
         <div
           className="absolute bottom-20 left-20 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-float"
           style={{ animationDelay: '2s' }}
         />
-      </div>
-
+      </div> */}
       <div className="container mx-auto px-4 py-20 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Right side - Content (in RTL, this appears on right) */}

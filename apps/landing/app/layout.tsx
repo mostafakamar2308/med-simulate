@@ -4,6 +4,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/sonner';
 import Footer from '@/components/layout/Footer';
 import Head from 'next/head';
+import { NextIntlClientProvider } from 'next-intl';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -58,10 +59,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
-        <Footer />
-
-        <Toaster richColors />
+        <NextIntlClientProvider>
+          {children}
+          <Footer />
+          <Toaster richColors />
+        </NextIntlClientProvider>
       </body>
     </html>
   );
