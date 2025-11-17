@@ -31,10 +31,12 @@ const Title = () => {
         <Target className="w-4 h-4 text-primary" />
       </div>
 
-      <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+      <h2 className="text-2xl md:text-5xl font-bold leading-tight">
         <span className="text-foreground">{intl('home/logo')}</span>
         <br />
-        <span className="text-primary">{intl('home/value/description')}</span>
+        <span className="text-primary text-center lg:text-right">
+          {intl('home/value/description')}
+        </span>
       </h2>
     </div>
   );
@@ -57,12 +59,12 @@ const Challenges = () => {
     <div className="glass-strong p-8 md:p-12 rounded-3xl space-y-6">
       <div className="flex items-start gap-4 justify-end">
         <div className="flex-1 space-y-4">
-          <p className="text-xl md:text-2xl font-semibold text-foreground leading-relaxed">
+          <p className="text-xl md:text-2xl font-semibold text-destructive leading-relaxed">
             {intl('home/value/intro-title')}
           </p>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            {intl('home/value/intro-subtitle')}
-            <br />
+          <p className="flex lg:flex-col text-muted-foreground leading-relaxed">
+            {intl('home/value/intro-subtitle')}{' '}
+            <br className="lg:block hidden" />
             {intl('home/value/intro-subtitle-2')}
           </p>
         </div>
@@ -94,7 +96,7 @@ const Solution = () => {
     <div className="glass p-8 md:p-12 rounded-3xl space-y-6 glow-medical">
       <div className="flex items-start gap-4 justify-end">
         <div className="flex-1 space-y-4">
-          <p className="text-xl md:text-2xl font-bold text-primary leading-relaxed">
+          <p className="text-xl md:text-2xl font-semibold text-primary leading-relaxed">
             {intl('home/value/solution-title')}
           </p>
           <p className="text-lg text-muted-foreground leading-relaxed">

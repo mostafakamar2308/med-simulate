@@ -6,7 +6,6 @@ import QuestionnaireSection from '@/components/questionnaire/QuestionnaireSectio
 const Questionnaire = () => {
   return (
     <div className="min-h-screen" dir="rtl">
-      {/* Back to home button */}
       <div className="fixed top-6 right-6 z-50">
         <Link href="/">
           <Button variant="glass" size="sm" className="gap-2">
