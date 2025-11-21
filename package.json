@@ -1,10 +1,10 @@
 {
-  "name": "osce-prep",
+  "name": "med-simulate",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "types": "pnpm --filter @osce-prep/types",
+    "types": "pnpm --filter @med-simulate/types",
     "landing": "pnpm --filter landing",
     "platform": "pnpm --filter platform"
   },

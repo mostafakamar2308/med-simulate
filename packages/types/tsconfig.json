@@ -1,22 +1,25 @@
 {
   "compilerOptions": {
-    "useDefineForClassFields": true,
-    "module": "nodenext",
-    "outDir": "dist",
-    "baseUrl": "./src",
+    "target": "es6",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
     "skipLibCheck": true,
-
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
+    "jsx": "react",
+    "module": "ESNext",
     "declaration": true,
     "declarationMap": true,
-
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
-  },
-  "include": ["src/**/*"]
+    "sourceMap": true,
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "emitDeclarationOnly": false,
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "plugins": [
+      { "transform": "typescript-transform-paths" },
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    ]
+  }
 }
