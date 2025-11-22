@@ -1,25 +1,39 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "moduleResolution": "node",
-    "target": "es2023",
-    "types": ["node"],
+    "moduleResolution": "bundler",
+    "target": "es6",
+    "baseUrl": "./",
 
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
+    "declarationDir": "dist",
+    "emitDeclarationOnly": false,
+    "outDir": "dist",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "importHelpers": true,
 
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
 
     "esModuleInterop": true,
-
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "strict": true,
     "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "plugins": [
+      { "transform": "typescript-transform-paths" },
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    ]
+  },
+  "exclude": ["generated", "generated/**/*", "node_modules"],
+  "include": ["src/"]
 }

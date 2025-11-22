@@ -6,7 +6,12 @@
   "scripts": {
     "types": "pnpm --filter @med-simulate/types",
     "landing": "pnpm --filter landing",
-    "platform": "pnpm --filter platform"
+    "platform": "pnpm --filter platform",
+    "api": "pnpm --filter api",
+    "models": "pnpm --filter @med-simulate/models",
+    "clean:dep": "rm -rf node_modules && rm pnpm-lock.yaml && pnpm -r exec rm -rf node_modules",
+    "clean:dist": "pnpm -r exec rm -rf dist",
+    "build:pkgs": "pnpm run types build && pnpm run models build"
   },
   "keywords": [],
   "author": "",

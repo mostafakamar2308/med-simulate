@@ -89,3 +89,10 @@ export enum University {
   FayoumNational = 65,
   HelwanNational = 66,
 }
+
+export type CreateNewUserPayload = {
+  name: string;
+  university: University;
+  whatsappNumber: string;
+  password: string;
+};
