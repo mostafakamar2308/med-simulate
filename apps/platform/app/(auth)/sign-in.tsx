@@ -1,3 +1,4 @@
+import { useFormatMessage } from '@/hooks/intl';
 import { useSignIn } from '@clerk/clerk-expo';
 import { Link, useRouter } from 'expo-router';
 import React from 'react';
@@ -6,6 +7,8 @@ import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 export default function Page() {
   const { signIn, setActive, isLoaded } = useSignIn();
   const router = useRouter();
+
+  const intl = useFormatMessage();
 
   const [emailAddress, setEmailAddress] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -40,7 +43,7 @@ export default function Page() {
 
   return (
     <View>
-      <Text>Sign in</Text>
+      <Text>{intl('hello')}</Text>
       <TextInput
         autoCapitalize="none"
         value={emailAddress}
