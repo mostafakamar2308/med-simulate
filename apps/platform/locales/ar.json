@@ -1,3 +1,14 @@
 {
-  "hello": "أهلا يا دكتور"
+  "auth.welcome": "أهلا يا دكتور",
+  "auth.sign-in": "تسجيل الدخول",
+  "auth.sign-up": "تسجيل حساب جديد",
+  "auth.redirect-to-sign-up": "ليس لديك حساب؟ يمكنك {register} ",
+  "auth.register.title": "التسجيل من هنا",
+  "auth.redirect-to-sign-in": "لديك حساب؟ يمكنك {register} ",
+  "auth.sign-in.title": "تسجيل الدخول من هنا",
+  "label.email": "البريد الإلكتروني",
+  "label.email.placeholder": "mostafa@gmail.com",
+  "label.password": "الرقم السري",
+  "label.password.placeholder": "أدخل الرقم السري",
+  "errors.required": "هذا الحقل مطلوب، برجاء ملئه."
 }
