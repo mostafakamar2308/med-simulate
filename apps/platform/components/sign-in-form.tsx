@@ -1,19 +1,19 @@
-import { SocialConnections } from '@/components/social-connections';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
-import { Text } from '@/components/ui/text';
-import { useSignIn } from '@clerk/clerk-expo';
-import { Link, router } from 'expo-router';
-import * as React from 'react';
-import { type TextInput, View } from 'react-native';
+import { SocialConnections } from "@/components/social-connections";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Text } from "@/components/ui/text";
+import { useSignIn } from "@clerk/clerk-expo";
+import { Link } from "expo-router";
+import * as React from "react";
+import { type TextInput, View } from "react-native";
 
 export function SignInForm() {
   const { signIn, setActive, isLoaded } = useSignIn();
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const passwordInputRef = React.useRef<TextInput>(null);
   const [error, setError] = React.useState<{ email?: string; password?: string }>({});
 
@@ -31,8 +31,8 @@ export function SignInForm() {
 
       // If sign-in process is complete, set the created session as active
       // and redirect the user
-      if (signInAttempt.status === 'complete') {
-        setError({ email: '', password: '' });
+      if (signInAttempt.status === "complete") {
+        setError({ email: "", password: "" });
         await setActive({ session: signInAttempt.createdSessionId });
         return;
       }
@@ -42,8 +42,8 @@ export function SignInForm() {
       // See https://go.clerk.com/mRUDrIe for more info on error handling
       if (err instanceof Error) {
         const isEmailMessage =
-          err.message.toLowerCase().includes('identifier') ||
-          err.message.toLowerCase().includes('email');
+          err.message.toLowerCase().includes("identifier") ||
+          err.message.toLowerCase().includes("email");
         setError(isEmailMessage ? { email: err.message } : { password: err.message });
         return;
       }
@@ -112,7 +112,7 @@ export function SignInForm() {
             </Button>
           </View>
           <Text className="text-center text-sm">
-            Don&apos;t have an account?{' '}
+            Don&apos;t have an account?{" "}
             <Link href="/(auth)/sign-up" className="text-sm underline underline-offset-4">
               Sign up
             </Link>

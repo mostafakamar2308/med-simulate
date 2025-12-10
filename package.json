@@ -26,5 +26,6 @@
     "jiti": "^2.6.1",
     "prettier": "^3.6.2",
     "typescript-eslint": "^8.46.4"
-  }
+  },
+  "packageManager": "pnpm@10.6.5+sha1.da220e966c2db3275efb5928cf8f3592681b106b"
 }
