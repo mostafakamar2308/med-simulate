@@ -28,7 +28,7 @@ export const THEME = {
     chart5: 'hsl(27 87% 67%)',
   },
   dark: {
-    background: 'hsl(212 15% 20%)',
+    background: 'hsl(0 0% 3.9%)',
     foreground: 'hsl(0 0% 98%)',
     card: 'hsl(0 0% 3.9%)',
     cardForeground: 'hsl(0 0% 98%)',
