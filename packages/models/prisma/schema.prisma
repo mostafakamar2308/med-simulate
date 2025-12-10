@@ -8,10 +8,10 @@ datasource db {
 }
 
 model User {
-  id           String @id
-  name         String
-  whatsapp_Int String
-  university   Int
+  id              String @id
+  name            String
+  whatsapp_number String
+  university      Int
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

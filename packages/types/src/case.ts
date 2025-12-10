@@ -1,3 +1,5 @@
+import { IFilter } from ".";
+
 export type Self = {
   id: string;
   title: string;
@@ -139,3 +141,16 @@ export type CaseManagementProtocolRow = {
   created_at: Date;
   updated_at: Date;
 };
+
+export type FindCasesApiQuery = IFilter.Pagination & {
+  search?: string;
+  filters?: {
+    speciality?: CaseSpeciality[];
+    category?: CaseCategory[];
+    difficulty?: CaseDifficulty[];
+  };
+};
+
+export type FindCasesQuery = FindCasesApiQuery;
+
+export type FindCasesResponse = Self[];

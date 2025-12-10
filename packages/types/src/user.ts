@@ -91,6 +91,7 @@ export enum University {
 }
 
 export type CreateNewUserPayload = {
+  id: string;
   name: string;
   university: University;
   whatsappNumber: string;
