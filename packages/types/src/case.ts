@@ -2,9 +2,14 @@ export type Self = {
   id: string;
   title: string;
   complaint: string;
-
   category: CaseCategory;
+  difficulty: CaseDifficulty;
   speciality: CaseSpeciality;
+  name: string;
+  age: number;
+  gender: Gender;
+  weight: number;
+  height: number;
 
   createdAt: string;
   updatedAt: string;
@@ -15,10 +20,24 @@ export type Row = {
   title: string;
   complaint: string;
   category: CaseCategory;
+  difficulty: CaseDifficulty;
   speciality: CaseSpeciality;
+  name: string;
+  age: number;
+  gender: Gender;
+  weight: number;
+  height: number;
+
   created_at: Date;
   updated_at: Date;
 };
+
+export enum CaseDifficulty {
+  Intern = 0,
+  JuniorResident = 1,
+  SeniorResident = 2,
+  Specialist = 3,
+}
 
 export enum CaseCategory {
   ER = 0,
@@ -36,26 +55,6 @@ export enum Gender {
   Male = 0,
   Female = 1,
 }
-
-export type CasePersonalData = {
-  id: string;
-  caseId: string;
-  name: string;
-  age: number;
-  gender: Gender;
-  weight: number;
-  height: number;
-};
-
-export type CasePersonalDataRow = {
-  id: string;
-  case_id: string;
-  name: string;
-  age: number;
-  gender: Gender;
-  weight: number;
-  height: number;
-};
 
 export type CaseVitalSigns = {
   id: string;
