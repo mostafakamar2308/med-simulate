@@ -7,8 +7,10 @@ import { Separator } from "@/components/ui/separator";
 import { Text } from "@/components/ui/text";
 import { useSignIn } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
+import { Stethoscope } from "lucide-react-native";
 import * as React from "react";
 import { type TextInput, View } from "react-native";
+import { Icon } from "./ui/icon";
 
 export function SignInForm() {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -58,10 +60,15 @@ export function SignInForm() {
   return (
     <View className="gap-6">
       <Card className="border-border/0 shadow-none sm:border-border sm:shadow-sm sm:shadow-black/5">
-        <CardHeader>
-          <CardTitle className="text-center text-xl sm:text-left">Sign in to platform</CardTitle>
-          <CardDescription className="text-center sm:text-left">
-            Welcome back! Please sign in to continue
+        <CardHeader className="flex flex-col items-center">
+          <View className="mx-auto mb-6 flex h-20 w-20 rotate-3 items-center justify-center rounded-3xl bg-primary/10 text-primary">
+            <Icon as={Stethoscope} className="mx-auto h-10 w-10 text-primary"></Icon>
+          </View>
+          <CardTitle className="font-display text-3xl font-bold text-foreground">
+            Med Simulate
+          </CardTitle>
+          <CardDescription className="text-muted-foreground">
+            Train your clinical reasoning
           </CardDescription>
         </CardHeader>
         <CardContent className="gap-6">
