@@ -45,6 +45,8 @@ export default function Screen() {
       <Stack.Screen options={SCREEN_OPTIONS} />
       <View className="flex-1 items-center justify-center gap-8 p-4">
         <View className="flex-row items-center justify-center gap-3.5">
+          <Text>Hi 2</Text>
+
           <Image
             source={CLERK_LOGO[colorScheme ?? "light"]}
             resizeMode="contain"
