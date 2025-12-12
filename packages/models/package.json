@@ -30,6 +30,7 @@
     "@prisma/adapter-pg": "^7.0.0",
     "@prisma/client": "^7.0.0",
     "@prisma/client-runtime-utils": "^7.0.0",
+    "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",
     "pg": "^8.16.3",
     "tslib": "^2.8.1"

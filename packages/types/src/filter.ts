@@ -10,3 +10,9 @@ export type SkippablePagination = Pagination & {
    */
   full?: boolean;
 };
+
+export type Paginated<T> = {
+  page: number;
+  size: number;
+  list: T;
+};

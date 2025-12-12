@@ -1,17 +1,19 @@
+import { getUser } from "@/lib/auth";
+import { unauthenticated } from "@/lib/error";
 import { cases } from "@med-simulate/models";
 import { ICase } from "@med-simulate/types";
 import { NextFunction, Request, Response } from "express";
 import z from "zod";
-import { getUser } from "../lib/auth";
-import { unauthenticated } from "../lib/error";
 
 const findCasesApiQuery = z.object({
   search: z.string().optional(),
-  filters: z.object({
-    speciality: z.enum(ICase.CaseSpeciality).optional(),
-    difficulty: z.enum(ICase.CaseDifficulty).optional(),
-    category: z.enum(ICase.CaseCategory).optional(),
-  }).optional,
+  filters: z
+    .object({
+      speciality: z.array(z.enum(ICase.CaseSpeciality)).optional(),
+      difficulty: z.array(z.enum(ICase.CaseDifficulty)).optional(),
+      category: z.array(z.enum(ICase.CaseCategory)).optional(),
+    })
+    .optional(),
   page: z.number().optional(),
   size: z.number().optional(),
 });

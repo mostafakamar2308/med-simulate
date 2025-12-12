@@ -153,4 +153,4 @@ export type FindCasesApiQuery = IFilter.Pagination & {
 
 export type FindCasesQuery = FindCasesApiQuery;
 
-export type FindCasesResponse = Self[];
+export type FindCasesResponse = IFilter.Paginated<Self[]>;

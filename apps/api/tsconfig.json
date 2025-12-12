@@ -2,7 +2,13 @@
   "extends": "@tsconfig/node22/tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./"
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rootDir": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "plugins": [{ "transform": "typescript-transform-paths" }]
   },
   "include": ["**/*.ts"],
   "exclude": ["dist"]
