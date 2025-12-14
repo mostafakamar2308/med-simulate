@@ -1,10 +1,9 @@
-import { PrismaPg } from '@prisma/adapter-pg';
-import 'dotenv/config';
-import { PrismaClient } from '../../generated/prisma/client';
+import { PrismaClient } from "@/../generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-const connectionString = `${process.env.DATABASE_URL}`;
+const connectionString = process.env.DATABASE_URL;
+
+if (!connectionString) throw Error("Please provide valid connection string");
 
 const adapter = new PrismaPg({ connectionString });
-const db = new PrismaClient({ adapter });
-
-export { db };
+export const db = new PrismaClient({ adapter });

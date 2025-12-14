@@ -1,39 +1,53 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
-import pluginReact from 'eslint-plugin-react';
-import json from '@eslint/json';
-import css from '@eslint/css';
-import { defineConfig } from 'eslint/config';
+import css from "@eslint/css";
+import js from "@eslint/js";
+import json from "@eslint/json";
+import pluginReact from "eslint-plugin-react";
+import { defineConfig } from "eslint/config";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
 export default defineConfig([
   {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     plugins: { js },
-    extends: ['js/recommended'],
+    extends: ["js/recommended"],
     languageOptions: { globals: globals.browser },
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["./*", "../*"], // Disallows relative imports
+              message:
+                "Relative imports are not allowed. Use path aliases instead.",
+            },
+          ],
+        },
+      ],
+    },
   },
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   {
-    files: ['**/*.json'],
+    files: ["**/*.json"],
     plugins: { json },
-    language: 'json/json',
-    extends: ['json/recommended'],
+    language: "json/json",
+    extends: ["json/recommended"],
   },
   {
-    files: ['**/*.css'],
+    files: ["**/*.css"],
     plugins: { css },
-    language: 'css/css',
-    extends: ['css/recommended'],
+    language: "css/css",
+    extends: ["css/recommended"],
   },
   {
     ignores: [
-      'coverage',
-      '**/public',
-      '**/dist',
-      'pnpm-lock.yaml',
-      'pnpm-workspace.yaml',
+      "coverage",
+      "**/public",
+      "**/dist",
+      "pnpm-lock.yaml",
+      "pnpm-workspace.yaml",
     ],
   },
 ]);

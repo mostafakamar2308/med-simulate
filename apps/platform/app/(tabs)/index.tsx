@@ -7,6 +7,7 @@ import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { UserMenu } from "@/components/user-menu";
 import { useUser } from "@clerk/clerk-expo";
+import { useFindCases } from "@med-simulate/api/hooks";
 import { Link, Stack } from "expo-router";
 import { XIcon } from "lucide-react-native";
 import { useColorScheme } from "nativewind";
@@ -39,6 +40,9 @@ const SCREEN_OPTIONS = {
 export default function Screen() {
   const { colorScheme } = useColorScheme();
   const { user } = useUser();
+
+  const cases = useFindCases({});
+  console.log({ cases: cases.data });
 
   return (
     <>

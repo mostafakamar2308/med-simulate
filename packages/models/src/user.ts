@@ -1,5 +1,5 @@
-import { db } from '@/lib/prisma';
-import { IUser } from '@med-simulate/types';
+import { db } from "@/lib/prisma";
+import { IUser } from "@med-simulate/types";
 
 class Users {
   constructor() {}

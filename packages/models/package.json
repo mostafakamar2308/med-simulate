@@ -6,9 +6,9 @@
     "dist"
   ],
   "types": "dist/src/index.d.ts",
-  "description": "Med Simulate Models",
+  "description": "Med Simulate Data Access Layer",
   "scripts": {
-    "migrate": "npx prisma migrate dev --name init",
+    "migrate": "npx prisma migrate dev",
     "generate": "npx prisma generate",
     "studio": "npx prisma studio --config ./prisma.config.ts",
     "build": "pnpm run generate && tsc",
@@ -30,6 +30,7 @@
     "@prisma/adapter-pg": "^7.0.0",
     "@prisma/client": "^7.0.0",
     "@prisma/client-runtime-utils": "^7.0.0",
+    "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",
     "pg": "^8.16.3",
     "tslib": "^2.8.1"

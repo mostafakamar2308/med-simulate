@@ -1,0 +1,38 @@
+{
+  "name": "@med-simulate/api",
+  "version": "1.0.0",
+  "description": "Med Simulate Server Connection Layer",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist/",
+    "check": "tsc --noEmit",
+    "prepare": "ts-patch install -s"
+  },
+  "exports": {
+    "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
+      "default": "./dist/hooks/index.js"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.6.5",
+  "dependencies": {
+    "@med-simulate/types": "workspace:*",
+    "@clerk/clerk-expo": "^2.16.1",
+    "@tanstack/react-query": "^5.90.9",
+    "axios": "^1.13.2",
+    "react": "19.1.0"
+  },
+  "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.91.2",
+    "@types/react": "^19.2.7",
+    "ts-patch": "^3.2.1",
+    "typescript": "^5.9.3",
+    "typescript-transform-paths": "^3.5.2"
+  }
+}
