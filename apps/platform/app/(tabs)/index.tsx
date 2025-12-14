@@ -41,8 +41,6 @@ export default function Screen() {
   const { colorScheme } = useColorScheme();
   const { user } = useUser();
 
-  console.log({ user });
-
   const cases = useFindCases({});
   console.log({ cases: cases.data });
 

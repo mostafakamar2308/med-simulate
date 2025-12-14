@@ -6,11 +6,25 @@ type HTTPMethodAttr<T, P = object> = {
   params?: P;
 };
 
-export function createClient(baseURL: string) {
+export function createClient(
+  baseURL: string,
+  getToken?: () => Promise<string | null>
+) {
   const client = axios.create({
     baseURL: baseURL,
     withCredentials: true,
     headers: { "Content-Type": "application/json" },
+  });
+
+  client.interceptors.request.use(async (req) => {
+    if (getToken) {
+      const token = await getToken();
+
+      if (token) {
+        req.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return req;
   });
 
   return client;

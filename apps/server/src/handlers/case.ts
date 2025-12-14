@@ -26,11 +26,8 @@ export async function findCases(
   const user = await getUser(req);
   if (!user) return next(unauthenticated());
   const query = findCasesApiQuery.parse(req.query);
-  console.log("Here");
 
   const result: ICase.FindCasesResponse = await cases.find(query);
-
-  console.log({ result });
 
   res.status(200).json(result);
 }

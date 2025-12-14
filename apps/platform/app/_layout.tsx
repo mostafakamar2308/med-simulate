@@ -1,10 +1,9 @@
 import "@/global.css";
-import { resolveBaseUrl } from "@/lib/api";
 
+import { ApiAuthProvider } from "@/components/providers/ApiAuthProvider";
 import { NAV_THEME } from "@/lib/theme";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
-import { ApiProvider } from "@med-simulate/api/hooks";
 import { ThemeProvider } from "@react-navigation/native";
 import { PortalHost } from "@rn-primitives/portal";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -35,11 +34,11 @@ export default function RootLayout() {
     <ClerkProvider tokenCache={tokenCache}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider value={NAV_THEME[colorScheme ?? "light"]}>
-          <ApiProvider baseURL={resolveBaseUrl()}>
+          <ApiAuthProvider>
             <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
             <Routes />
             <PortalHost />
-          </ApiProvider>
+          </ApiAuthProvider>
         </ThemeProvider>
       </QueryClientProvider>
     </ClerkProvider>

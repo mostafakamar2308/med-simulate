@@ -4,8 +4,6 @@ import { Request } from "express";
 export async function getUser(req: Request): Promise<User | null> {
   const { userId } = getAuth(req);
 
-  console.log({ userId });
-
   if (!userId) return null;
 
   const user = await clerkClient.users.getUser(userId);
