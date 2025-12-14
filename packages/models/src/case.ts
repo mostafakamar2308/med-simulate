@@ -10,32 +10,11 @@ class Cases {
   ): Promise<ICase.FindCasesResponse> {
     const pagination = {
       size: payload.size || 10,
-      page: payload.page || 1,
+      page: payload.page || 0,
     };
 
+    // TODO: implement case filtering
     const cases = await db.case.findMany({
-      where: {
-        category: payload.filters?.category
-          ? {
-              in: payload.filters?.category,
-            }
-          : {},
-        speciality: payload.filters?.speciality
-          ? {
-              in: payload.filters?.speciality,
-            }
-          : {},
-        difficulty: payload.filters?.difficulty
-          ? {
-              in: payload.filters?.difficulty,
-            }
-          : {},
-        title: payload.search
-          ? {
-              contains: payload.search,
-            }
-          : {},
-      },
       take: pagination.size,
       skip: pagination.size * pagination.page,
     });

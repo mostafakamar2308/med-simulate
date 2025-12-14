@@ -27,16 +27,19 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="index3"
+        name="case"
         options={{
-          title: "Cases",
+          title: "Case Library",
+          headerTitleStyle: {
+            fontWeight: "900",
+          },
           tabBarIcon: ({ color, focused }) => (
             <Icon size={28} as={ClipboardList} color={color} strokeWidth={focused ? 2.5 : 2} />
           ),
         }}
       />
       <Tabs.Screen
-        name="index2"
+        name="settings"
         options={{
           title: "Settings",
           tabBarIcon: ({ color, focused }) => (
