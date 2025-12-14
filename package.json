@@ -2,16 +2,16 @@
   "name": "med-simulate",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "types": "pnpm --filter @med-simulate/types",
+    "api": "pnpm --filter @med-simulate/api",
     "landing": "pnpm --filter landing",
     "platform": "pnpm --filter platform",
-    "api": "pnpm --filter api",
+    "server": "pnpm --filter server",
     "models": "pnpm --filter @med-simulate/models",
     "clean:dep": "rm -rf node_modules && rm pnpm-lock.yaml && pnpm -r exec rm -rf node_modules",
     "clean:dist": "pnpm -r exec rm -rf dist",
-    "build:pkgs": "pnpm run types build && pnpm run models build"
+    "build:pkgs": "pnpm run types build && pnpm run models build && pnpm run api build"
   },
   "keywords": [],
   "author": "",

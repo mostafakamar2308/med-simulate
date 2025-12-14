@@ -6,7 +6,7 @@
     "dist"
   ],
   "types": "dist/src/index.d.ts",
-  "description": "Med Simulate Models",
+  "description": "Med Simulate Data Access Layer",
   "scripts": {
     "migrate": "npx prisma migrate dev",
     "generate": "npx prisma generate",

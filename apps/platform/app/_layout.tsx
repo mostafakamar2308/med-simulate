@@ -1,10 +1,13 @@
 import "@/global.css";
+import { resolveBaseUrl } from "@/lib/api";
 
 import { NAV_THEME } from "@/lib/theme";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
+import { ApiProvider } from "@med-simulate/api/hooks";
 import { ThemeProvider } from "@react-navigation/native";
 import { PortalHost } from "@rn-primitives/portal";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
@@ -16,16 +19,29 @@ export {
   ErrorBoundary,
 } from "expo-router";
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 export default function RootLayout() {
   const { colorScheme } = useColorScheme();
 
   return (
     <ClerkProvider tokenCache={tokenCache}>
-      <ThemeProvider value={NAV_THEME[colorScheme ?? "light"]}>
-        <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-        <Routes />
-        <PortalHost />
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider value={NAV_THEME[colorScheme ?? "light"]}>
+          <ApiProvider baseURL={resolveBaseUrl()}>
+            <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+            <Routes />
+            <PortalHost />
+          </ApiProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
     </ClerkProvider>
   );
 }

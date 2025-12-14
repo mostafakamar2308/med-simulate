@@ -6,7 +6,7 @@ import express, { json } from "express";
 const app = express();
 const port = "3000";
 
-app.use(cors({ credentials: true }));
+app.use(cors({ credentials: true, origin: true }));
 app.use(json());
 app.use(clerkMiddleware());
 
