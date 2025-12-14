@@ -33,18 +33,16 @@ const genderMap: Record<ICase.Gender, string> = {
 const MedicalCase: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => {
   return (
     <Pressable className="my-2">
-      <Card className="group cursor-pointer border-border/50 bg-white p-4 transition-shadow hover:shadow-lg">
-        <View className="mb-3 flex items-start justify-between">
-          <View className="flex flex-row gap-2">
-            <Badge
-              variant="secondary"
-              className="bg-blue-50 font-normal text-blue-700 hover:bg-blue-100">
-              <Text>{specialityMap[medicalCase.speciality]}</Text>
-            </Badge>
-            <Badge variant="outline" className="border-border font-normal text-muted-foreground">
-              <Text>{difficultyMap[medicalCase.difficulty]}</Text>
-            </Badge>
-          </View>
+      <Card className="group cursor-pointer !gap-2 border-border/50 bg-white p-4 transition-shadow hover:shadow-lg">
+        <View className="flex flex-row gap-2">
+          <Badge
+            variant="secondary"
+            className="bg-blue-50 font-normal text-blue-700 hover:bg-blue-100">
+            <Text>{specialityMap[medicalCase.speciality]}</Text>
+          </Badge>
+          <Badge variant="outline" className="border-border font-normal text-muted-foreground">
+            <Text>{difficultyMap[medicalCase.difficulty]}</Text>
+          </Badge>
         </View>
 
         <Text className="mb-1 text-lg font-bold text-foreground transition-colors group-hover:text-primary">

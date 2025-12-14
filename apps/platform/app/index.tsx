@@ -1,18 +1,21 @@
 import MedicalCase from "@/components/cases/MedicalCase";
+import Loading from "@/components/Loading";
 import { Input } from "@/components/ui/input";
 import { useFindCases } from "@med-simulate/api/hooks";
 import { Search } from "lucide-react-native";
 import * as React from "react";
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
+import Animated, { LinearTransition } from "react-native-reanimated";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Screen() {
   const [search, setSearch] = React.useState<string>("");
   const cases = useFindCases({});
 
-  console.log({ cases: cases.data });
+  if (cases.isPending) return <Loading text="Loading Cases..." />;
 
   return (
-    <View className="my-4 flex-1 px-3">
+    <SafeAreaView className="my-4 flex-1 px-3">
       <View className="relative">
         <Search className="absolute left-3 top-[34%] h-4 w-4 text-muted-foreground" />
         <Input
@@ -22,11 +25,13 @@ export default function Screen() {
           className="h-12 rounded-2xl border-none bg-white pl-9 shadow-sm"
         />
       </View>
-      <FlatList
+      <Animated.FlatList
         data={cases.data?.list || []}
         keyExtractor={(item) => item.id}
-        renderItem={(medicalCase) => <MedicalCase medicalCase={medicalCase.item} />}
+        itemLayoutAnimation={LinearTransition}
+        keyboardDismissMode={"on-drag"}
+        renderItem={({ item }) => <MedicalCase medicalCase={item} />}
       />
-    </View>
+    </SafeAreaView>
   );
 }
