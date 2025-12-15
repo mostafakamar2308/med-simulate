@@ -12,6 +12,8 @@ export type Self = {
   gender: Gender;
   weight: number;
   height: number;
+  briefHistory: string;
+  objective: string;
 
   createdAt: string;
   updatedAt: string;
@@ -29,6 +31,8 @@ export type Row = {
   gender: Gender;
   weight: number;
   height: number;
+  brief_history: string;
+  objective: string;
 
   created_at: Date;
   updated_at: Date;

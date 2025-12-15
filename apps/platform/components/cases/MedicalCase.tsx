@@ -1,38 +1,25 @@
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Text } from "@/components/ui/text";
+import { categoryMap, difficultyMap, genderMap, specialityMap } from "@/lib/constants";
 import { ICase } from "@med-simulate/types";
-import { Pressable } from "@rn-primitives/slot";
-import React from "react";
-import { View } from "react-native";
-
-const specialityMap: Record<ICase.CaseSpeciality, string> = {
-  [ICase.CaseSpeciality.IM]: "Internal Medicine",
-  [ICase.CaseSpeciality.Pediatrics]: "Pediatrics",
-  [ICase.CaseSpeciality.OBGYN]: "OB/GYN",
-};
-
-const categoryMap: Record<ICase.CaseCategory, string> = {
-  [ICase.CaseCategory.ER]: "Emergency",
-  [ICase.CaseCategory.Outpatient]: "Clinic",
-  [ICase.CaseCategory.Inpatient]: "Ward",
-};
-
-const difficultyMap: Record<ICase.CaseDifficulty, string> = {
-  [ICase.CaseDifficulty.Intern]: "Intern",
-  [ICase.CaseDifficulty.JuniorResident]: "Junior Resident",
-  [ICase.CaseDifficulty.SeniorResident]: "Senior Resident",
-  [ICase.CaseDifficulty.Specialist]: "Specialist",
-};
-
-const genderMap: Record<ICase.Gender, string> = {
-  [ICase.Gender.Male]: "Male",
-  [ICase.Gender.Female]: "Female",
-};
+import { useRouter } from "expo-router";
+import React, { useCallback } from "react";
+import { Pressable, View } from "react-native";
 
 const MedicalCase: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => {
+  const router = useRouter();
+  const goToCase = useCallback(
+    () =>
+      router.push({
+        pathname: "/case/[id]",
+        params: { id: medicalCase.id },
+      }),
+    [medicalCase.id, router]
+  );
+
   return (
-    <Pressable className="my-2">
+    <Pressable onPress={() => goToCase()} className="my-2">
       <Card className="group cursor-pointer !gap-2 border-border/50 bg-white p-4 transition-shadow hover:shadow-lg">
         <View className="flex flex-row gap-2">
           <Badge

@@ -26,9 +26,22 @@ class Cases {
     };
   }
 
+  async findCaseById(id: string): Promise<ICase.Self | null> {
+    const medicalCase = await db.case.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!medicalCase) return null;
+
+    return this.from(medicalCase);
+  }
+
   from(caseItem: ICase.Row): ICase.Self {
     return {
       ...caseItem,
+      briefHistory: caseItem.brief_history,
       createdAt: dayjs.utc(caseItem.created_at).toISOString(),
       updatedAt: dayjs.utc(caseItem.updated_at).toISOString(),
     };

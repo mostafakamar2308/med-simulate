@@ -25,9 +25,27 @@ export async function findCases(
 ) {
   const user = await getUser(req);
   if (!user) return next(unauthenticated());
-  const query = findCasesApiQuery.parse(req.query);
 
+  const query = findCasesApiQuery.parse(req.query);
   const result: ICase.FindCasesResponse = await cases.find(query);
+
+  res.status(200).json(result);
+}
+
+const findCaseByIdQuery = z.object({
+  id: z.uuid(),
+});
+
+export async function findCaseById(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const user = await getUser(req);
+  if (!user) return next(unauthenticated());
+
+  const { id } = findCaseByIdQuery.parse(req.params);
+  const result = await cases.findCaseById(id);
 
   res.status(200).json(result);
 }
