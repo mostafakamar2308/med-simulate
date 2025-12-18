@@ -1,7 +1,7 @@
 import img from "@/assets/images/clerk-logo-light.png";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import React from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 
 const PatientAvatar: React.FC<{ feelings?: string }> = ({ feelings }) => {
   return (
@@ -12,8 +12,8 @@ const PatientAvatar: React.FC<{ feelings?: string }> = ({ feelings }) => {
         <AvatarImage resizeMode="contain" source={img} className="!h-full !w-full" />
       </Avatar>
       {feelings ? (
-        <View className="absolute right-2 top-2 animate-bounce text-4xl drop-shadow-md">
-          {feelings}
+        <View className="absolute right-2 top-2 animate-bounce drop-shadow-md">
+          <Text className="text-4xl">{feelings}</Text>
         </View>
       ) : null}
     </View>
