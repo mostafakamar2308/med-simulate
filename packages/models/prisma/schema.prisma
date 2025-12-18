@@ -18,17 +18,19 @@ model User {
 }
 
 model Case {
-  id         String @id @default(uuid())
-  title      String
-  complaint  String
-  difficulty Int
-  category   Int
-  speciality Int
-  name       String
-  age        Int
-  gender     Int
-  weight     Float
-  height     Float
+  id            String @id @default(uuid())
+  title         String
+  complaint     String
+  difficulty    Int
+  category      Int
+  speciality    Int
+  name          String
+  age           Int
+  gender        Int
+  weight        Float
+  height        Float
+  brief_history String @default("")
+  objective     String @default("")
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt

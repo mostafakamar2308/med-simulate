@@ -8,11 +8,24 @@ export const useFindCases = (filter: ICase.FindCasesApiQuery) => {
   const api = useApi();
 
   const findCases = useCallback(async () => {
-    return api.case.findLessons(filter);
+    return api.case.findCases(filter);
   }, [api]);
 
   return useQuery({
     queryKey: [QueryKey.FindCases],
     queryFn: findCases,
+  });
+};
+
+export const useFindCaseById = ({ id }: { id: string }) => {
+  const api = useApi();
+
+  const findCaseById = useCallback(async () => {
+    return api.case.findCaseById({ id });
+  }, [api]);
+
+  return useQuery({
+    queryKey: [QueryKey.FindCaseById, id],
+    queryFn: findCaseById,
   });
 };

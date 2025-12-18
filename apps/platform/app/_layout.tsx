@@ -61,8 +61,11 @@ function Routes() {
   }
 
   return (
-    <Stack>
-      {/* Screens only shown when the user is NOT signed in */}
+    <Stack
+      screenOptions={{
+        headerBackVisible: false,
+        headerLeft: () => null,
+      }}>
       <Stack.Protected guard={!isSignedIn}>
         <Stack.Screen name="(auth)/sign-in" options={SIGN_IN_SCREEN_OPTIONS} />
         <Stack.Screen name="(auth)/sign-up" options={SIGN_UP_SCREEN_OPTIONS} />
@@ -70,12 +73,10 @@ function Routes() {
         <Stack.Screen name="(auth)/forgot-password" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
       </Stack.Protected>
 
-      {/* Screens only shown when the user IS signed in */}
       <Stack.Protected guard={isSignedIn}>
-        <Stack.Screen name="(tabs)" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
+        <Stack.Screen name="index" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
+        <Stack.Screen name="case/[id]" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
       </Stack.Protected>
-
-      {/* Screens outside the guards are accessible to everyone (e.g. not found) */}
     </Stack>
   );
 }
@@ -96,4 +97,5 @@ const DEFAULT_AUTH_SCREEN_OPTIONS = {
   title: "",
   headerShadowVisible: false,
   headerTransparent: true,
+  headerBackVisible: false,
 };
