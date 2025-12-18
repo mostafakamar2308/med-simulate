@@ -9,7 +9,7 @@ const SimulationVitals = () => {
         <View className="flex w-1/4 flex-col items-center gap-3">
           <View className="flex flex-row items-center gap-2 text-blue-500">
             <Activity className="h-4 w-4" />
-            <Text className="text-[12px] font-bold uppercase">BP</Text>
+            <Text className="text-base font-bold uppercase">BP</Text>
           </View>
           <Text className="font-mono text-lg font-bold leading-none">120/80</Text>
         </View>
@@ -19,7 +19,7 @@ const SimulationVitals = () => {
         <View className="flex w-1/4 flex-col items-center gap-3">
           <View className="flex flex-row items-center gap-2 text-rose-500">
             <HeartPulse className="h-4 w-4 animate-pulse" />
-            <Text className="text-[12px] font-bold uppercase">HR</Text>
+            <Text className="text-base font-bold uppercase">HR</Text>
           </View>
           <Text className="font-mono text-lg font-bold leading-none">88</Text>
         </View>
@@ -29,7 +29,7 @@ const SimulationVitals = () => {
         <View className="flex w-1/4 flex-col items-center gap-3">
           <View className="flex flex-row items-center gap-2 text-sky-500">
             <Wind className="h-4 w-4" />
-            <Text className="text-[12px] font-bold uppercase">RR</Text>
+            <Text className="text-base font-bold uppercase">RR</Text>
           </View>
           <Text className="font-mono text-lg font-bold leading-none">16</Text>
         </View>
@@ -39,7 +39,7 @@ const SimulationVitals = () => {
         <View className="flex w-1/4 flex-col items-center gap-3">
           <View className="flex flex-row items-center gap-2 text-indigo-500">
             <Droplets className="h-4 w-4" />
-            <Text className="text-[12px] font-bold uppercase">Sat</Text>
+            <Text className="text-base font-bold uppercase">Sat</Text>
           </View>
           <Text className="font-mono text-lg font-bold leading-none">98%</Text>
         </View>

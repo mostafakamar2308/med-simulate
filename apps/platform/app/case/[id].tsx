@@ -36,7 +36,7 @@ const Screen: React.FC = () => {
         {step === "intro" ? (
           <CaseIntroduction data={data} startSimulation={startSimulation} />
         ) : (
-          <Simulation />
+          <Simulation caseData={data} />
         )}
       </ScrollView>
     </SafeAreaView>
