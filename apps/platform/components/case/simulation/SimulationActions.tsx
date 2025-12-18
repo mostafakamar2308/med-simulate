@@ -4,8 +4,7 @@ import React, { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import HistorySimulation from "@/components/case/simulation/history";
-import { ICase } from "@med-simulate/types";
-import { Message } from "@/components/case/simulation/history/types";
+import { ICase, IChat } from "@med-simulate/types";
 
 interface ActionCategory {
   id: string;
@@ -62,7 +61,7 @@ const initialActions = {
   disposition: false,
 };
 
-const SimulationActions: React.FC<{ medicalCase: ICase.Self; messages: Message[] }> = ({
+const SimulationActions: React.FC<{ medicalCase: ICase.Self; messages: IChat.Message[] }> = ({
   medicalCase,
   messages,
 }) => {

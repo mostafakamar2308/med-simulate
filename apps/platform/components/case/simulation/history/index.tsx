@@ -2,17 +2,17 @@ import React from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Animated, ScrollView } from "react-native";
 import HistoryHeader from "@/components/case/simulation/history/Header";
-import { Message } from "@/components/case/simulation/history/types";
 import ChatMessage from "@/components/case/simulation/history/Message";
 import { View } from "react-native";
 import SendMessage from "@/components/case/simulation/history/SendMessage";
+import { IChat } from "@med-simulate/types";
 
 const HistorySimulation: React.FC<{
   onClose: () => void;
   isOpen: boolean;
   isTyping: boolean;
   patientName: string;
-  messages: Message[];
+  messages: IChat.Message[];
 }> = ({ isOpen, patientName, onClose, messages, isTyping }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

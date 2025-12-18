@@ -31,6 +31,7 @@ model Case {
   height        Float
   brief_history String @default("")
   objective     String @default("")
+  actor         String @default("")
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
