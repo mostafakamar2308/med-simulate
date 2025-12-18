@@ -61,11 +61,13 @@ const initialActions = {
   disposition: false,
 };
 
-const SimulationActions: React.FC<{ medicalCase: ICase.Self; messages: IChat.Message[] }> = ({
-  medicalCase,
-  messages,
-}) => {
+const SimulationActions: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => {
   const [actions, setActions] = useState(initialActions);
+  const [chatMessages, setChatMessages] = useState<IChat.Chat>([]);
+
+  const addMessage = useCallback((message: IChat.Message) => {
+    setChatMessages((prev) => [...prev, message]);
+  }, []);
 
   const closeDialogs = useCallback(() => setActions(initialActions), []);
 
@@ -88,10 +90,12 @@ const SimulationActions: React.FC<{ medicalCase: ICase.Self; messages: IChat.Mes
         </Button>
       ))}
       <HistorySimulation
+        caseId={medicalCase.id}
         isOpen={actions.history}
         onClose={closeDialogs}
         isTyping={false}
-        messages={messages}
+        addMessage={addMessage}
+        messages={chatMessages}
         patientName={medicalCase.name}
       />
     </View>

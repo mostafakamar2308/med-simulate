@@ -9,7 +9,14 @@ const SendMessage: React.FC<{ handleSend: (message: string) => void }> = ({ hand
 
   return (
     <View className="border-t border-border bg-white p-4">
-      <form onSubmit={() => handleSend(inputValue)} className="flex items-center gap-2">
+      {/* // TODO: replace with react-hook-form */}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSend(inputValue);
+          setInputValue("");
+        }}
+        className="flex items-center gap-2">
         <Input
           value={inputValue}
           onChangeText={(val) => setInputValue(val)}

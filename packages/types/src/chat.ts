@@ -21,6 +21,9 @@ export type Message = {
   text: string;
 };
 
-export type sendMessageResponse = {
-  response: string;
+export type Chat = Message[];
+
+export type SendMessageResponse = {
+  text: string;
+  emotion: string;
 };

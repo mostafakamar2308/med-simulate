@@ -11,6 +11,7 @@ app.use(json());
 app.use(clerkMiddleware());
 
 app.use("/api/v1/cases", routes.cases);
+app.use("/api/v1/chat", routes.chat);
 
 app.listen(port, () => {
   console.log(`Med Simulate Api listening on port ${port}`);
