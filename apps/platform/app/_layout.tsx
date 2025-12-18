@@ -61,7 +61,11 @@ function Routes() {
   }
 
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerBackVisible: false,
+        headerLeft: () => null,
+      }}>
       <Stack.Protected guard={!isSignedIn}>
         <Stack.Screen name="(auth)/sign-in" options={SIGN_IN_SCREEN_OPTIONS} />
         <Stack.Screen name="(auth)/sign-up" options={SIGN_UP_SCREEN_OPTIONS} />
