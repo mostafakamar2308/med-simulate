@@ -8,7 +8,7 @@ const ScenarioDetails: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase })
     <div className="mb-24 space-y-6">
       <div className="prose prose-sm text-muted-foreground">
         <h3 className="font-display text-lg text-foreground">History</h3>
-        <p>{medicalCase.briefHistory}</p>
+        <p className="indent-3">{medicalCase.briefHistory}</p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -29,9 +29,9 @@ const ScenarioDetails: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase })
         </div>
       </div>
 
-      <div className="rounded-2xl border border-primary/10 bg-primary/5 p-5">
+      <div className="rounded-2xl border border-primary/10 bg-primary/5 p-4">
         <h3 className="font-display mb-2 font-bold text-primary">Objective</h3>
-        <p className="font-medium text-primary-foreground/80">{medicalCase.objective}</p>
+        <p className="indent-2 font-medium text-muted-foreground">{medicalCase.objective}</p>
       </div>
     </div>
   );

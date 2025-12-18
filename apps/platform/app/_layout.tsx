@@ -71,7 +71,7 @@ function Routes() {
 
       <Stack.Protected guard={isSignedIn}>
         <Stack.Screen name="index" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
-        <Stack.Screen name="case/[id]" options={CASE_OPTIONS} />
+        <Stack.Screen name="case/[id]" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
       </Stack.Protected>
     </Stack>
   );
@@ -93,9 +93,5 @@ const DEFAULT_AUTH_SCREEN_OPTIONS = {
   title: "",
   headerShadowVisible: false,
   headerTransparent: true,
-};
-
-const CASE_OPTIONS = {
-  title: "",
-  headershown: true,
+  headerBackVisible: false,
 };

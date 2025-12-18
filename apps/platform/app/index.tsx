@@ -15,7 +15,7 @@ export default function Screen() {
   if (cases.isPending) return <Loading text="Loading Cases..." />;
 
   return (
-    <SafeAreaView className="my-4 flex-1 px-3">
+    <SafeAreaView className="my-4 flex-1 px-3 py-10">
       <View className="relative">
         <Search className="absolute left-3 top-[34%] h-4 w-4 text-muted-foreground" />
         <Input
