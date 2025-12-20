@@ -9,9 +9,9 @@ const findCasesApiQuery = z.object({
   search: z.string().optional(),
   filters: z
     .object({
-      speciality: z.array(z.enum(ICase.CaseSpeciality)).optional(),
-      difficulty: z.array(z.enum(ICase.CaseDifficulty)).optional(),
-      category: z.array(z.enum(ICase.CaseCategory)).optional(),
+      speciality: z.array(z.nativeEnum(ICase.CaseSpeciality)).optional(),
+      difficulty: z.array(z.nativeEnum(ICase.CaseDifficulty)).optional(),
+      category: z.array(z.nativeEnum(ICase.CaseCategory)).optional(),
     })
     .optional(),
   page: z.number().optional(),
@@ -33,7 +33,7 @@ export async function findCases(
 }
 
 const findCaseByIdQuery = z.object({
-  id: z.uuid(),
+  id: z.string(),
 });
 
 export async function findCaseById(

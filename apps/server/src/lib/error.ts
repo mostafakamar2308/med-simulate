@@ -32,3 +32,5 @@ const error = (
 
 export const unauthenticated = () =>
   error(IError.ApiError.Unauthenticated, 401);
+
+export const bad = () => error(IError.ApiError.BadRequest, 400);

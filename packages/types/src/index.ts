@@ -5,3 +5,4 @@ export * as IError from "@/error";
 export * as IExamination from "@/examination";
 export * as IFilter from "@/filter";
 export * as IUser from "@/user";
+export * from "@/utils";

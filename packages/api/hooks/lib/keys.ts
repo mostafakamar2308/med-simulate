@@ -3,4 +3,6 @@ export enum QueryKey {
   FindCaseById = "find-case-by-id",
 }
 
-export enum MutationKey {}
+export enum MutationKey {
+  SendMessage = "send-message",
+}

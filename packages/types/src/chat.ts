@@ -17,22 +17,13 @@ export type Row = {
 };
 
 export type Message = {
-  id: string;
+  sender: "doctor" | "patient";
   text: string;
-  sender: 'user' | 'system';
-  caseId: string;
-  chatId: string;
-
-  createdAt: string;
-  updatedAt: string;
 };
 
-export type MessageRow = {
-  id: string;
+export type Chat = Message[];
+
+export type SendMessageResponse = {
   text: string;
-  sender: 'user' | 'system';
-  case_id: string;
-  chat_id: string;
-  created_at: Date;
-  updated_at: Date;
+  emotion: string;
 };

@@ -31,7 +31,7 @@ const Simulation: React.FC<{ caseData: ICase.Self }> = ({ caseData }) => {
         <View className="h-40 w-40">
           <PatientAvatar feelings="😣" />
         </View>
-        <SimulationActions onActionPress={() => {}} />
+        <SimulationActions medicalCase={caseData} />
       </View>
       <SimulationVitals />
     </View>

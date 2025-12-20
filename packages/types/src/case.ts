@@ -14,6 +14,7 @@ export type Self = {
   height: number;
   briefHistory: string;
   objective: string;
+  actor: string;
 
   createdAt: string;
   updatedAt: string;
@@ -33,6 +34,7 @@ export type Row = {
   height: number;
   brief_history: string;
   objective: string;
+  actor: string;
 
   created_at: Date;
   updated_at: Date;

@@ -41,4 +41,10 @@ export class Base {
       })
       .then((response) => response.data);
   }
+
+  async post<T, R = void, P = object>(attr: HTTPMethodAttr<T, P>): Promise<R> {
+    return this.client
+      .post(attr.route, attr.payload ? JSON.stringify(attr.payload) : undefined)
+      .then((response) => response.data);
+  }
 }
