@@ -1,14 +1,6 @@
+import { BodySystem, ExaminationTechniqueType } from "@med-simulate/types";
 import { Eye, Hand, Ear } from "lucide-react";
-
-export type BodySystem =
-  | "general"
-  | "cardiovascular"
-  | "respiratory"
-  | "abdomen"
-  | "neurological"
-  | "extremities";
-
-export type ExaminationTechnique = "inspect" | "palpate" | "auscultate";
+import { Gem } from "lucide-react-native";
 
 export type SystemDefinition = {
   id: BodySystem;
@@ -37,7 +29,7 @@ export const BODY_SYSTEMS: SystemDefinition[] = [
 ];
 
 export const TECHNIQUES: {
-  id: ExaminationTechnique;
+  id: ExaminationTechniqueType;
   icon: React.ElementType;
   label: string;
   description: string;
@@ -45,6 +37,7 @@ export const TECHNIQUES: {
   { id: "inspect", icon: Eye, label: "Inspect", description: "Look & observe" },
   { id: "palpate", icon: Hand, label: "Palpate", description: "Feel & press" },
   { id: "auscultate", icon: Ear, label: "Auscultate", description: "Listen" },
+  { id: "special", icon: Gem, label: "Special", description: "Focused Signs" },
 ];
 
 export const getSystemLabel = (system: BodySystem): { label: string; icon: string } => {

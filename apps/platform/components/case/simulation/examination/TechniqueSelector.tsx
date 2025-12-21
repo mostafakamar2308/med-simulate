@@ -1,13 +1,15 @@
 import { cn } from "@/lib/utils";
-import { BodySystem, ExaminationTechnique, getSystemLabel, TECHNIQUES } from "@/lib/examination";
+import { getSystemLabel, TECHNIQUES } from "@/lib/examination";
 import { Button } from "@/components/ui/button";
 import { Text, View } from "react-native";
 import React from "react";
+import ExaminationActionSelector from "@/components/case/simulation/examination/ExaminationActionSelector";
+import { BodySystem, ExaminationTechniqueType } from "@med-simulate/types";
 
 type TechniqueSelectorProps = {
-  selectedTechnique: ExaminationTechnique | null;
+  selectedTechnique: ExaminationTechniqueType | null;
   selectedSystem: BodySystem;
-  onChange: (technique: ExaminationTechnique) => void;
+  onChange: (technique: ExaminationTechniqueType | "special") => void;
 };
 
 export function TechniqueSelector({
@@ -20,7 +22,7 @@ export function TechniqueSelector({
       <Text className="flex flex-row gap-2 text-2xl font-semibold text-foreground">
         {getSystemLabel(selectedSystem).icon} {getSystemLabel(selectedSystem).label}
       </Text>
-      <View className="my-4 flex w-full flex-row gap-3 px-2">
+      <View className="my-4 grid w-full grid-cols-2 gap-3 px-2">
         {TECHNIQUES.map((tech) => {
           const Icon = tech.icon;
           const isSelected = selectedTechnique === tech.id;
@@ -41,6 +43,12 @@ export function TechniqueSelector({
           );
         })}
       </View>
+      {selectedTechnique && selectedSystem ? (
+        <ExaminationActionSelector
+          selectedSystem={selectedSystem}
+          selectedTechnique={selectedTechnique}
+        />
+      ) : null}
     </View>
   );
 }

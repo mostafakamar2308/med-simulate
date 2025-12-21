@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import ExaminationSuiteHeader from "@/components/case/simulation/examination/Header";
 import SystemSelector from "@/components/case/simulation/examination/SystemSelector";
 import { TechniqueSelector } from "@/components/case/simulation/examination/TechniqueSelector";
-import { BodySystem, ExaminationTechnique } from "@/lib/examination";
-import ExaminationActionSelector from "@/components/case/simulation/examination/ExaminationActionSelector";
+import { BodySystem, ExaminationTechniqueType } from "@med-simulate/types";
 
 const ExaminationSuite: React.FC<{
   isOpen: boolean;
@@ -12,7 +11,7 @@ const ExaminationSuite: React.FC<{
   complaint: string;
 }> = ({ isOpen, onClose, complaint }) => {
   const [selectedSystem, setSelectedSystem] = useState<BodySystem | null>(null);
-  const [selectedTechnique, setSelectedTechnique] = useState<ExaminationTechnique | null>(null);
+  const [selectedTechnique, setSelectedTechnique] = useState<ExaminationTechniqueType | null>(null);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -38,12 +37,6 @@ const ExaminationSuite: React.FC<{
           <TechniqueSelector
             selectedSystem={selectedSystem}
             onChange={setSelectedTechnique}
-            selectedTechnique={selectedTechnique}
-          />
-        ) : null}
-        {selectedTechnique && selectedSystem ? (
-          <ExaminationActionSelector
-            selectedSystem={selectedSystem}
             selectedTechnique={selectedTechnique}
           />
         ) : null}

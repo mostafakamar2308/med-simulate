@@ -1,9 +1,9 @@
 import { ScrollView, Text } from "react-native";
 import React from "react";
-
 import { cn } from "@/lib/utils";
-import { BODY_SYSTEMS, BodySystem } from "@/lib/examination";
+import { BODY_SYSTEMS } from "@/lib/examination";
 import { Button } from "@/components/ui/button";
+import { BodySystem } from "@med-simulate/types";
 
 type SystemSelectorProps = {
   selected: BodySystem | null;
