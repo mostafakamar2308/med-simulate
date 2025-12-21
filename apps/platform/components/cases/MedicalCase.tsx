@@ -20,11 +20,9 @@ const MedicalCase: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => 
 
   return (
     <Pressable onPress={() => goToCase()} className="my-2">
-      <Card className="group cursor-pointer !gap-2 border-border/50 bg-white p-4 transition-shadow hover:shadow-lg">
+      <Card className="group cursor-pointer !gap-2 border-border/50 bg-white p-4 shadow-lg transition-shadow">
         <View className="flex flex-row gap-2">
-          <Badge
-            variant="secondary"
-            className="bg-blue-50 font-normal text-blue-700 hover:bg-blue-100">
+          <Badge variant="secondary" className="bg-blue-100 font-normal text-blue-700">
             <Text>{specialityMap[medicalCase.speciality]}</Text>
           </Badge>
           <Badge variant="outline" className="border-border font-normal text-muted-foreground">
@@ -32,7 +30,7 @@ const MedicalCase: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => 
           </Badge>
         </View>
 
-        <Text className="mb-1 text-lg font-bold text-foreground transition-colors group-hover:text-primary">
+        <Text className="group-text-primary mb-1 text-lg font-bold text-foreground transition-colors">
           {medicalCase.title}
         </Text>
         <Text className="mb-4 line-clamp-2 text-sm text-muted-foreground">
