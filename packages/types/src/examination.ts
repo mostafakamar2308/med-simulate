@@ -13,16 +13,20 @@ export type ExaminationTechniqueType =
   | "special";
 
 export type ExaminationTechnique =
-  | {
-      type: Exclude<ExaminationTechniqueType, "special">;
-      system: BodySystem;
-      areas: Area[];
-    }
-  | {
-      type: "special";
-      label: string;
-      value: string;
-    };
+  | RegularExaminationTechnique
+  | SpecialExaminationTechnique;
+
+export type SpecialExaminationTechnique = {
+  type: "special";
+  label: string;
+  value: string;
+};
+
+export type RegularExaminationTechnique = {
+  type: Exclude<ExaminationTechniqueType, "special">;
+  system: BodySystem;
+  areas: Area[];
+};
 
 export type Area = {
   label: string;

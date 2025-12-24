@@ -1,6 +1,6 @@
-import { ExaminationTechnique } from "@med-simulate/types";
+import { RegularExaminationTechnique, SpecialExaminationTechnique } from "@med-simulate/types";
 
-export const EXAMINATION_TECHNIQUES: ExaminationTechnique[] = [
+export const EXAMINATION_TECHNIQUES: RegularExaminationTechnique[] = [
   // GENERAL – INSPECT
   {
     type: "inspect",
@@ -16,7 +16,7 @@ export const EXAMINATION_TECHNIQUES: ExaminationTechnique[] = [
           },
           {
             type: "img",
-            url: "https://example.com/general-appearance.jpg",
+            url: "https://prod-images-static.radiopaedia.org/images/70418365/dr-original.jpg",
             description: "Patient lying still on bed",
           },
         ],
@@ -55,7 +55,7 @@ export const EXAMINATION_TECHNIQUES: ExaminationTechnique[] = [
         findings: [
           {
             type: "img",
-            url: "https://example.com/jvp.jpg",
+            url: "https://prod-images-static.radiopaedia.org/images/70418365/dr-original.jpg",
             description: "Jugular venous distension noted",
           },
         ],
@@ -102,7 +102,7 @@ export const EXAMINATION_TECHNIQUES: ExaminationTechnique[] = [
         findings: [
           {
             type: "audio",
-            url: "https://example.com/murmur-mitral.mp3",
+            url: "https://prod-images-static.radiopaedia.org/images/70418365/dr-original.jpg",
             description: "Abnormal systolic murmur heard",
           },
         ],
@@ -113,7 +113,7 @@ export const EXAMINATION_TECHNIQUES: ExaminationTechnique[] = [
         findings: [
           {
             type: "audio",
-            url: "https://example.com/normal-heart.mp3",
+            url: "https://prod-images-static.radiopaedia.org/images/70418365/dr-original.jpg",
             description: "Normal heart sounds",
           },
         ],
@@ -132,7 +132,7 @@ export const EXAMINATION_TECHNIQUES: ExaminationTechnique[] = [
         findings: [
           {
             type: "audio",
-            url: "https://example.com/crackles.mp3",
+            url: "https://prod-images-static.radiopaedia.org/images/70418365/dr-original.jpg",
             description: "Fine crackles heard",
           },
         ],
@@ -141,7 +141,7 @@ export const EXAMINATION_TECHNIQUES: ExaminationTechnique[] = [
   },
 ];
 
-export const SPECIAL_SIGNS: ExaminationTechnique[] = [
+export const SPECIAL_SIGNS: SpecialExaminationTechnique[] = [
   {
     type: "special",
     label: "Murphy sign",
