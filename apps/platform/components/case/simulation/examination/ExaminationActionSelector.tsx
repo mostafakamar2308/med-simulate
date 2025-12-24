@@ -51,18 +51,7 @@ const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
     return (
       <View className="w-full px-2">
         <Text className="text-xl font-bold text-muted-foreground">Available Actions</Text>
-        {selectedSpecialTechnique ? (
-          <Text
-            className={cn(
-              "my-2 w-full rounded-lg border px-2 py-4 text-center text-2xl font-bold",
-              selectedSpecialTechnique?.value === "positive"
-                ? "border-primary bg-green-600/80 text-white"
-                : "border-destructive bg-destructive/80 text-white"
-            )}>
-            <Text className="font-normal">{selectedSpecialTechnique?.label}:</Text>{" "}
-            {selectedSpecialTechnique?.value}
-          </Text>
-        ) : null}
+
         <ScrollView contentContainerClassName="grid w-full grid-cols-2 gap-2">
           {techniques.map((item, idx) => (
             <Button
@@ -76,15 +65,25 @@ const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
             </Button>
           ))}
         </ScrollView>
+        {selectedSpecialTechnique ? (
+          <Text
+            className={cn(
+              "my-2 w-full rounded-lg border px-2 py-4 text-center text-2xl font-bold",
+              selectedSpecialTechnique?.value === "positive"
+                ? "border-primary bg-green-600/80 text-white"
+                : "border-destructive bg-destructive/80 text-white"
+            )}>
+            <Text className="font-normal">{selectedSpecialTechnique?.label}:</Text>{" "}
+            {selectedSpecialTechnique?.value}
+          </Text>
+        ) : null}
       </View>
     );
 
   return (
     <View className="w-full space-y-2 px-2">
       <Text className="text-xl font-bold text-muted-foreground">Available Areas</Text>
-      {selectedRegularTechniqueAreaFindings ? (
-        <FindingViewer findings={selectedRegularTechniqueAreaFindings} />
-      ) : null}
+
       <ScrollView contentContainerClassName="grid grid-cols-2 gap-2" className="my-2 w-full px-2">
         {techniques.map((item) => {
           return (
@@ -103,6 +102,9 @@ const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
           );
         })}
       </ScrollView>
+      {selectedRegularTechniqueAreaFindings ? (
+        <FindingViewer findings={selectedRegularTechniqueAreaFindings} />
+      ) : null}
     </View>
   );
 };

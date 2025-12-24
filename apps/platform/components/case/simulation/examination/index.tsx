@@ -1,5 +1,5 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ExaminationSuiteHeader from "@/components/case/simulation/examination/Header";
 import SystemSelector from "@/components/case/simulation/examination/SystemSelector";
 import { TechniqueSelector } from "@/components/case/simulation/examination/TechniqueSelector";
@@ -12,6 +12,11 @@ const ExaminationSuite: React.FC<{
 }> = ({ isOpen, onClose, complaint }) => {
   const [selectedSystem, setSelectedSystem] = useState<BodySystem | null>(null);
   const [selectedTechnique, setSelectedTechnique] = useState<ExaminationTechniqueType | null>(null);
+
+  useEffect(() => {
+    setSelectedSystem(null);
+    setSelectedTechnique(null);
+  }, [isOpen]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

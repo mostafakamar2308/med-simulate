@@ -102,7 +102,7 @@ export const EXAMINATION_TECHNIQUES: RegularExaminationTechnique[] = [
         findings: [
           {
             type: "audio",
-            url: "https://prod-images-static.radiopaedia.org/images/70418365/dr-original.jpg",
+            url: "https://edge.sitecorecloud.io/mmanual-ssq1ci05/media/professional/sounds/crackles.mp3",
             description: "Abnormal systolic murmur heard",
           },
         ],
@@ -113,7 +113,7 @@ export const EXAMINATION_TECHNIQUES: RegularExaminationTechnique[] = [
         findings: [
           {
             type: "audio",
-            url: "https://prod-images-static.radiopaedia.org/images/70418365/dr-original.jpg",
+            url: "https://edge.sitecorecloud.io/mmanual-ssq1ci05/media/professional/sounds/crackles.mp3",
             description: "Normal heart sounds",
           },
         ],
@@ -132,7 +132,7 @@ export const EXAMINATION_TECHNIQUES: RegularExaminationTechnique[] = [
         findings: [
           {
             type: "audio",
-            url: "https://prod-images-static.radiopaedia.org/images/70418365/dr-original.jpg",
+            url: "https://edge.sitecorecloud.io/mmanual-ssq1ci05/media/professional/sounds/crackles.mp3",
             description: "Fine crackles heard",
           },
         ],
