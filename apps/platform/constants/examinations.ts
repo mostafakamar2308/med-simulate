@@ -60,6 +60,17 @@ export const EXAMINATION_TECHNIQUES: RegularExaminationTechnique[] = [
           },
         ],
       },
+      {
+        id: "neck-veins-video",
+        label: "Neck veins Video",
+        findings: [
+          {
+            type: "video",
+            url: "//d38zjy0x98992m.cloudfront.net/7c42baeb-01bf-4595-8afe-51c8badb21a1/jugular_venous_pressure_mp4_hd_video.mp4",
+            description: "Jugular venous distension noted",
+          },
+        ],
+      },
     ],
   },
 

@@ -4,7 +4,12 @@ import { Finding } from "@med-simulate/types";
 import { ArrowLeft, ArrowRight } from "lucide-react-native";
 import React, { useState } from "react";
 import { Text, View } from "react-native";
-import { AudioViewer, ImageViewer } from "@/components/case/simulation/examination/FindingsViewers";
+import {
+  AudioViewer,
+  ImageViewer,
+  TextViewer,
+  VideoViewer,
+} from "@/components/case/simulation/examination/Viewers";
 
 const FindingViewer: React.FC<{
   findings: Finding[];
@@ -38,6 +43,8 @@ const FindingViewer: React.FC<{
       ) : null}
       {findings[finding]?.type === "img" ? <ImageViewer finding={findings[finding]} /> : null}
       {findings[finding]?.type === "audio" ? <AudioViewer finding={findings[finding]} /> : null}
+      {findings[finding]?.type === "video" ? <VideoViewer finding={findings[finding]} /> : null}
+      {findings[finding]?.type === "text" ? <TextViewer finding={findings[finding]} /> : null}
       {findings.length > 1 ? (
         <Button onPress={goPrevious} variant={"outline"}>
           <ArrowRight />
