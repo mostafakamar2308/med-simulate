@@ -7,6 +7,7 @@
     "api": "pnpm --filter @med-simulate/api",
     "landing": "pnpm --filter landing",
     "platform": "pnpm --filter platform",
+    "platform-v2": "pnpm --filter platform-v2",
     "server": "pnpm --filter server",
     "models": "pnpm --filter @med-simulate/models",
     "clean:dep": "rm -rf node_modules && rm pnpm-lock.yaml && pnpm -r exec rm -rf node_modules",

@@ -1,5 +1,5 @@
 import { BodySystem, ExaminationTechniqueType } from "@med-simulate/types";
-import { Eye, Hand, Ear } from "lucide-react";
+import { Eye, Hand, Ear } from "lucide-react-native";
 import { Gem } from "lucide-react-native";
 
 export type SystemDefinition = {

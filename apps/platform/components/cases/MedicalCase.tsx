@@ -6,6 +6,7 @@ import { ICase } from "@med-simulate/types";
 import { useRouter } from "expo-router";
 import React, { useCallback } from "react";
 import { Pressable, View } from "react-native";
+import { Button } from "@/components/ui/button";
 
 const MedicalCase: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const MedicalCase: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => 
   );
 
   return (
-    <Pressable onPress={() => goToCase()} className="my-2">
+    <Pressable onPress={goToCase} className="my-2">
       <Card className="group cursor-pointer !gap-2 border-border/50 bg-white p-4 shadow-lg transition-shadow">
         <View className="flex flex-row gap-2">
           <Badge variant="secondary" className="bg-blue-100 font-normal text-blue-700">
@@ -45,6 +46,9 @@ const MedicalCase: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => 
             {categoryMap[medicalCase.category]}
           </Text>
         </View>
+        <Button onPress={goToCase}>
+          <Text>Start Case</Text>
+        </Button>
       </Card>
     </Pressable>
   );

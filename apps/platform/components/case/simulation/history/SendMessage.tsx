@@ -10,13 +10,7 @@ const SendMessage: React.FC<{ handleSend: (message: string) => void }> = ({ hand
   return (
     <View className="border-t border-border bg-white p-4">
       {/* // TODO: replace with react-hook-form */}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSend(inputValue);
-          setInputValue("");
-        }}
-        className="flex items-center gap-2">
+      <View className="flex items-center gap-2">
         <Input
           value={inputValue}
           onChangeText={(val) => setInputValue(val)}
@@ -27,10 +21,14 @@ const SendMessage: React.FC<{ handleSend: (message: string) => void }> = ({ hand
         <Button
           size="icon"
           className="h-12 w-12 rounded-xl shadow-md shadow-primary/20 transition-transform active:scale-95"
-          disabled={!inputValue.trim()}>
+          disabled={!inputValue.trim()}
+          onPress={() => {
+            handleSend(inputValue);
+            setInputValue("");
+          }}>
           <Send className="h-5 w-5" />
         </Button>
-      </form>
+      </View>
     </View>
   );
 };

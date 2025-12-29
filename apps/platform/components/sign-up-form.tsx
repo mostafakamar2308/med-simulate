@@ -10,7 +10,7 @@ import { Link, router } from "expo-router";
 import { Stethoscope } from "lucide-react-native";
 import * as React from "react";
 import { TextInput, View } from "react-native";
-import { Icon } from "./ui/icon";
+import { Icon } from "@/components/ui/icon";
 
 export function SignUpForm() {
   const { signUp, isLoaded } = useSignUp();

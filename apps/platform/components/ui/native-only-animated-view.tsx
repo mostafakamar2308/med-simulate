@@ -1,5 +1,6 @@
-import { Platform } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { Platform } from "react-native";
+import Animated from "react-native-reanimated";
+import React from "react";
 
 /**
  * This component is used to wrap animated views that should only be animated on native.
@@ -13,7 +14,7 @@ import Animated from 'react-native-reanimated';
 function NativeOnlyAnimatedView(
   props: React.ComponentProps<typeof Animated.View> & React.RefAttributes<Animated.View>
 ) {
-  if (Platform.OS === 'web') {
+  if (Platform.OS === "web") {
     return <>{props.children as React.ReactNode}</>;
   } else {
     return <Animated.View {...props} />;

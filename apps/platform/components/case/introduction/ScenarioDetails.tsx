@@ -2,38 +2,39 @@ import { categoryMap, difficultyMap } from "@/lib/constants";
 import { ICase } from "@med-simulate/types";
 import { AlertCircle, MapPin } from "lucide-react-native";
 import React from "react";
+import { Text, View } from "react-native";
 
 const ScenarioDetails: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => {
   return (
-    <div className="mb-24 space-y-6">
-      <div className="prose prose-sm text-muted-foreground">
-        <h3 className="font-display text-lg text-foreground">History</h3>
-        <p className="indent-3">{medicalCase.briefHistory}</p>
-      </div>
+    <View className="mb-24 space-y-6">
+      <View className="prose prose-sm text-muted-foreground">
+        <Text className="font-display text-lg text-foreground">History</Text>
+        <Text className="indent-3">{medicalCase.briefHistory}</Text>
+      </View>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div className="rounded-2xl border border-border bg-white p-4 shadow-sm">
-          <div className="mb-2 flex items-center gap-2 text-primary">
+      <View className="grid grid-cols-2 gap-4">
+        <View className="rounded-2xl border border-border bg-white p-4 shadow-sm">
+          <View className="mb-2 flex items-center gap-2 text-primary">
             <MapPin className="h-4 w-4" />
-            <span className="text-xs font-bold uppercase">Environment</span>
-          </div>
-          <p className="font-semibold">{categoryMap[medicalCase.category]}</p>
-        </div>
+            <Text className="text-xs font-bold uppercase">Environment</Text>
+          </View>
+          <Text className="font-semibold">{categoryMap[medicalCase.category]}</Text>
+        </View>
 
-        <div className="rounded-2xl border border-border bg-white p-4 shadow-sm">
-          <div className="mb-2 flex items-center gap-2 text-amber-500">
+        <View className="rounded-2xl border border-border bg-white p-4 shadow-sm">
+          <View className="mb-2 flex items-center gap-2 text-amber-500">
             <AlertCircle className="h-4 w-4" />
-            <span className="text-xs font-bold uppercase">Difficulty</span>
-          </div>
-          <p className="font-semibold">{difficultyMap[medicalCase.difficulty]}</p>
-        </div>
-      </div>
+            <Text className="text-xs font-bold uppercase">Difficulty</Text>
+          </View>
+          <Text className="font-semibold">{difficultyMap[medicalCase.difficulty]}</Text>
+        </View>
+      </View>
 
-      <div className="rounded-2xl border border-primary/10 bg-primary/5 p-4">
-        <h3 className="font-display mb-2 font-bold text-primary">Objective</h3>
-        <p className="indent-2 font-medium text-muted-foreground">{medicalCase.objective}</p>
-      </div>
-    </div>
+      <View className="rounded-2xl border border-primary/10 bg-primary/5 p-4">
+        <Text className="font-display mb-2 font-bold text-primary">Objective</Text>
+        <Text className="indent-2 font-medium text-muted-foreground">{medicalCase.objective}</Text>
+      </View>
+    </View>
   );
 };
 

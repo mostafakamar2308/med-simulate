@@ -1,4 +1,5 @@
-import { Stack } from 'expo-router';
+import { Stack } from "expo-router";
+import * as React from "react";
 
 const SCREEN_OPTIONS = {
   headerShown: false,
