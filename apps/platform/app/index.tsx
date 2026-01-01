@@ -1,30 +1,15 @@
 import MedicalCase from "@/components/cases/MedicalCase";
 import Loading from "@/components/Loading";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useFindCases } from "@med-simulate/api/hooks";
-import { useRouter } from "expo-router";
 import { Search } from "lucide-react-native";
 import * as React from "react";
 import { FlatList, View } from "react-native";
-// import Animated, { LinearTransition } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Screen() {
   const [search, setSearch] = React.useState<string>("");
   const cases = useFindCases({});
-  const router = useRouter();
-
-  const goToCase = React.useCallback(
-    (id: string) => {
-      console.log("case");
-      router.push({
-        pathname: "/case/[id]",
-        params: { id: id },
-      });
-    },
-    [router]
-  );
 
   if (cases.isPending) return <Loading text="Loading Cases..." />;
 
@@ -50,7 +35,6 @@ export default function Screen() {
         keyboardDismissMode={"on-drag"}
         renderItem={({ item }) => <MedicalCase medicalCase={item} />}
       />
-      <Button onPress={() => goToCase(cases.data?.list[0].id || "")}></Button>
     </SafeAreaView>
   );
 }

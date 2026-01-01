@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAudioPlayer } from "expo-audio";
-import { Button } from "@/components/ui/button";
 import { Pause, Play } from "lucide-react-native";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { Progress } from "@/components/ui/progress";
 import { timeConverter } from "@/lib/time";
 
@@ -38,12 +37,12 @@ const AudioPlayer: React.FC<{ source: string }> = ({ source }) => {
   }
 
   return (
-    <View className="flex h-full w-full flex-row items-center gap-4">
-      <Button
+    <View className="flex w-full flex-row items-center gap-4">
+      <Pressable
         onPress={() => (state.playing ? player.pause() : player.play())}
-        className="rounded-full bg-primary/50 text-foreground">
+        className="rounded-full bg-primary/50 p-3 text-foreground">
         {state.playing ? <Pause /> : <Play />}
-      </Button>
+      </Pressable>
       <View className="flex h-full flex-1 items-end justify-center gap-2">
         <Text>
           {timeConverter(state.currentTime)}/{timeConverter(state.duration)}

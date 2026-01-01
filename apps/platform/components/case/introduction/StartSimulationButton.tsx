@@ -1,17 +1,19 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { PlayCircle } from "lucide-react-native";
-import { Text } from "@/components/ui/text";
+import { Pressable } from "react-native";
+import { cn } from "@/lib/utils";
 
 const StartSimulationButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   return (
-    <Button
-      size="lg"
-      className="sticky bottom-0 left-0 right-0 z-20 mx-auto h-14 w-full max-w-xs scale-[1.02] rounded-2xl text-lg font-bold text-white shadow-2xl shadow-primary/20 transition-all"
+    <Pressable
+      className={cn(
+        "h-16 w-16",
+        "flex-row items-center justify-center gap-2",
+        "rounded-2xl bg-primary"
+      )}
       onPress={onClick}>
-      <PlayCircle className="mr-2 !h-6 !w-6" />
-      <Text>Start Simulation</Text>
-    </Button>
+      <PlayCircle color={"white"} size={32} />
+    </Pressable>
   );
 };
 
