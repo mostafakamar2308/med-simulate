@@ -1,6 +1,6 @@
-import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { DialogHeader } from "@/components/ui/dialog";
 import { Text, View, Pressable } from "react-native";
-import { ChevronLeft, X } from "lucide-react-native";
+import { ChevronLeft } from "lucide-react-native";
 import React from "react";
 
 const ExaminationSuiteHeader: React.FC<{
@@ -10,14 +10,14 @@ const ExaminationSuiteHeader: React.FC<{
 }> = ({ complaint, onTechnique, reset }) => {
   return (
     <DialogHeader className="z-10 border-b bg-white/80 p-4 shadow-sm backdrop-blur-md">
-      <DialogTitle className="flex items-center justify-between gap-3">
-        <View>
-          {onTechnique ? (
+      <View className="flex flex-row items-center gap-3">
+        {onTechnique ? (
+          <View>
             <Pressable onPress={reset}>
-              <ChevronLeft className="h-8 w-8" />
+              <ChevronLeft size={32} />
             </Pressable>
-          ) : null}
-        </View>
+          </View>
+        ) : null}
 
         <View>
           <Text className="font-display text-lg font-bold text-foreground">
@@ -25,10 +25,7 @@ const ExaminationSuiteHeader: React.FC<{
           </Text>
           <Text className="text-sm text-muted-foreground">{complaint}</Text>
         </View>
-        <DialogClose>
-          <X />
-        </DialogClose>
-      </DialogTitle>
+      </View>
     </DialogHeader>
   );
 };

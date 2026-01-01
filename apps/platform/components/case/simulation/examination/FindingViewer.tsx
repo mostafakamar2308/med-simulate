@@ -35,7 +35,7 @@ const FindingViewer: React.FC<{
   if (findings.length === 0) return <Text>No Findings Here</Text>;
 
   return (
-    <View className="mb-4 flex flex-row flex-nowrap items-center gap-2">
+    <View className="mb-4 flex w-5/6 translate-x-3 flex-row flex-nowrap items-center gap-2">
       {findings.length > 1 ? (
         <Button onPress={goNext} variant={"outline"}>
           <ArrowLeft />

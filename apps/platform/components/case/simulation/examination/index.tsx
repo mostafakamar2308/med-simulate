@@ -19,7 +19,7 @@ const ExaminationSuite: React.FC<{
   }, [isOpen]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onClose={onClose}>
       <DialogContent className="flex h-[90vh] w-screen flex-col gap-0 overflow-hidden bg-background p-0">
         <ExaminationSuiteHeader
           reset={() => {

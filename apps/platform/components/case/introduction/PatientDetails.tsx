@@ -11,7 +11,7 @@ const PatientDetails: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) 
   return (
     <Card className="relative mb-6 gap-3 overflow-hidden border-none bg-white p-6 shadow-lg">
       <View className="relative z-10 mb-2 flex flex-row items-center gap-6">
-        <View className="h-20 w-20">
+        <View className="relative h-20 w-20">
           <PatientAvatar />
         </View>
         <View>
