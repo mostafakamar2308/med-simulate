@@ -4,7 +4,9 @@ import { cn } from "@/lib/utils";
 import HistorySimulation from "@/components/case/simulation/history";
 import { ICase, IChat } from "@med-simulate/types";
 import ExaminationSuite from "@/components/case/simulation/examination";
-import { ACTION_CATEGORIES } from "@/lib/history";
+import { OUT_PATIENT_ACTION_CATEGORIES, ER_ACTION_CATEGORIES } from "@/lib/history";
+import UrgentManagement from "@/components/case/simulation/urgentManangement";
+import { ActionTaken } from "@/components/case/simulation/urgentManangement/types";
 
 const initialActions = {
   history: false,
@@ -12,12 +14,18 @@ const initialActions = {
   investigations: false,
   consult: false,
   treatment: false,
+  management: false,
   disposition: false,
 };
 
 const SimulationActions: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => {
   const [actions, setActions] = useState(initialActions);
   const [chatMessages, setChatMessages] = useState<IChat.Chat>([]);
+  const [actionsTaken, setActionsTaken] = useState<ActionTaken[]>([]);
+
+  const AddAction = (action: ActionTaken) => {
+    setActionsTaken((prev) => [...prev, action]);
+  };
 
   const isUrgent = useMemo(
     () => medicalCase.category !== ICase.CaseCategory.Outpatient,
@@ -25,12 +33,7 @@ const SimulationActions: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase 
   );
 
   const displayedCategories = useMemo(
-    () =>
-      isUrgent
-        ? ACTION_CATEGORIES.filter((c) => !["consult", "treatment"].includes(c.id)).map((c) =>
-            c.id === "investigations" ? { ...c, label: "Manage Patient" } : c
-          )
-        : ACTION_CATEGORIES,
+    () => (isUrgent ? ER_ACTION_CATEGORIES : OUT_PATIENT_ACTION_CATEGORIES),
     [isUrgent]
   );
   const addMessage = useCallback((message: IChat.Message) => {
@@ -72,6 +75,12 @@ const SimulationActions: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase 
       <ExaminationSuite
         complaint={medicalCase.complaint}
         isOpen={actions.exam}
+        onClose={closeDialogs}
+      />
+      <UrgentManagement
+        takenActions={actionsTaken}
+        onActionTaken={AddAction}
+        isOpen={actions.management}
         onClose={closeDialogs}
       />
     </View>

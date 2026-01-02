@@ -11,7 +11,7 @@ const HistoryHeader: React.FC<{ patientName: string; onClose?: () => void }> = (
   return (
     <DialogHeader className="z-10 border-b bg-white/80 p-4 shadow-sm backdrop-blur-md">
       <View className="flex flex-row items-center justify-between gap-3">
-        <View className="relative flex !h-10 !w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+        <View className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-primary/10">
           <PatientAvatar />
         </View>
         <View className="flex-1">

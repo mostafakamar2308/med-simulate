@@ -4,6 +4,7 @@ import ExaminationSuiteHeader from "@/components/case/simulation/examination/Hea
 import SystemSelector from "@/components/case/simulation/examination/SystemSelector";
 import { TechniqueSelector } from "@/components/case/simulation/examination/TechniqueSelector";
 import { BodySystem, ExaminationTechniqueType } from "@med-simulate/types";
+import { ScrollView } from "react-native";
 
 const ExaminationSuite: React.FC<{
   isOpen: boolean;
@@ -29,22 +30,24 @@ const ExaminationSuite: React.FC<{
           onTechnique={!!selectedSystem}
           complaint={complaint}
         />
-        {!selectedSystem ? (
-          <SystemSelector
-            onChange={(system) => {
-              setSelectedSystem(system);
-              setSelectedTechnique("inspect");
-            }}
-            selected={selectedSystem}
-          />
-        ) : null}
-        {selectedSystem ? (
-          <TechniqueSelector
-            selectedSystem={selectedSystem}
-            onChange={setSelectedTechnique}
-            selectedTechnique={selectedTechnique}
-          />
-        ) : null}
+        <ScrollView>
+          {!selectedSystem ? (
+            <SystemSelector
+              onChange={(system) => {
+                setSelectedSystem(system);
+                setSelectedTechnique("inspect");
+              }}
+              selected={selectedSystem}
+            />
+          ) : null}
+          {selectedSystem ? (
+            <TechniqueSelector
+              selectedSystem={selectedSystem}
+              onChange={setSelectedTechnique}
+              selectedTechnique={selectedTechnique}
+            />
+          ) : null}
+        </ScrollView>
       </DialogContent>
     </Dialog>
   );
