@@ -5,5 +5,7 @@ export * as IError from "@/error";
 export * as IExamination from "@/examination";
 export * as IFilter from "@/filter";
 export * as IUser from "@/user";
+export * as IInvestigation from "@/investigation";
+export * as IManagement from "@/management";
 export * from "@/utils";
 export * from "@/examination";
