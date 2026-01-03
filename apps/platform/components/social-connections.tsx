@@ -10,10 +10,7 @@ import { Text } from "@/components/ui/text";
 
 WebBrowser.maybeCompleteAuthSession();
 
-type SocialConnectionStrategy = Extract<
-  StartSSOFlowParams["strategy"],
-  "oauth_google" | "oauth_github" | "oauth_apple"
->;
+type SocialConnectionStrategy = Extract<StartSSOFlowParams["strategy"], "oauth_google">;
 
 const SOCIAL_CONNECTION_STRATEGIES: {
   type: SocialConnectionStrategy;
@@ -34,6 +31,10 @@ export function SocialConnections() {
   const { colorScheme } = useColorScheme();
   const { startSSOFlow } = useSSO();
 
+  const redirectUrl = AuthSession.makeRedirectUri({
+    scheme: "medsimulate",
+  });
+
   function onSocialLoginPress(strategy: SocialConnectionStrategy) {
     return async () => {
       try {
@@ -43,7 +44,7 @@ export function SocialConnections() {
           // For web, defaults to current path
           // For native, you must pass a scheme, like AuthSession.makeRedirectUri({ scheme, path })
           // For more info, see https://docs.expo.dev/versions/latest/sdk/auth-session/#authsessionmakeredirecturioptions
-          redirectUrl: AuthSession.makeRedirectUri(),
+          redirectUrl,
         });
 
         // If sign in was successful, set the active session

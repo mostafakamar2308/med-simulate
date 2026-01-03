@@ -28,6 +28,8 @@ export default function Screen() {
 
   if (cases.isPending) return <Loading text="Loading Cases..." />;
 
+  console.log({ cases });
+
   return (
     <SafeAreaView className="my-4 h-screen flex-1 px-3">
       <View className="relative flex-row">
