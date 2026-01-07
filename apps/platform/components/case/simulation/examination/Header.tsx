@@ -1,4 +1,4 @@
-import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { DialogHeader } from "@/components/ui/dialog";
 import { Text, View, Pressable } from "react-native";
 import { ChevronLeft, X } from "lucide-react-native";
 import React from "react";
@@ -7,28 +7,25 @@ const ExaminationSuiteHeader: React.FC<{
   complaint: string;
   onTechnique: boolean;
   reset: () => void;
-}> = ({ complaint, onTechnique, reset }) => {
+  close: () => void;
+}> = ({ complaint, onTechnique, reset, close }) => {
   return (
-    <DialogHeader className="z-10 border-b bg-white/80 p-4 shadow-sm backdrop-blur-md">
-      <DialogTitle className="flex items-center justify-between gap-3">
+    <DialogHeader className="z-10 flex-row items-center justify-between border-b bg-white/80 p-4 shadow-sm backdrop-blur-md">
+      {onTechnique ? (
         <View>
-          {onTechnique ? (
-            <Pressable onPress={reset}>
-              <ChevronLeft className="h-8 w-8" />
-            </Pressable>
-          ) : null}
+          <Pressable onPress={reset}>
+            <ChevronLeft size={32} />
+          </Pressable>
         </View>
+      ) : null}
 
-        <View>
-          <Text className="font-display text-lg font-bold text-foreground">
-            Physical Examination
-          </Text>
-          <Text className="text-sm text-muted-foreground">{complaint}</Text>
-        </View>
-        <DialogClose>
-          <X />
-        </DialogClose>
-      </DialogTitle>
+      <View>
+        <Text className="font-display text-lg font-bold text-foreground">Physical Examination</Text>
+        <Text className="text-sm text-muted-foreground">{complaint}</Text>
+      </View>
+      <Pressable onPress={close}>
+        <X width={32} height={32} />
+      </Pressable>
     </DialogHeader>
   );
 };

@@ -7,7 +7,7 @@ export type ActionCategory = {
   color: string;
 };
 
-export const ACTION_CATEGORIES: ActionCategory[] = [
+export const OUT_PATIENT_ACTION_CATEGORIES: ActionCategory[] = [
   {
     id: "history",
     label: "History",
@@ -37,6 +37,33 @@ export const ACTION_CATEGORIES: ActionCategory[] = [
     label: "Treat",
     icon: Pill,
     color: "bg-green-100 text-green-600",
+  },
+  {
+    id: "disposition",
+    label: "Decide",
+    icon: DoorOpen,
+    color: "bg-rose-100  text-rose-600",
+  },
+];
+
+export const ER_ACTION_CATEGORIES: ActionCategory[] = [
+  {
+    id: "history",
+    label: "History",
+    icon: ClipboardList,
+    color: "bg-blue-100  text-blue-600",
+  },
+  {
+    id: "exam",
+    label: "Exam",
+    icon: Stethoscope,
+    color: "bg-teal-100 text-teal-600",
+  },
+  {
+    id: "management",
+    label: "Manage Patient",
+    icon: Activity,
+    color: "bg-purple-100 text-purple-600",
   },
   {
     id: "disposition",

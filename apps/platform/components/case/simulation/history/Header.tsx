@@ -1,14 +1,17 @@
-import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { DialogHeader } from "@/components/ui/dialog";
 import React from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import PatientAvatar from "@/components/case/PatientAvatar";
 import { X } from "lucide-react-native";
 
-const HistoryHeader: React.FC<{ patientName: string }> = ({ patientName }) => {
+const HistoryHeader: React.FC<{ patientName: string; onClose?: () => void }> = ({
+  patientName,
+  onClose,
+}) => {
   return (
     <DialogHeader className="z-10 border-b bg-white/80 p-4 shadow-sm backdrop-blur-md">
-      <DialogTitle className="flex items-center justify-between gap-3">
-        <View className="relative flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+      <View className="flex flex-row items-center justify-between gap-3">
+        <View className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-primary/10">
           <PatientAvatar />
         </View>
         <View className="flex-1">
@@ -18,10 +21,10 @@ const HistoryHeader: React.FC<{ patientName: string }> = ({ patientName }) => {
             Online
           </Text>
         </View>
-        <DialogClose>
+        <Pressable onPress={onClose}>
           <X />
-        </DialogClose>
-      </DialogTitle>
+        </Pressable>
+      </View>
     </DialogHeader>
   );
 };

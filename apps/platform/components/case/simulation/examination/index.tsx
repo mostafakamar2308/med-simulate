@@ -4,6 +4,7 @@ import ExaminationSuiteHeader from "@/components/case/simulation/examination/Hea
 import SystemSelector from "@/components/case/simulation/examination/SystemSelector";
 import { TechniqueSelector } from "@/components/case/simulation/examination/TechniqueSelector";
 import { BodySystem, ExaminationTechniqueType } from "@med-simulate/types";
+import { ScrollView } from "react-native";
 
 const ExaminationSuite: React.FC<{
   isOpen: boolean;
@@ -19,32 +20,35 @@ const ExaminationSuite: React.FC<{
   }, [isOpen]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onClose={onClose}>
+      <ExaminationSuiteHeader
+        reset={() => {
+          setSelectedSystem(null);
+          setSelectedTechnique(null);
+        }}
+        close={onClose}
+        onTechnique={!!selectedSystem}
+        complaint={complaint}
+      />
       <DialogContent className="flex h-[90vh] w-screen flex-col gap-0 overflow-hidden bg-background p-0">
-        <ExaminationSuiteHeader
-          reset={() => {
-            setSelectedSystem(null);
-            setSelectedTechnique(null);
-          }}
-          onTechnique={!!selectedSystem}
-          complaint={complaint}
-        />
-        {!selectedSystem ? (
-          <SystemSelector
-            onChange={(system) => {
-              setSelectedSystem(system);
-              setSelectedTechnique("inspect");
-            }}
-            selected={selectedSystem}
-          />
-        ) : null}
-        {selectedSystem ? (
-          <TechniqueSelector
-            selectedSystem={selectedSystem}
-            onChange={setSelectedTechnique}
-            selectedTechnique={selectedTechnique}
-          />
-        ) : null}
+        <ScrollView>
+          {!selectedSystem ? (
+            <SystemSelector
+              onChange={(system) => {
+                setSelectedSystem(system);
+                setSelectedTechnique("inspect");
+              }}
+              selected={selectedSystem}
+            />
+          ) : null}
+          {selectedSystem ? (
+            <TechniqueSelector
+              selectedSystem={selectedSystem}
+              onChange={setSelectedTechnique}
+              selectedTechnique={selectedTechnique}
+            />
+          ) : null}
+        </ScrollView>
       </DialogContent>
     </Dialog>
   );

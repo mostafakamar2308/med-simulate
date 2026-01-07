@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   BodySystem,
@@ -52,13 +52,14 @@ const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
       <View className="w-full px-2">
         <Text className="text-xl font-bold text-muted-foreground">Available Actions</Text>
 
-        <ScrollView contentContainerClassName="grid w-full grid-cols-2 gap-2">
+        <ScrollView contentContainerClassName="flex flex-col gap-2">
           {techniques.map((item, idx) => (
             <Button
               onPress={() => {
                 setSelectedSpecialTechnique(item.type === "special" ? item : null);
                 setSelectedRegularTechniqueAreaFindings(null);
               }}
+              className="w-3/4 border-primary"
               variant={"outline"}
               key={idx}>
               <Text>{item.type === "special" && item.label}</Text>
@@ -68,7 +69,7 @@ const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
         {selectedSpecialTechnique ? (
           <Text
             className={cn(
-              "my-2 w-full rounded-lg border px-2 py-4 text-center text-2xl font-bold",
+              "my-2 w-screen max-w-xs rounded-lg border px-2 py-4 text-center text-2xl font-bold",
               selectedSpecialTechnique?.value === "positive"
                 ? "border-primary bg-green-600/80 text-white"
                 : "border-destructive bg-destructive/80 text-white"
@@ -84,27 +85,31 @@ const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
     <View className="w-full space-y-2 px-2">
       <Text className="text-xl font-bold text-muted-foreground">Available Areas</Text>
 
-      <ScrollView contentContainerClassName="grid grid-cols-2 gap-2" className="my-2 w-full px-2">
-        {techniques.map((item) => {
-          return (
-            item.type !== "special" &&
-            item.areas.map((area) => (
-              <Button
-                onPress={() => {
-                  setSelectedRegularTechniqueAreaFindings(area.findings);
-                  setSelectedSpecialTechnique(null);
-                }}
-                variant={"default"}
-                key={area.id}>
-                <Text>{area.label}</Text>
-              </Button>
-            ))
-          );
-        })}
+      <ScrollView className="my-2 flex w-full gap-4 px-2">
+        <View className="flex flex-row flex-wrap gap-2">
+          {techniques.map((item) => {
+            return (
+              item.type !== "special" &&
+              item.areas.map((area) => (
+                <Pressable
+                  onPress={() => {
+                    setSelectedRegularTechniqueAreaFindings(area.findings);
+                    setSelectedSpecialTechnique(null);
+                  }}
+                  className="rounded-xl bg-primary p-4"
+                  key={area.id}>
+                  <Text className="text-xl text-white">{area.label}</Text>
+                </Pressable>
+              ))
+            );
+          })}
+        </View>
+        <View className="mt-2">
+          {selectedRegularTechniqueAreaFindings ? (
+            <FindingViewer findings={selectedRegularTechniqueAreaFindings} />
+          ) : null}
+        </View>
       </ScrollView>
-      {selectedRegularTechniqueAreaFindings ? (
-        <FindingViewer findings={selectedRegularTechniqueAreaFindings} />
-      ) : null}
     </View>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useVideoPlayer, VideoView, VideoSource } from "expo-video";
 
 interface ExpoVideoPlayerProps {
@@ -12,14 +12,23 @@ const VideoPlayer: React.FC<ExpoVideoPlayerProps> = ({ source }) => {
   });
 
   return (
-    <View className="w-full gap-3">
-      <VideoView
-        player={player}
-        allowsFullscreen
-        className="h-[220px] w-full overflow-hidden rounded-xl"
-      />
+    <View style={styles.container}>
+      <VideoView player={player} fullscreenOptions={{ enable: true }} style={styles.video} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    height: 220,
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  video: {
+    width: "100%",
+    height: "100%",
+  },
+});
 
 export default VideoPlayer;

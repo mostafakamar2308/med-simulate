@@ -31,7 +31,9 @@ export default function RootLayout() {
   const { colorScheme } = useColorScheme();
 
   return (
-    <ClerkProvider tokenCache={tokenCache}>
+    <ClerkProvider
+      publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      tokenCache={tokenCache}>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider value={NAV_THEME[colorScheme ?? "light"]}>
           <ApiAuthProvider>
@@ -50,15 +52,22 @@ SplashScreen.preventAutoHideAsync();
 function Routes() {
   const { isSignedIn, isLoaded } = useAuth();
 
+  // TODO: must make a check for when users don't have active internet connection
   React.useEffect(() => {
     if (isLoaded) {
       SplashScreen.hideAsync();
     }
   }, [isLoaded]);
 
-  if (!isLoaded) {
-    return null;
-  }
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      SplashScreen.hideAsync();
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  if (!isLoaded) return null;
 
   return (
     <Stack
