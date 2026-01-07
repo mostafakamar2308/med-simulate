@@ -1,24 +1,27 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Text, View, TouchableOpacity, Pressable, ScrollView } from "react-native";
 import { ChevronLeft } from "lucide-react-native";
-import { TESTS } from "@/lib/urgentManagement";
+import { CONSULTATIONS, TESTS, TREATMENTS } from "@/constants/urgentManagement";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { ActionListProps } from "@/components/case/simulation/urgentManangement/types";
-import { IInvestigation } from "@med-simulate/types";
+import {
+  ActionListItem,
+  ActionListProps,
+} from "@/components/case/simulation/urgentManangement/types";
+import { isConsultation, isInvestigation, isTreatment } from "@/lib/urgentManagement";
 
 const ActionList: React.FC<ActionListProps> = ({ category, onBack, onActionTaken }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [item, setItem] = useState<IInvestigation.Investigation | null>(null);
+  const [item, setItem] = useState<ActionListItem | null>(null);
 
   const categoryData = useMemo(() => {
     switch (category) {
       case "investigations":
         return TESTS;
-      // case "treatment":
-      //   return TREATMENTS;
-      // case "consultation":
-      //   return CONSULTATIONS;
+      case "treatment":
+        return TREATMENTS;
+      case "consultation":
+        return CONSULTATIONS;
       default:
         return [];
     }
@@ -56,8 +59,8 @@ const ActionList: React.FC<ActionListProps> = ({ category, onBack, onActionTaken
   //   switch (category) {
   //     case "investigations":
   //       return "test";
-  //     case "treatment":
-  //       return "treatment";
+  //     // case "treatment":
+  //     //   return "treatment";
   //     case "consultation":
   //       return "consult";
   //     default:
@@ -65,7 +68,7 @@ const ActionList: React.FC<ActionListProps> = ({ category, onBack, onActionTaken
   //   }
   // };
 
-  const handleSelectAction = (item: IInvestigation.Investigation) => {
+  const handleSelectAction = (item: ActionListItem) => {
     if (onActionTaken) {
       const now = new Date();
       const action = {
@@ -100,50 +103,67 @@ const ActionList: React.FC<ActionListProps> = ({ category, onBack, onActionTaken
   );
 };
 
-const ResultViewer: React.FC<{ item: IInvestigation.Investigation }> = ({ item }) => {
-  return (
-    <View className="justify-center gap-4 bg-secondary-foreground p-2">
-      <Text className="text-xl text-white">{item.name}:</Text>
+const ResultViewer: React.FC<{ item: ActionListItem }> = ({ item }) => {
+  if (isInvestigation(item))
+    return (
+      <View className="justify-center gap-4 bg-secondary-foreground p-2">
+        <Text className="text-xl text-white">{item.name}:</Text>
 
-      {item.result.type === "text" ? (
-        <View>
-          <Text className="text-center font-bold text-white">{item.result.value}</Text>
-        </View>
-      ) : null}
-      {item.result.type === "binary" ? (
-        <View>
-          <Text
-            className={cn(
-              "p-4 text-center font-bold text-white",
-              item.result.value === "positive" ? "bg-red-700" : "bg-green-500"
-            )}>
-            {item.result.value}
-          </Text>
-        </View>
-      ) : null}
-
-      {item.result.type === "number" ? (
-        <View>
-          <View className="flex-row items-center justify-center gap-2">
-            <Text className="text-lg font-bold text-white">{item.result.value} </Text>
-            <Text className="text-sm text-white">({item.result.reference})</Text>
+        {item.result.type === "text" ? (
+          <View>
+            <Text className="text-center font-bold text-white">{item.result.value}</Text>
           </View>
-          <Text className="text-center font-bold text-white">{item.result.description}</Text>
-        </View>
-      ) : null}
+        ) : null}
+        {item.result.type === "binary" ? (
+          <View>
+            <Text
+              className={cn(
+                "p-4 text-center font-bold text-white",
+                item.result.value === "positive" ? "bg-red-700" : "bg-green-500"
+              )}>
+              {item.result.value}
+            </Text>
+          </View>
+        ) : null}
 
-      {/* {item.guidance ? (
-        <Pressable className="max-w-fit rounded-lg bg-primary p-2">
-          <Text className="w-fit max-w-fit text-center text-white">Why is it important?</Text>
-        </Pressable>
-      ) : null} */}
-    </View>
-  );
+        {item.result.type === "number" ? (
+          <View>
+            <View className="flex-row items-center justify-center gap-2">
+              <Text className="text-lg font-bold text-white">{item.result.value} </Text>
+              <Text className="text-sm text-white">({item.result.reference})</Text>
+            </View>
+            <Text className="text-center font-bold text-white">{item.result.description}</Text>
+          </View>
+        ) : null}
+
+        {item.guidance ? (
+          <Pressable className="max-w-fit rounded-lg bg-primary p-2">
+            <Text className="w-fit max-w-fit text-center text-white">{item.guidance}</Text>
+          </Pressable>
+        ) : null}
+      </View>
+    );
+
+  if (isConsultation(item))
+    return (
+      <View className="justify-center gap-4 bg-secondary-foreground p-8">
+        <Text className="text-xl text-white">{item.name}:</Text>
+        <Text className="text-center font-bold text-white">{item.result.description}</Text>
+      </View>
+    );
+
+  if (isTreatment(item))
+    return (
+      <View className="justify-center gap-4 bg-secondary-foreground p-8">
+        <Text className="text-xl text-white">{item.name}:</Text>
+        <Text className="text-center font-bold text-white">{item.result.description}</Text>
+      </View>
+    );
 };
 
 const List: React.FC<{
-  items: IInvestigation.Investigation[];
-  onClick: (item: IInvestigation.Investigation) => void;
+  items: ActionListItem[];
+  onClick: (item: ActionListItem) => void;
 }> = ({ items, onClick }) => {
   return items.length === 0 ? (
     <View className="flex-1 items-center justify-center py-12">

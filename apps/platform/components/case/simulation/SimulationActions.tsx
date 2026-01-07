@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import HistorySimulation from "@/components/case/simulation/history";
 import { ICase, IChat } from "@med-simulate/types";
 import ExaminationSuite from "@/components/case/simulation/examination";
-import { OUT_PATIENT_ACTION_CATEGORIES, ER_ACTION_CATEGORIES } from "@/lib/history";
+import { ER_ACTION_CATEGORIES } from "@/lib/history";
 import UrgentManagement from "@/components/case/simulation/urgentManangement";
 import { ActionTaken } from "@/components/case/simulation/urgentManangement/types";
 
@@ -32,10 +32,7 @@ const SimulationActions: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase 
     [medicalCase.category]
   );
 
-  const displayedCategories = useMemo(
-    () => (isUrgent ? ER_ACTION_CATEGORIES : OUT_PATIENT_ACTION_CATEGORIES),
-    [isUrgent]
-  );
+  const displayedCategories = useMemo(() => ER_ACTION_CATEGORIES, [isUrgent]);
   const addMessage = useCallback((message: IChat.Message) => {
     setChatMessages((prev) => [...prev, message]);
   }, []);

@@ -5,26 +5,39 @@ import {
   ActionsTakenProps,
   ActionTaken,
 } from "@/components/case/simulation/urgentManangement/types";
+import { isConsultation, isInvestigation, isTreatment } from "@/lib/urgentManagement";
 
 const ActionsTaken: React.FC<ActionsTakenProps> = ({ takenActions }) => {
-  const getResultDisplay = (result: ActionTaken["result"]) => {
-    if (!result) return null;
+  const getResultDisplay = (action: ActionTaken) => {
+    if (!action.result) return null;
 
-    switch (result.type) {
-      case "number":
-        return (
-          <Text className="font-mono">
-            <Text className="font-bold text-blue-600">{result.value}</Text>
-            {result.reference && ` ${result.reference}`}
-          </Text>
-        );
-      case "text":
-        return <Text className="font-medium text-gray-900">{result.value}</Text>;
-      case "binary":
-        return <Text className="font-bold text-blue-600">{result.value}</Text>;
-      default:
-        return null;
+    if (isInvestigation(action)) {
+      switch (action.result.type) {
+        case "number":
+          return (
+            <Text className="font-mono">
+              <Text className="font-bold text-blue-600">{action.result.value}</Text>
+              {action.result.reference && ` ${action.result.reference}`}
+            </Text>
+          );
+        case "text":
+          return <Text className="font-medium text-gray-900">{action.result.value}</Text>;
+        case "binary":
+          return <Text className="font-bold text-blue-600">{action.result.value}</Text>;
+        default:
+          return null;
+      }
     }
+
+    if (isConsultation(action))
+      return (
+        <Text className="text-center font-bold text-green-600">{action.result.description}</Text>
+      );
+
+    if (isTreatment(action))
+      return (
+        <Text className="text-center font-bold text-purple-600">{action.result.description}</Text>
+      );
   };
 
   if (takenActions.length === 0) {
@@ -59,8 +72,8 @@ const ActionsTaken: React.FC<ActionsTakenProps> = ({ takenActions }) => {
               <Text className="mb-2 font-bold text-gray-900">{action.name}</Text>
               {action.result && (
                 <View className="mt-2 rounded-lg border border-gray-200 bg-white/80 p-2">
-                  {getResultDisplay(action.result)}
-                  {action.result.description && (
+                  {getResultDisplay(action)}
+                  {isInvestigation(action) && action.result.description && (
                     <Text className="mt-1 italic text-gray-600">{action.result.description}</Text>
                   )}
                 </View>

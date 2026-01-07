@@ -1,8 +1,13 @@
-import { IInvestigation } from "@med-simulate/types";
+import { IConsultation, IInvestigation, ITreatment } from "@med-simulate/types";
 
 export type ActionCategory = "investigations" | "treatment" | "consultation";
 
-export type ActionTaken = IInvestigation.Investigation & {
+export type ActionListItem =
+  | IInvestigation.Investigation
+  | IConsultation.Consultation
+  | ITreatment.Treatment;
+
+export type ActionTaken = ActionListItem & {
   timeStamp: string;
 };
 

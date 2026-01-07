@@ -33,7 +33,7 @@ const ActionsToTake: React.FC<ActionsToTakeProps> = ({ onActionTaken }) => {
           color="purple"
           onPress={() => setSelectedCategory("investigations")}
         />
-        {/* 
+
         <ActionCategoryCard
           title="Initiate Treatment"
           description="Medications, IV fluids, and procedures"
@@ -48,7 +48,7 @@ const ActionsToTake: React.FC<ActionsToTakeProps> = ({ onActionTaken }) => {
           icon={<Users size={24} color="#ffffff" />}
           color="orange"
           onPress={() => setSelectedCategory("consultation")}
-        /> */}
+        />
       </View>
     </ScrollView>
   );

@@ -1,5 +1,6 @@
 export type Investigation = {
   id: string;
+  role: "investigation";
   name: string;
   result: InvestigationResult;
   guidance?: string;

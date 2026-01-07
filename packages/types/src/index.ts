@@ -6,6 +6,7 @@ export * as IExamination from "@/examination";
 export * as IFilter from "@/filter";
 export * as IUser from "@/user";
 export * as IInvestigation from "@/investigation";
-export * as IManagement from "@/management";
+export * as IConsultation from "@/consultation";
+export * as ITreatment from "@/treatement";
 export * from "@/utils";
 export * from "@/examination";

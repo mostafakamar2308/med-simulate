@@ -21,15 +21,16 @@ const ExaminationSuite: React.FC<{
 
   return (
     <Dialog open={isOpen} onClose={onClose}>
+      <ExaminationSuiteHeader
+        reset={() => {
+          setSelectedSystem(null);
+          setSelectedTechnique(null);
+        }}
+        close={onClose}
+        onTechnique={!!selectedSystem}
+        complaint={complaint}
+      />
       <DialogContent className="flex h-[90vh] w-screen flex-col gap-0 overflow-hidden bg-background p-0">
-        <ExaminationSuiteHeader
-          reset={() => {
-            setSelectedSystem(null);
-            setSelectedTechnique(null);
-          }}
-          onTechnique={!!selectedSystem}
-          complaint={complaint}
-        />
         <ScrollView>
           {!selectedSystem ? (
             <SystemSelector
