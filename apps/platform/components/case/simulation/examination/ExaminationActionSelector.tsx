@@ -15,11 +15,13 @@ import FindingViewer from "@/components/case/simulation/examination/FindingViewe
 type ExaminationSelectorProps = {
   selectedTechnique: ExaminationTechniqueType;
   selectedSystem: BodySystem;
+  onFinding: (finding: Finding) => void;
 };
 
 const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
   selectedSystem,
   selectedTechnique,
+  onFinding,
 }) => {
   const [selectedRegularTechniqueAreaFindings, setSelectedRegularTechniqueAreaFindings] = useState<
     Finding[] | null
@@ -95,6 +97,9 @@ const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
                   onPress={() => {
                     setSelectedRegularTechniqueAreaFindings(area.findings);
                     setSelectedSpecialTechnique(null);
+                    area.findings.forEach((finding) => {
+                      if (!finding.normal) onFinding(finding);
+                    });
                   }}
                   className="rounded-xl bg-primary p-4"
                   key={area.id}>

@@ -3,14 +3,15 @@ import React, { useEffect, useState } from "react";
 import ExaminationSuiteHeader from "@/components/case/simulation/examination/Header";
 import SystemSelector from "@/components/case/simulation/examination/SystemSelector";
 import { TechniqueSelector } from "@/components/case/simulation/examination/TechniqueSelector";
-import { BodySystem, ExaminationTechniqueType } from "@med-simulate/types";
+import { BodySystem, ExaminationTechniqueType, Finding } from "@med-simulate/types";
 import { KeyboardScreen } from "@/components/layout/keyboardScreen";
 
 const ExaminationSuite: React.FC<{
   isOpen: boolean;
-  onClose: () => void;
   complaint: string;
-}> = ({ isOpen, onClose, complaint }) => {
+  onClose: () => void;
+  onFinding: (finding: Finding) => void;
+}> = ({ isOpen, onClose, onFinding, complaint }) => {
   const [selectedSystem, setSelectedSystem] = useState<BodySystem | null>(null);
   const [selectedTechnique, setSelectedTechnique] = useState<ExaminationTechniqueType | null>(null);
 
@@ -36,7 +37,7 @@ const ExaminationSuite: React.FC<{
             <SystemSelector
               onChange={(system) => {
                 setSelectedSystem(system);
-                setSelectedTechnique("inspect");
+                setSelectedTechnique(null);
               }}
               selected={selectedSystem}
             />
@@ -45,6 +46,7 @@ const ExaminationSuite: React.FC<{
             <TechniqueSelector
               selectedSystem={selectedSystem}
               onChange={setSelectedTechnique}
+              onFinding={onFinding}
               selectedTechnique={selectedTechnique}
             />
           ) : null}

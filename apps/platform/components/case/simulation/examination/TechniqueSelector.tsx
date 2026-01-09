@@ -4,18 +4,20 @@ import { Button } from "@/components/ui/button";
 import { Text, View } from "react-native";
 import React from "react";
 import ExaminationActionSelector from "@/components/case/simulation/examination/ExaminationActionSelector";
-import { BodySystem, ExaminationTechniqueType } from "@med-simulate/types";
+import { BodySystem, ExaminationTechniqueType, Finding } from "@med-simulate/types";
 
 type TechniqueSelectorProps = {
   selectedTechnique: ExaminationTechniqueType | null;
   selectedSystem: BodySystem;
   onChange: (technique: ExaminationTechniqueType | "special") => void;
+  onFinding: (finding: Finding) => void;
 };
 
 export function TechniqueSelector({
   selectedTechnique,
   selectedSystem,
   onChange,
+  onFinding,
 }: TechniqueSelectorProps) {
   return (
     <View className="my-4 flex w-full items-center gap-3 px-2">
@@ -45,6 +47,7 @@ export function TechniqueSelector({
       </View>
       {selectedTechnique && selectedSystem ? (
         <ExaminationActionSelector
+          onFinding={onFinding}
           selectedSystem={selectedSystem}
           selectedTechnique={selectedTechnique}
         />

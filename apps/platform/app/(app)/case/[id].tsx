@@ -5,8 +5,10 @@ import React, { useState, useCallback } from "react";
 import { View } from "react-native";
 import Simulation from "@/components/case/simulation";
 import CaseIntroduction from "@/components/case/introduction";
+import Feedback from "@/components/case/simulation/feedback";
+import { FinishSimulation } from "@/components/case/simulation/SimulationActions";
 
-type Step = "intro" | "simulation";
+type Step = "intro" | "simulation" | "feedback";
 
 const Screen: React.FC = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -19,6 +21,12 @@ const Screen: React.FC = () => {
     setStep("simulation");
   }, []);
 
+  const completeSimulation = useCallback(() => {
+    setStep("feedback");
+  }, []);
+
+  const finishSimulation: FinishSimulation = useCallback((payload) => {}, []);
+
   if (isPending || data === undefined) return <Loading text="Loading Case..." />;
 
   if (data === null) {
@@ -28,11 +36,11 @@ const Screen: React.FC = () => {
 
   return (
     <View className="relative flex-1">
-      {step === "intro" ? (
-        <CaseIntroduction data={data} startSimulation={startSimulation} />
-      ) : (
-        <Simulation caseData={data} />
-      )}
+      {step === "intro" ? <CaseIntroduction data={data} startSimulation={startSimulation} /> : null}
+      {step === "simulation" ? (
+        <Simulation finishSimulation={finishSimulation} caseData={data} />
+      ) : null}
+      {step === "feedback" ? <Feedback /> : null}
     </View>
   );
 };

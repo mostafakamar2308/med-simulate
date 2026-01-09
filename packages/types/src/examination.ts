@@ -39,5 +39,6 @@ export type FidningType = "img" | "audio" | "video" | "text";
 export type Finding = {
   type: FidningType;
   url?: string;
+  normal?: boolean;
   description: string;
 };
