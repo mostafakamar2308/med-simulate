@@ -6,8 +6,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native";
 import Simulation from "@/components/case/simulation";
 import CaseIntroduction from "@/components/case/introduction";
+import Feedback from "@/components/case/simulation/feedback";
+import { FinishSimulation } from "@/components/case/simulation/SimulationActions";
 
-type Step = "intro" | "simulation";
+type Step = "intro" | "simulation" | "feedback";
 
 const Screen: React.FC = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -19,6 +21,12 @@ const Screen: React.FC = () => {
   const startSimulation = useCallback(() => {
     setStep("simulation");
   }, []);
+
+  const completeSimulation = useCallback(() => {
+    setStep("feedback");
+  }, []);
+
+  const finishSimulation: FinishSimulation = useCallback((payload) => {}, []);
 
   if (isPending || data === undefined) return <Loading text="Loading Case..." />;
 
@@ -34,9 +42,11 @@ const Screen: React.FC = () => {
         contentContainerClassName="flex-1">
         {step === "intro" ? (
           <CaseIntroduction data={data} startSimulation={startSimulation} />
-        ) : (
-          <Simulation caseData={data} />
-        )}
+        ) : null}
+        {step === "simulation" ? (
+          <Simulation finishSimulation={finishSimulation} caseData={data} />
+        ) : null}
+        {step === "feedback" ? <Feedback /> : null}
       </ScrollView>
     </SafeAreaView>
   );

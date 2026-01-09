@@ -8,5 +8,6 @@ export * as IUser from "@/user";
 export * as IInvestigation from "@/investigation";
 export * as IConsultation from "@/consultation";
 export * as ITreatment from "@/treatement";
+export * as IFeedback from "@/feedback";
 export * from "@/utils";
 export * from "@/examination";

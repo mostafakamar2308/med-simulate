@@ -1,14 +1,16 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { Text, View, TouchableOpacity, Pressable, ScrollView } from "react-native";
+import { Text, View, TouchableOpacity, Pressable } from "react-native";
 import { ChevronLeft } from "lucide-react-native";
 import { CONSULTATIONS, TESTS, TREATMENTS } from "@/constants/urgentManagement";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import {
+  ActionCategory,
   ActionListItem,
   ActionListProps,
 } from "@/components/case/simulation/urgentManangement/types";
 import { isConsultation, isInvestigation, isTreatment } from "@/lib/urgentManagement";
+import { FlashList } from "@shopify/flash-list";
 
 const ActionList: React.FC<ActionListProps> = ({ category, onBack, onActionTaken }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -98,7 +100,7 @@ const ActionList: React.FC<ActionListProps> = ({ category, onBack, onActionTaken
         </View>
       </View>
       {item ? <ResultViewer item={item} /> : null}
-      <List items={filteredItems} onClick={handleSelectAction} />
+      <List category={category} items={filteredItems} onClick={handleSelectAction} />
     </View>
   );
 };
@@ -163,27 +165,29 @@ const ResultViewer: React.FC<{ item: ActionListItem }> = ({ item }) => {
 
 const List: React.FC<{
   items: ActionListItem[];
+  category?: ActionCategory;
   onClick: (item: ActionListItem) => void;
 }> = ({ items, onClick }) => {
   return items.length === 0 ? (
     <View className="flex-1 items-center justify-center py-12">
-      <Text className="text-base text-gray-500">No items found</Text>
+      <Text className="text-base text-gray-500">
+        No items found
+        {/* {category === "treatment" ? "Please Search for the correct action" : "No items found"} */}
+      </Text>
     </View>
   ) : (
     <View className="flex-1 gap-2">
-      <ScrollView
-        showsVerticalScrollIndicator={true}
-        contentContainerClassName="flex-1 min-h-full h-full"
-        className="h-full min-h-full flex-1">
-        {items.map((item) => (
+      <FlashList
+        data={items}
+        renderItem={({ item }) => (
           <Pressable
             key={item.id}
             onPress={() => onClick(item)}
             className="mb-2 items-center justify-center rounded-lg border-2 border-primary bg-primary/5 py-2 active:bg-primary/10">
             <Text className="text-base font-semibold text-primary">{item.name || "No name"}</Text>
           </Pressable>
-        ))}
-      </ScrollView>
+        )}
+      />
     </View>
   );
 };

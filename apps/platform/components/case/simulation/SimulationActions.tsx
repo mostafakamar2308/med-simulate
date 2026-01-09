@@ -2,11 +2,12 @@ import { Text, TouchableOpacity, View } from "react-native";
 import React, { useState, useCallback, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import HistorySimulation from "@/components/case/simulation/history";
-import { ICase, IChat } from "@med-simulate/types";
+import { Finding, ICase, IChat } from "@med-simulate/types";
 import ExaminationSuite from "@/components/case/simulation/examination";
 import { ER_ACTION_CATEGORIES } from "@/lib/history";
 import UrgentManagement from "@/components/case/simulation/urgentManangement";
 import { ActionTaken } from "@/components/case/simulation/urgentManangement/types";
+import Decision, { DecisionItem } from "@/components/case/decision";
 
 const initialActions = {
   history: false,
@@ -15,17 +16,32 @@ const initialActions = {
   consult: false,
   treatment: false,
   management: false,
-  disposition: false,
+  decision: false,
 };
 
-const SimulationActions: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => {
+export type FinishSimulation = (payload: {
+  chat: IChat.Chat;
+  findings: Finding[];
+  actions: ActionTaken[];
+  decision: DecisionItem;
+}) => void;
+
+const SimulationActions: React.FC<{
+  medicalCase: ICase.Self;
+  finishSimulation: FinishSimulation;
+}> = ({ medicalCase, finishSimulation }) => {
   const [actions, setActions] = useState(initialActions);
   const [chatMessages, setChatMessages] = useState<IChat.Chat>([]);
+  const [examinationFindings, setExaminationationFindings] = useState<Finding[]>([]);
   const [actionsTaken, setActionsTaken] = useState<ActionTaken[]>([]);
 
-  const AddAction = (action: ActionTaken) => {
+  const AddAction = useCallback((action: ActionTaken) => {
     setActionsTaken((prev) => [...prev, action]);
-  };
+  }, []);
+
+  const AddFinding = useCallback((finding: Finding) => {
+    setExaminationationFindings((prev) => [...prev, finding]);
+  }, []);
 
   const isUrgent = useMemo(
     () => medicalCase.category !== ICase.CaseCategory.Outpatient,
@@ -42,6 +58,19 @@ const SimulationActions: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase 
   const openDialog = useCallback(
     (id: string) => setActions((prev) => ({ ...prev, [id]: true })),
     []
+  );
+
+  const onDecision = useCallback(
+    (decision: DecisionItem) => {
+      finishSimulation({
+        decision,
+        chat: chatMessages,
+        actions: actionsTaken,
+        findings: examinationFindings,
+      });
+      closeDialogs();
+    },
+    [closeDialogs]
   );
 
   return (
@@ -73,11 +102,18 @@ const SimulationActions: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase 
         complaint={medicalCase.complaint}
         isOpen={actions.exam}
         onClose={closeDialogs}
+        onFinding={AddFinding}
       />
       <UrgentManagement
         takenActions={actionsTaken}
         onActionTaken={AddAction}
         isOpen={actions.management}
+        onClose={closeDialogs}
+      />
+      <Decision
+        onDecision={onDecision}
+        patientName={medicalCase.name}
+        isOpen={actions.decision}
         onClose={closeDialogs}
       />
     </View>

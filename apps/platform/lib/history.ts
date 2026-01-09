@@ -66,7 +66,7 @@ export const ER_ACTION_CATEGORIES: ActionCategory[] = [
     color: "bg-purple-100 text-purple-600",
   },
   {
-    id: "disposition",
+    id: "decision",
     label: "Decide",
     icon: DoorOpen,
     color: "bg-rose-100  text-rose-600",
