@@ -39,7 +39,7 @@ export function SocialConnections() {
     return async () => {
       try {
         // Start the authentication process by calling `startSSOFlow()`
-        const { createdSessionId, setActive } = await startSSOFlow({
+        const { createdSessionId, setActive, authSessionResult } = await startSSOFlow({
           strategy,
           // For web, defaults to current path
           // For native, you must pass a scheme, like AuthSession.makeRedirectUri({ scheme, path })
@@ -47,9 +47,10 @@ export function SocialConnections() {
           redirectUrl,
         });
 
+        console.log({ authSessionResult, createdSessionId });
         // If sign in was successful, set the active session
         if (createdSessionId && setActive) {
-          setActive({ session: createdSessionId });
+          await setActive({ session: createdSessionId });
           return;
         }
 

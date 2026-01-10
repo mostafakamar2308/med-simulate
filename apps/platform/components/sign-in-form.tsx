@@ -30,6 +30,8 @@ export function SignInForm() {
         password,
       });
 
+      console.log({ signInAttempt, email });
+
       // If sign-in process is complete, set the created session as active
       // and redirect the user
       if (signInAttempt.status === "complete") {
@@ -57,7 +59,7 @@ export function SignInForm() {
   }
 
   return (
-    <Card className="h-screen justify-center border-border/0 shadow-none">
+    <Card className="bordershadow-none h-full w-full justify-center">
       <CardHeader className="flex flex-col items-center">
         <View className="mx-auto mb-6 flex h-20 w-20 rotate-3 items-center justify-center rounded-3xl bg-primary/10 text-primary">
           <Icon as={Stethoscope} className="mx-auto h-10 w-10 text-primary"></Icon>

@@ -43,10 +43,9 @@ const HistorySimulation: React.FC<{
   );
 
   return (
-    <Dialog open={isOpen} onClose={onClose}>
-      <DialogContent className="flex h-[80vh] flex-col p-0">
+    <Dialog className="!max-h-[80%] w-[90%] flex-1" open={isOpen} onClose={onClose}>
+      <DialogContent>
         <HistoryHeader patientName={patientName} onClose={onClose} />
-
         <ScrollView
           ref={scrollViewRef}
           className="flex-1 bg-slate-50 px-4 pt-4"
@@ -58,7 +57,6 @@ const HistorySimulation: React.FC<{
 
           {sendMessageMutation.isPending ? <TypingIndicator /> : null}
         </ScrollView>
-
         <SendMessage handleSend={sendMessage} />
       </DialogContent>
     </Dialog>

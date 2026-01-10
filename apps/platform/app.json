@@ -16,10 +16,11 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mostafakamar.dev.medsimulate"
+      "bundleIdentifier": "com.mostafakamar.medsimulate"
     },
     "android": {
       "edgeToEdgeEnabled": true,
+      "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -28,7 +29,18 @@
         "android.permission.RECORD_AUDIO",
         "android.permission.MODIFY_AUDIO_SETTINGS"
       ],
-      "package": "com.mostafakamar.dev.medsimulate"
+      "package": "com.mostafakamar.medsimulate",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "medsimulate"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "bundler": "metro",

@@ -51,72 +51,70 @@ export function SignUpForm() {
   }
 
   return (
-    <View className="gap-6">
-      <Card className="border-border/0 shadow-none sm:border-border sm:shadow-sm sm:shadow-black/5">
-        <CardHeader className="flex flex-col items-center">
-          <View className="mx-auto mb-6 flex h-20 w-20 rotate-3 items-center justify-center rounded-3xl bg-primary/10 text-primary">
-            <Icon as={Stethoscope} className="mx-auto h-10 w-10 text-primary"></Icon>
+    <Card className="h-full justify-center border-border/0 shadow-none sm:border-border sm:shadow-sm sm:shadow-black/5">
+      <CardHeader className="flex flex-col items-center">
+        <View className="mx-auto mb-6 flex h-20 w-20 rotate-3 items-center justify-center rounded-3xl bg-primary/10 text-primary">
+          <Icon as={Stethoscope} className="mx-auto h-10 w-10 text-primary"></Icon>
+        </View>
+        <CardTitle className="font-display text-3xl font-bold text-foreground">
+          Med Simulate
+        </CardTitle>
+        <CardDescription className="text-muted-foreground">
+          Train your clinical reasoning
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="gap-6">
+        <View className="gap-6">
+          <View className="gap-1.5">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              placeholder="m@example.com"
+              keyboardType="email-address"
+              autoComplete="email"
+              autoCapitalize="none"
+              onChangeText={setEmail}
+              onSubmitEditing={onEmailSubmitEditing}
+              returnKeyType="next"
+              submitBehavior="submit"
+            />
+            {error.email ? (
+              <Text className="text-sm font-medium text-destructive">{error.email}</Text>
+            ) : null}
           </View>
-          <CardTitle className="font-display text-3xl font-bold text-foreground">
-            Med Simulate
-          </CardTitle>
-          <CardDescription className="text-muted-foreground">
-            Train your clinical reasoning
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="gap-6">
-          <View className="gap-6">
-            <View className="gap-1.5">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                placeholder="m@example.com"
-                keyboardType="email-address"
-                autoComplete="email"
-                autoCapitalize="none"
-                onChangeText={setEmail}
-                onSubmitEditing={onEmailSubmitEditing}
-                returnKeyType="next"
-                submitBehavior="submit"
-              />
-              {error.email ? (
-                <Text className="text-sm font-medium text-destructive">{error.email}</Text>
-              ) : null}
+          <View className="gap-1.5">
+            <View className="flex-row items-center">
+              <Label htmlFor="password">Password</Label>
             </View>
-            <View className="gap-1.5">
-              <View className="flex-row items-center">
-                <Label htmlFor="password">Password</Label>
-              </View>
-              <Input
-                ref={passwordInputRef}
-                id="password"
-                secureTextEntry
-                onChangeText={setPassword}
-                returnKeyType="send"
-                onSubmitEditing={onSubmit}
-              />
-              {error.password ? (
-                <Text className="text-sm font-medium text-destructive">{error.password}</Text>
-              ) : null}
-            </View>
-            <Button className="w-full" onPress={onSubmit}>
-              <Text>Continue</Text>
-            </Button>
+            <Input
+              ref={passwordInputRef}
+              id="password"
+              secureTextEntry
+              onChangeText={setPassword}
+              returnKeyType="send"
+              onSubmitEditing={onSubmit}
+            />
+            {error.password ? (
+              <Text className="text-sm font-medium text-destructive">{error.password}</Text>
+            ) : null}
           </View>
-          <Text className="text-center text-sm">
-            Already have an account?{" "}
-            <Link href="/(auth)/sign-in" dismissTo className="text-sm underline underline-offset-4">
-              Sign in
-            </Link>
-          </Text>
-          <View className="flex-row items-center">
-            <Separator className="flex-1" />
-            <Text className="px-4 text-sm text-muted-foreground">or</Text>
-            <Separator className="flex-1" />
-          </View>
-          <SocialConnections />
-        </CardContent>
-      </Card>
-    </View>
+          <Button className="w-full" onPress={onSubmit}>
+            <Text>Continue</Text>
+          </Button>
+        </View>
+        <Text className="text-center text-sm">
+          Already have an account?{" "}
+          <Link href="/(auth)/sign-in" dismissTo className="text-sm underline underline-offset-4">
+            Sign in
+          </Link>
+        </Text>
+        <View className="flex-row items-center">
+          <Separator className="flex-1" />
+          <Text className="px-4 text-sm text-muted-foreground">or</Text>
+          <Separator className="flex-1" />
+        </View>
+        <SocialConnections />
+      </CardContent>
+    </Card>
   );
 }

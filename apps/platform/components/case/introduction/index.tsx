@@ -11,7 +11,7 @@ const CaseIntroduction: React.FC<{ data: ICase.Self; startSimulation: () => void
   startSimulation,
 }) => {
   return (
-    <View className="relative max-h-screen gap-2">
+    <View className="relative mt-4 max-h-screen gap-2 p-2">
       <View className="absolute -left-10 -top-10 -z-10 h-24 w-24 rounded-full bg-primary/20 blur-3xl" />
       <CaseHeader title={data.title} />
       <StartSimulationButton onClick={startSimulation} />

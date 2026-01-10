@@ -1,11 +1,11 @@
-import { ForgotPasswordForm } from "@/components/forgot-password-form";
 import { KeyboardScreen } from "@/components/layout/keyboardScreen";
+import { SignUpForm } from "@/components/sign-up-form";
 import * as React from "react";
 
-export default function ForgotPasswordScreen() {
+export default function SignUpScreen() {
   return (
     <KeyboardScreen>
-      <ForgotPasswordForm />
+      <SignUpForm />
     </KeyboardScreen>
   );
 }

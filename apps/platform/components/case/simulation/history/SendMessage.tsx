@@ -14,7 +14,6 @@ const SendMessage: React.FC<{ handleSend: (message: string) => void }> = ({ hand
         onChangeText={(val) => setInputValue(val)}
         placeholder="Ask patient a question..."
         className="h-12 flex-1 rounded-xl border-none bg-secondary/30 focus-visible:ring-primary/20"
-        autoFocus
       />
       <Button
         size="icon"

@@ -12,6 +12,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useColorScheme } from "nativewind";
 import * as React from "react";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -31,19 +32,24 @@ export default function RootLayout() {
   const { colorScheme } = useColorScheme();
 
   return (
-    <ClerkProvider
-      publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}
-      tokenCache={tokenCache}>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider value={NAV_THEME[colorScheme ?? "light"]}>
-          <ApiAuthProvider>
-            <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-            <Routes />
-            <PortalHost />
-          </ApiAuthProvider>
-        </ThemeProvider>
-      </QueryClientProvider>
-    </ClerkProvider>
+    <SafeAreaProvider>
+      <ClerkProvider
+        publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}
+        tokenCache={tokenCache}>
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider value={NAV_THEME[colorScheme ?? "light"]}>
+            <ApiAuthProvider>
+              {/* <StatusBar style={colorScheme === "dark" ? "light" : "dark"} /> */}
+              <StatusBar style={"light"} />
+              <SafeAreaView style={{ flex: 1 }}>
+                <Routes />
+                <PortalHost />
+              </SafeAreaView>
+            </ApiAuthProvider>
+          </ThemeProvider>
+        </QueryClientProvider>
+      </ClerkProvider>
+    </SafeAreaProvider>
   );
 }
 
@@ -58,6 +64,10 @@ function Routes() {
       SplashScreen.hideAsync();
     }
   }, [isLoaded]);
+
+  React.useEffect(() => {
+    console.log("Auth state:", { isLoaded, isSignedIn });
+  }, [isLoaded, isSignedIn]);
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
@@ -80,11 +90,12 @@ function Routes() {
         <Stack.Screen name="(auth)/sign-up" options={SIGN_UP_SCREEN_OPTIONS} />
         <Stack.Screen name="(auth)/reset-password" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
         <Stack.Screen name="(auth)/forgot-password" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
+        <Stack.Screen name="(auth)/verify-email" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
       </Stack.Protected>
 
       <Stack.Protected guard={isSignedIn}>
-        <Stack.Screen name="index" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
-        <Stack.Screen name="case/[id]" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
+        <Stack.Screen name="(app)/index" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
+        <Stack.Screen name="(app)/case/[id]" options={DEFAULT_AUTH_SCREEN_OPTIONS} />
       </Stack.Protected>
     </Stack>
   );
@@ -97,14 +108,12 @@ const SIGN_IN_SCREEN_OPTIONS = {
 
 const SIGN_UP_SCREEN_OPTIONS = {
   presentation: "modal",
+  headerShown: false,
   title: "",
-  headerTransparent: true,
   gestureEnabled: false,
 } as const;
 
 const DEFAULT_AUTH_SCREEN_OPTIONS = {
   title: "",
-  headerShadowVisible: false,
-  headerTransparent: true,
-  headerBackVisible: false,
+  headerShown: false,
 };
