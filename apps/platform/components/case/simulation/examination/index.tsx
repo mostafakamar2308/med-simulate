@@ -4,7 +4,7 @@ import ExaminationSuiteHeader from "@/components/case/simulation/examination/Hea
 import SystemSelector from "@/components/case/simulation/examination/SystemSelector";
 import { TechniqueSelector } from "@/components/case/simulation/examination/TechniqueSelector";
 import { BodySystem, ExaminationTechniqueType } from "@med-simulate/types";
-import { ScrollView } from "react-native";
+import { KeyboardScreen } from "@/components/layout/keyboardScreen";
 
 const ExaminationSuite: React.FC<{
   isOpen: boolean;
@@ -30,8 +30,8 @@ const ExaminationSuite: React.FC<{
         onTechnique={!!selectedSystem}
         complaint={complaint}
       />
-      <DialogContent className="flex h-[90vh] w-screen flex-col gap-0 overflow-hidden bg-background p-0">
-        <ScrollView>
+      <KeyboardScreen>
+        <DialogContent className="flex h-[90vh] w-screen flex-col gap-0 overflow-hidden bg-background p-0">
           {!selectedSystem ? (
             <SystemSelector
               onChange={(system) => {
@@ -48,8 +48,8 @@ const ExaminationSuite: React.FC<{
               selectedTechnique={selectedTechnique}
             />
           ) : null}
-        </ScrollView>
-      </DialogContent>
+        </DialogContent>
+      </KeyboardScreen>
     </Dialog>
   );
 };
