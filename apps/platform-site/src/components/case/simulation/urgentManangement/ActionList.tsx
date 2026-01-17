@@ -13,6 +13,7 @@ import {
   isInvestigation,
   isTreatment,
 } from "@/lib/urgentManagement";
+import { Button } from "@/components/ui/button";
 
 const ActionList: React.FC<ActionListProps> = ({
   category,
@@ -38,7 +39,7 @@ const ActionList: React.FC<ActionListProps> = ({
   const filteredItems = useMemo(() => {
     const query = searchQuery.toLowerCase();
     return categoryData.filter((item) =>
-      item.name.toLowerCase().includes(query)
+      item.name.toLowerCase().includes(query),
     );
   }, [categoryData, searchQuery]);
 
@@ -91,21 +92,18 @@ const ActionList: React.FC<ActionListProps> = ({
   };
 
   return (
-    <div className="flex-1 flex-col justify-stretch gap-2 bg-white">
-      <div className="flex-row items-center">
-        <button
-          onClick={onBack}
-          className="mr-2 rounded-sm border-2 border-[#222] p-1"
-        >
-          <ChevronLeft size={24} color="#222" />
-        </button>
+    <div className="flex-1 flex flex-col justify-stretch gap-2">
+      <div className="flex-row flex items-center">
+        <Button variant={"ghost"} onClick={onBack} className="rounded-sm p-1">
+          <ChevronLeft className="w-6! h-6! text-primary" />
+        </Button>
 
         <div className="flex-1">
           <Input
             placeholder={`Search ${getCategoryLabel()}...`}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="border-[#222] bg-gray-50 text-gray-800"
+            className="text-gray-800 border-none active:outline-0! focus:outline-0!"
             autoFocus
           />
         </div>
@@ -123,7 +121,7 @@ const ActionList: React.FC<ActionListProps> = ({
 const ResultViewer: React.FC<{ item: ActionListItem }> = ({ item }) => {
   if (isInvestigation(item))
     return (
-      <div className="justify-center gap-4 bg-secondary-foreground p-2">
+      <div className="justify-center gap-4 bg-secondary-foreground rounded-2xl flex flex-col p-2">
         <p className="text-xl text-white">{item.name}:</p>
 
         {item.result.type === "text" ? (
@@ -138,7 +136,9 @@ const ResultViewer: React.FC<{ item: ActionListItem }> = ({ item }) => {
             <p
               className={cn(
                 "p-4 text-center font-bold text-white",
-                item.result.value === "positive" ? "bg-red-700" : "bg-green-500"
+                item.result.value === "positive"
+                  ? "bg-destructive"
+                  : "bg-primary",
               )}
             >
               {item.result.value}
@@ -148,7 +148,7 @@ const ResultViewer: React.FC<{ item: ActionListItem }> = ({ item }) => {
 
         {item.result.type === "number" ? (
           <div>
-            <div className="flex-row items-center justify-center gap-2">
+            <div className="flex-row flex items-center justify-center gap-2">
               <p className="text-lg font-bold text-white">
                 {item.result.value}{" "}
               </p>
@@ -161,7 +161,7 @@ const ResultViewer: React.FC<{ item: ActionListItem }> = ({ item }) => {
         ) : null}
 
         {item.guidance ? (
-          <button className="max-w-fit rounded-lg bg-primary p-2">
+          <button className="max-w-fit rounded-lg bg-secondary-foreground p-2">
             <p className="w-fit max-w-fit text-center text-white">
               {item.guidance}
             </p>
@@ -197,14 +197,14 @@ const List: React.FC<{
   onClick: (item: ActionListItem) => void;
 }> = ({ items, onClick }) => {
   return items.length === 0 ? (
-    <div className="flex-1 items-center justify-center py-12">
+    <div className="flex-1 flex items-center justify-center py-12">
       <p className="text-base text-gray-500">
         No items found
         {/* {category === "treatment" ? "Please Search for the correct action" : "No items found"} */}
       </p>
     </div>
   ) : (
-    <div className="flex-1 gap-2">
+    <div className="flex-1 flex flex-col gap-2">
       {items.map((item) => (
         <button
           key={item.id}

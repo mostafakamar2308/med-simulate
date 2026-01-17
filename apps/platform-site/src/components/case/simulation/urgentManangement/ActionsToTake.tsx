@@ -27,7 +27,7 @@ const ActionsToTake: React.FC<ActionsToTakeProps> = ({ onActionTaken }) => {
         Select an action category
       </p>
 
-      <div className="gap-2">
+      <div className="flex flex-col gap-2">
         <ActionCategoryCard
           title="Order Tests & Scans"
           description="Lab work, imaging, and bedside tests"

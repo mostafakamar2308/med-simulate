@@ -35,7 +35,7 @@ const Case: React.FC = () => {
   }
 
   return (
-    <div className="relative flex-1">
+    <div className="relative flex flex-col flex-1 h-full min-h-screen max-w-3xl mx-auto">
       {step === "intro" ? (
         <CaseIntroduction data={data} startSimulation={startSimulation} />
       ) : null}

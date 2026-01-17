@@ -14,7 +14,7 @@ const Home: React.FC = () => {
   console.log(cases.data);
 
   return (
-    <section className="flex-1 bg-secondary/15 h-full min-h-screen p-2 flex flex-col items-center">
+    <section className="flex-1 bg-secondary/15 h-full min-h-screen p-2 flex flex-col max-w-3xl mx-auto w-full items-center">
       <div className="relative border rounded-2xl w-full max-w-sm md:max-w-md flex">
         <div className="absolute left-2 top-[33%] z-10">
           <Search className="h-4 w-4 text-muted-foreground" />
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 self-stretch">
         {cases.data?.list
           .filter((item) =>
-            item.title.toLowerCase().includes(search.toLowerCase())
+            item.title.toLowerCase().includes(search.toLowerCase()),
           )
           .map((item) => (
             <MedicalCase key={item.id} medicalCase={item} />

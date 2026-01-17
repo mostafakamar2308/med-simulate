@@ -19,14 +19,9 @@ const Simulation: React.FC<{
   }, [caseData]);
 
   return (
-    <div className="relative flex-1 pt-4">
-      <div
-        className={cn(
-          "absolute left-0 top-0 -z-10 h-screen w-screen",
-          environment
-        )}
-      />
-      <div className={"flex-1 items-center justify-center gap-4"}>
+    <div className="relative flex flex-col flex-1 h-full pt-4 border">
+      <div className={cn("absolute left-0 top-0 -z-10", environment)} />
+      <div className={"flex-1 flex flex-col items-center justify-center gap-4"}>
         <div className="mb-4 items-center space-y-2 text-center">
           <p className="font-display mb-1 text-2xl font-bold">
             {caseData.name}

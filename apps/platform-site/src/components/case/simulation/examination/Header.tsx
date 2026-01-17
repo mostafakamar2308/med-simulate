@@ -1,4 +1,4 @@
-import { DialogHeader } from "@/components/ui/dialog";
+import { DialogClose, DialogHeader } from "@/components/ui/dialog";
 import { ChevronLeft, X } from "lucide-react";
 import React from "react";
 
@@ -6,8 +6,7 @@ const ExaminationSuiteHeader: React.FC<{
   complaint: string;
   onTechnique: boolean;
   reset: () => void;
-  close: () => void;
-}> = ({ complaint, onTechnique, reset, close }) => {
+}> = ({ complaint, onTechnique, reset }) => {
   return (
     <DialogHeader className="z-10 flex-row items-center justify-between border-b bg-white/80 p-4 shadow-sm backdrop-blur-md">
       {onTechnique ? (
@@ -24,9 +23,9 @@ const ExaminationSuiteHeader: React.FC<{
         </p>
         <p className="text-sm text-muted-foreground">{complaint}</p>
       </div>
-      <button onClick={close}>
+      <DialogClose>
         <X width={32} height={32} />
-      </button>
+      </DialogClose>
     </DialogHeader>
   );
 };

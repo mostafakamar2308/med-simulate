@@ -8,8 +8,8 @@ const StartSimulationButton: React.FC<{ onClick: () => void }> = ({
   return (
     <button
       className={cn(
-        "h-16 w-full flex-row items-center justify-center gap-2",
-        "rounded-2xl bg-primary"
+        "h-16 flex p-2 flex-row items-center justify-center gap-2",
+        "rounded-2xl bg-primary cursor-pointer",
       )}
       onClick={onClick}
     >

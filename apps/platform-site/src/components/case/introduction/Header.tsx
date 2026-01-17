@@ -1,14 +1,18 @@
 import { ChevronLeft } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router";
+import StartSimulationButton from "@/components/case/introduction/StartSimulationButton";
 
-const CaseHeader: React.FC<{ title?: string }> = ({ title }) => {
+const CaseHeader: React.FC<{ title?: string; startSimulation: () => void }> = ({
+  title,
+  startSimulation,
+}) => {
   const navigate = useNavigate();
 
   const goBack = React.useCallback(() => navigate("/"), [navigate]);
 
   return (
-    <div className="flex-row justify-between">
+    <div className="flex-row items-center mb-2 grid md:flex gap-2 md:justify-between">
       <div>
         <div className="flex flex-row items-center gap-2">
           <button onClick={goBack}>
@@ -28,6 +32,7 @@ const CaseHeader: React.FC<{ title?: string }> = ({ title }) => {
           <p className="text-sm">Est. 10-15 mins</p>
         </div> */}
       </div>
+      <StartSimulationButton onClick={startSimulation} />
     </div>
   );
 };

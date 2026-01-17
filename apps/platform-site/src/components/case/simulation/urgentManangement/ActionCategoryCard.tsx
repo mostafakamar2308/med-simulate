@@ -50,15 +50,15 @@ const ActionCategoryCard: React.FC<ActionCategoryCardProps> = ({
     <button
       onClick={onClick}
       className={cn(
-        "w-full flex-row items-center gap-4 rounded-2xl border p-5",
+        "w-full flex cursor-pointer flex-row items-center gap-4 rounded-2xl border p-5",
         config.bg,
-        config.border
+        config.border,
       )}
     >
       <div
         className={cn(
           "flex h-12 w-12 items-center justify-center rounded-xl",
-          config.iconBg
+          config.iconBg,
         )}
       >
         {icon}

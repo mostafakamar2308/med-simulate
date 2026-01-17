@@ -9,9 +9,20 @@ const SendMessage: React.FC<{ handleSend: (message: string) => void }> = ({
   const [inputValue, setInputValue] = useState<string>("");
 
   return (
-    <div className="flex flex-row items-center gap-2 p-2">
+    <form
+      className="flex flex-row items-center gap-2 p-2"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSend(inputValue);
+        setInputValue("");
+      }}
+    >
       <Input
         value={inputValue}
+        onSubmit={() => {
+          handleSend(inputValue);
+          setInputValue("");
+        }}
         onChange={(e) => setInputValue(e.target.value)}
         placeholder="Ask patient a question..."
         className="h-12 flex-1 rounded-xl border-none bg-secondary/30 focus-visible:ring-primary/20"
@@ -27,7 +38,7 @@ const SendMessage: React.FC<{ handleSend: (message: string) => void }> = ({
       >
         <Send className="h-5 w-5" />
       </Button>
-    </div>
+    </form>
   );
 };
 

@@ -42,7 +42,7 @@ const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
 
     return EXAMINATION_TECHNIQUES.filter(
       (item) =>
-        item.type === selectedTechnique && item.system === selectedSystem
+        item.type === selectedTechnique && item.system === selectedSystem,
     );
   }, [selectedTechnique, selectedSystem]);
 
@@ -59,13 +59,25 @@ const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
         <p className="text-xl font-bold text-muted-foreground">
           Available Actions
         </p>
-
-        <div className="flex flex-col gap-2">
+        {selectedSpecialTechnique ? (
+          <p
+            className={cn(
+              "my-2 w-screen mx-auto max-w-xs rounded-lg border px-2 py-4 text-center text-2xl font-bold",
+              selectedSpecialTechnique?.value === "positive"
+                ? "border-primary bg-green-600/80 text-white"
+                : "border-destructive bg-destructive/80 text-white",
+            )}
+          >
+            <p className="font-normal">{selectedSpecialTechnique?.label}:</p>{" "}
+            {selectedSpecialTechnique?.value}
+          </p>
+        ) : null}
+        <div className="flex flex-col items-center mt-2 gap-2">
           {techniques.map((item, idx) => (
             <Button
               onClick={() => {
                 setSelectedSpecialTechnique(
-                  item.type === "special" ? item : null
+                  item.type === "special" ? item : null,
                 );
                 setSelectedRegularTechniqueAreaFindings(null);
               }}
@@ -77,27 +89,14 @@ const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
             </Button>
           ))}
         </div>
-        {selectedSpecialTechnique ? (
-          <p
-            className={cn(
-              "my-2 w-screen max-w-xs rounded-lg border px-2 py-4 text-center text-2xl font-bold",
-              selectedSpecialTechnique?.value === "positive"
-                ? "border-primary bg-green-600/80 text-white"
-                : "border-destructive bg-destructive/80 text-white"
-            )}
-          >
-            <p className="font-normal">{selectedSpecialTechnique?.label}:</p>{" "}
-            {selectedSpecialTechnique?.value}
-          </p>
-        ) : null}
       </div>
     );
 
   return (
-    <div className="w-full space-y-2 px-2">
+    <div className="w-full space-y-2 px-2 max-h-1/2">
       <p className="text-xl font-bold text-muted-foreground">Available Areas</p>
 
-      <div className="my-2 flex w-full gap-4 px-2">
+      <div className="my-2 flex flex-col items-center w-full gap-4 px-2 h-full">
         <div className="flex flex-row flex-wrap gap-2">
           {techniques.map((item) => {
             return (
@@ -120,7 +119,7 @@ const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
             );
           })}
         </div>
-        <div className="mt-2">
+        <div className="mt-2 flex items-center justify-center  h-full">
           {selectedRegularTechniqueAreaFindings ? (
             <FindingViewer findings={selectedRegularTechniqueAreaFindings} />
           ) : null}

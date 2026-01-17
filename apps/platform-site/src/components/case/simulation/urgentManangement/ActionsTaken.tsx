@@ -53,7 +53,7 @@ const ActionsTaken: React.FC<ActionsTakenProps> = ({ takenActions }) => {
 
   if (takenActions.length === 0) {
     return (
-      <div className="flex-col items-center justify-center py-20">
+      <div className="flex-col flex items-center justify-center py-20">
         <Clock size={48} color="#374151" />
         <p className="mt-4 items-center justify-center text-2xl text-gray-700">
           Take an action...
@@ -63,18 +63,16 @@ const ActionsTaken: React.FC<ActionsTakenProps> = ({ takenActions }) => {
   }
 
   return (
-    <div className="flex-1">
-      <div className="relative">
+    <div className="flex-1 max-h-full">
+      <div className="relative max-h-full">
         <div className="absolute bottom-2 left-4 top-2 w-0.5 bg-gray-300" />
         {takenActions.reverse().map((action, idx) => (
           <div
             key={action.timeStamp.toString()}
             className="relative mb-8 pl-10"
           >
-            <div className="absolute left-0 top-1 z-10 h-8 w-8 items-center justify-center rounded-full border-2 border-blue-500 bg-white">
-              <p className="text-base text-[#3b82f6]">
-                {takenActions.length - idx}
-              </p>
+            <div className="absolute left-0 top-1 z-10 h-8 w-8 flex items-center justify-center rounded-full border-2 border-blue-500 text-blue-500 bg-white">
+              {takenActions.length - idx}
             </div>
             <div className="rounded-2xl border border-gray-200 bg-gray-50 p-4">
               <div className="mb-2 flex-row items-start justify-between">
