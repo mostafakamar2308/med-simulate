@@ -4,9 +4,14 @@ import SimulationVitals from "@/components/case/simulation/SimulationVitals";
 import PatientAvatar from "@/components/case/PatientAvatar";
 import { ICase } from "@med-simulate/types";
 import { cn } from "@/lib/utils";
-import SimulationActions from "@/components/case/simulation/SimulationActions";
+import SimulationActions, {
+  FinishSimulation,
+} from "@/components/case/simulation/SimulationActions";
 
-const Simulation: React.FC<{ caseData: ICase.Self }> = ({ caseData }) => {
+const Simulation: React.FC<{ caseData: ICase.Self; finishSimulation: FinishSimulation }> = ({
+  caseData,
+  finishSimulation,
+}) => {
   const environment = useMemo(() => {
     if (caseData.category === ICase.CaseCategory.ER) return "bg-red-700/10";
     if (caseData.category === ICase.CaseCategory.Inpatient) return "bg-blue-900/10";
@@ -26,7 +31,7 @@ const Simulation: React.FC<{ caseData: ICase.Self }> = ({ caseData }) => {
         <View className="h-40 w-40">
           <PatientAvatar feelings="😣" />
         </View>
-        <SimulationActions medicalCase={caseData} />
+        <SimulationActions finishSimulation={finishSimulation} medicalCase={caseData} />
       </View>
       <SimulationVitals />
     </View>

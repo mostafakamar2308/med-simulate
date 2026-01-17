@@ -14,8 +14,6 @@ export default function Screen() {
 
   if (cases.isPending) return <Loading text="Loading Cases..." />;
 
-  console.log({ cases: cases.data });
-
   return (
     <KeyboardScreen>
       <View className="flex-1 p-2">
