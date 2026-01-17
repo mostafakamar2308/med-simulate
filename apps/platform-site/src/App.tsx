@@ -9,6 +9,7 @@ import SignIn from "@/pages/signIn";
 import SignUp from "@/pages/signUp";
 import VerifyEmail from "@/pages/verifyEmail";
 import NonProtected from "./components/common/nonProtected";
+import Case from "./pages/case";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -43,6 +44,7 @@ const RoutesContainer: React.FC = () => {
       <Routes>
         <Route element={<Protected />}>
           <Route path="/" element={<Home />} />
+          <Route path="/case/:id" element={<Case />} />
         </Route>
         <Route element={<NonProtected />}>
           <Route path="/sign-in" element={<SignIn />} />
