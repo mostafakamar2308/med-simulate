@@ -7,7 +7,7 @@
     "api": "pnpm --filter @med-simulate/api",
     "landing": "pnpm --filter landing",
     "platform": "pnpm --filter platform",
-    "platform-v2": "pnpm --filter platform-v2",
+    "platform-site": "pnpm --filter platform-site",
     "server": "pnpm --filter server",
     "models": "pnpm --filter @med-simulate/models",
     "clean:dep": "rm -rf node_modules && rm pnpm-lock.yaml && pnpm -r exec rm -rf node_modules",
@@ -17,6 +17,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@med-simulate/api": "workspace:*",
+    "@med-simulate/types": "workspace:*"
+  },
   "devDependencies": {
     "@eslint/css": "^0.14.1",
     "@eslint/js": "^9.39.1",
