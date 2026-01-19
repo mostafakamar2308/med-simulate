@@ -1,12 +1,14 @@
-import { DialogClose, DialogHeader } from "@/components/ui/dialog";
+import { DialogHeader } from "@/components/ui/dialog";
 import React from "react";
 import PatientAvatar from "@/components/case/PatientAvatar";
-import { X } from "lucide-react";
+import { MessageCircle, Mic } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const HistoryHeader: React.FC<{
   patientName: string;
-  onClose?: () => void;
-}> = ({ patientName }) => {
+  mode: "voice" | "chat";
+  onModeChange: (id: "chat" | "voice") => void;
+}> = ({ patientName, onModeChange, mode }) => {
   return (
     <DialogHeader className="z-10 border-b bg-white/80 p-4 shadow-sm backdrop-blur-md">
       <div className="flex flex-row items-center justify-between gap-3">
@@ -15,14 +17,26 @@ const HistoryHeader: React.FC<{
         </div>
         <div className="flex-1">
           <p className="font-display block text-lg">{patientName}</p>
-          <p className="flex items-center gap-1 text-xs font-medium text-green-600">
-            <p className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-500"></p>
-            Online
-          </p>
         </div>
-        <DialogClose>
-          <X />
-        </DialogClose>
+        {mode === "chat" ? (
+          <Button
+            variant={"outline"}
+            onClick={() => onModeChange("voice")}
+            className="text-primary"
+          >
+            <Mic className="text-primary" />
+            Voice Mode
+          </Button>
+        ) : (
+          <Button
+            variant={"outline"}
+            onClick={() => onModeChange("chat")}
+            className="text-primary"
+          >
+            <MessageCircle className="text-primary" />
+            Chat Mode
+          </Button>
+        )}
       </div>
     </DialogHeader>
   );

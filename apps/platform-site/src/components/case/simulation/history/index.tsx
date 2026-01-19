@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import HistoryHeader from "@/components/case/simulation/history/Header";
 import ChatMessage from "@/components/case/simulation/history/Message";
@@ -7,6 +7,7 @@ import { IChat } from "@med-simulate/types";
 import { useSendMessage } from "@med-simulate/api/hooks";
 import { ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
+import VoiceMode from "./VoiceMode";
 
 const HistorySimulation: React.FC<{
   isTyping: boolean;
@@ -15,7 +16,17 @@ const HistorySimulation: React.FC<{
   caseId: string;
   addMessage: (message: IChat.Message) => void;
 }> = ({ caseId, patientName, messages, addMessage }) => {
+  const [mode, setMode] = useState<"chat" | "voice">("chat");
+
+  const changeMode = useCallback((id: "chat" | "voice") => setMode(id), []);
+
   const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (divRef.current) {
+      divRef.current.scrollTop = divRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const onSendMessageSuccess = useCallback(
     (data: IChat.SendMessageResponse) => {
@@ -55,18 +66,35 @@ const HistorySimulation: React.FC<{
         </p>
       </DialogTrigger>
       <DialogContent
-        className="min-h-3/4 max-h-3/4 flex flex-col"
+        className="min-h-5/6 max-h-5/6 flex flex-col"
         showCloseButton={false}
       >
-        <HistoryHeader patientName={patientName} />
-        <div ref={divRef} className="flex-1 overflow-auto bg-slate-50 px-4">
-          {messages.map((msg, idx) => (
-            <ChatMessage message={msg} key={idx} />
-          ))}
+        <HistoryHeader
+          mode={mode}
+          onModeChange={changeMode}
+          patientName={patientName}
+        />
+        {mode === "chat" ? (
+          <>
+            <div ref={divRef} className="flex-1 overflow-auto bg-slate-50 px-4">
+              {messages.map((msg, idx) => (
+                <ChatMessage message={msg} key={idx} />
+              ))}
 
-          {sendMessageMutation.isPending ? <TypingIndicator /> : null}
-        </div>
-        <SendMessage handleSend={sendMessage} />
+              {sendMessageMutation.isPending ? <TypingIndicator /> : null}
+            </div>
+            <SendMessage handleSend={sendMessage} />
+          </>
+        ) : (
+          <VoiceMode
+            addMessage={(message) => {
+              sendMessage(message.text);
+            }}
+            onModeChange={changeMode}
+            patientName={patientName}
+            messages={messages}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );
