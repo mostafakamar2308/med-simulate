@@ -20,7 +20,8 @@ const VoiceMode: React.FC<{
   onModeChange: (id: "chat" | "voice") => void;
   messages: IChat.Message[];
   addMessage: (message: IChat.Message) => void;
-}> = ({ messages, patientName, addMessage, onModeChange }) => {
+  isResponding?: boolean;
+}> = ({ messages, patientName, isResponding, addMessage, onModeChange }) => {
   const [state, setState] = useState<ModeState>("responding");
   const [isMuted, setIsMuted] = useState(false);
 
@@ -66,6 +67,15 @@ const VoiceMode: React.FC<{
       divRef.current.scrollTop = divRef.current.scrollHeight;
     }
   }, [messages]);
+
+  useEffect(() => {
+    if (isResponding) {
+      setState("responding");
+    }
+    if (state === "responding") {
+      setState("idle");
+    }
+  }, [isResponding]);
 
   return (
     <div className="flex-1 w-full max-w-lg flex flex-col items-center justify-center py-2 gap-12">

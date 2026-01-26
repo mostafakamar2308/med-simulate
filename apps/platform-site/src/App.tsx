@@ -1,14 +1,14 @@
-import { ClerkProvider } from "@clerk/clerk-react";
+// import { ClerkProvider } from "@clerk/clerk-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ApiAuthProvider } from "@/components/providers/api-auth";
 import type React from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Home from "@/pages/home";
-import Protected from "@/components/common/protected";
 import SignIn from "@/pages/signIn";
 import SignUp from "@/pages/signUp";
 import VerifyEmail from "@/pages/verifyEmail";
-import NonProtected from "./components/common/nonProtected";
+// import Protected from "@/components/common/protected";
+// import NonProtected from "./components/common/nonProtected";
 import Case from "./pages/case";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -28,13 +28,11 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <QueryClientProvider client={queryClient}>
-        <ApiAuthProvider>
-          <RoutesContainer />
-        </ApiAuthProvider>
-      </QueryClientProvider>
-    </ClerkProvider>
+    <QueryClientProvider client={queryClient}>
+      <ApiAuthProvider>
+        <RoutesContainer />
+      </ApiAuthProvider>
+    </QueryClientProvider>
   );
 }
 
@@ -42,15 +40,15 @@ const RoutesContainer: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<Protected />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/case/:id" element={<Case />} />
-        </Route>
-        <Route element={<NonProtected />}>
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/verify-email" element={<VerifyEmail />} />
-        </Route>
+        {/* <Route element={<Protected />}> */}
+        <Route path="/" element={<Home />} />
+        <Route path="/case/:id" element={<Case />} />
+        {/* </Route> */}
+        {/* <Route element={<NonProtected />}> */}
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        {/* </Route> */}
       </Routes>
     </BrowserRouter>
   );

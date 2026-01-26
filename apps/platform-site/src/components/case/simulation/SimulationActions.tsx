@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
-import HistorySimulation from "@/components/case/simulation/history";
+import HistorySimulation from "@/components/case/simulation/history/index-v2";
 import { Finding, ICase, IChat } from "@med-simulate/types";
 import ExaminationSuite from "@/components/case/simulation/examination";
 import UrgentManagement from "@/components/case/simulation/urgentManangement";

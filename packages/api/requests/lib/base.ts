@@ -8,7 +8,7 @@ type HTTPMethodAttr<T, P = object> = {
 
 export function createClient(
   baseURL: string,
-  getToken?: () => Promise<string | null>
+  getToken?: () => Promise<string | null>,
 ) {
   const client = axios.create({
     baseURL: baseURL,
@@ -46,5 +46,15 @@ export class Base {
     return this.client
       .post(attr.route, attr.payload ? JSON.stringify(attr.payload) : undefined)
       .then((response) => response.data);
+  }
+
+  async stream<T, P = object>(
+    attr: HTTPMethodAttr<T, P>,
+  ): Promise<ReadableStream<Uint8Array>> {
+    const response = await this.client.post(attr.route, attr.payload, {
+      responseType: "stream",
+      adapter: "fetch",
+    });
+    return response.data;
   }
 }
