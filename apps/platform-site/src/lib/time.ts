@@ -8,3 +8,9 @@ export function timeConverter(totalSeconds: number): string {
 
   return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 }
+
+export function delay(ms = 1000): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), ms);
+  });
+}

@@ -27,3 +27,10 @@ export type SendMessageResponse = {
   text: string;
   emotion: string;
 };
+
+export type StreamChunk =
+  | { type: "text"; content: string }
+  | { type: "done" }
+  | { type: "error"; message?: string }
+  // Base64 string for audio
+  | { type: "audio"; content: string };

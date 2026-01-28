@@ -4,10 +4,10 @@ import HistoryHeader from "@/components/case/simulation/history/Header";
 import ChatMessage from "@/components/case/simulation/history/Message";
 import SendMessage from "@/components/case/simulation/history/SendMessage";
 import { IChat } from "@med-simulate/types";
-import { useSendMessage } from "@med-simulate/api/hooks";
 import { ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
-import VoiceMode from "./VoiceMode";
+import VoiceMode from "@/components/case/simulation/history/VoiceMode";
+import { usePatientChat } from "@/hooks/chat";
 
 const HistorySimulation: React.FC<{
   isTyping: boolean;
@@ -28,29 +28,14 @@ const HistorySimulation: React.FC<{
     }
   }, [messages]);
 
-  const onSendMessageSuccess = useCallback(
-    (data: IChat.SendMessageResponse) => {
-      addMessage({ text: data.text, sender: "patient" });
-    },
-    [addMessage],
+  const { sendMessage, streamingText, isProcessing } = usePatientChat(
+    caseId,
+    addMessage,
   );
 
-  const sendMessageMutation = useSendMessage({
-    onSuccess: onSendMessageSuccess,
-    onError: () => {},
-  });
-
-  const sendMessage = useCallback(
-    (message: string) => {
-      addMessage({ text: message, sender: "doctor" });
-
-      sendMessageMutation.mutate({
-        chat: [...messages, { text: message, sender: "doctor" }],
-        caseId,
-      });
-    },
-    [messages, caseId, addMessage, sendMessageMutation],
-  );
+  const handleSendMessage = (text: string) => {
+    sendMessage(text, messages);
+  };
 
   return (
     <Dialog>
@@ -66,7 +51,7 @@ const HistorySimulation: React.FC<{
         </p>
       </DialogTrigger>
       <DialogContent
-        className="min-h-5/6 max-h-5/6 flex flex-col"
+        className="h-[calc(100vh-90px)]! md:min-h-5/6 md:max-h-5/6 flex flex-col"
         showCloseButton={false}
       >
         <HistoryHeader
@@ -81,19 +66,23 @@ const HistorySimulation: React.FC<{
                 <ChatMessage message={msg} key={idx} />
               ))}
 
-              {sendMessageMutation.isPending ? <TypingIndicator /> : null}
+              {streamingText ? (
+                <ChatMessage
+                  message={{ sender: "patient", text: streamingText }}
+                />
+              ) : null}
+              {isProcessing ? <TypingIndicator /> : null}
             </div>
-            <SendMessage handleSend={sendMessage} />
+            <SendMessage handleSend={handleSendMessage} />
           </>
         ) : (
           <VoiceMode
-            addMessage={(message) => {
-              sendMessage(message.text);
-            }}
-            onModeChange={changeMode}
-            patientName={patientName}
+            addMessage={(msg) => handleSendMessage(msg.text)}
             messages={messages}
-            isResponding={false}
+            streamingText={streamingText}
+            patientName={patientName}
+            onModeChange={setMode}
+            isResponding={isProcessing || !!streamingText}
           />
         )}
       </DialogContent>

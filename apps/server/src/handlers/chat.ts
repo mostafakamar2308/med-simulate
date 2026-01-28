@@ -11,17 +11,17 @@ const sendMessageQuery = z.object({
     z.object({
       sender: z.enum(["doctor", "patient"]),
       text: z.string(),
-    })
+    }),
   ),
 });
 
 export async function sendMessage(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
-  const user = await getUser(req);
-  if (!user) return next(unauthenticated());
+  // const user = await getUser(req);
+  // if (!user) return next(unauthenticated());
 
   const { caseId, chat } = sendMessageQuery.parse(req.body);
 

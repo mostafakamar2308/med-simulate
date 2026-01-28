@@ -21,10 +21,10 @@ const findCasesApiQuery = z.object({
 export async function findCases(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
-  const user = await getUser(req);
-  if (!user) return next(unauthenticated());
+  // const user = await getUser(req);
+  // if (!user) return next(unauthenticated());
 
   const query = findCasesApiQuery.parse(req.query);
   const result: ICase.FindCasesResponse = await cases.find(query);
@@ -39,10 +39,10 @@ const findCaseByIdQuery = z.object({
 export async function findCaseById(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
-  const user = await getUser(req);
-  if (!user) return next(unauthenticated());
+  // const user = await getUser(req);
+  // if (!user) return next(unauthenticated());
 
   const { id } = findCaseByIdQuery.parse(req.params);
   const result = await cases.findCaseById(id);

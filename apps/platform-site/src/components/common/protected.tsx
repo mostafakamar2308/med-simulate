@@ -1,15 +1,15 @@
-import { useAuth } from "@clerk/clerk-react";
-import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router";
+// import { useAuth } from "@clerk/clerk-react";
+// import { useEffect } from "react";
+// import { Outlet, useNavigate } from "react-router";
 
-const Protected: React.FC = () => {
-  const { isSignedIn } = useAuth();
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!isSignedIn) navigate("/sign-in");
-  }, [isSignedIn]);
+// const Protected: React.FC = () => {
+//   const { isSignedIn } = useAuth();
+//   const navigate = useNavigate();
+//   useEffect(() => {
+//     if (!isSignedIn) navigate("/sign-in");
+//   }, [isSignedIn]);
 
-  return <Outlet />;
-};
+//   return <Outlet />;
+// };
 
-export default Protected;
+// export default Protected;

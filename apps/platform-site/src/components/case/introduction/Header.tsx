@@ -1,12 +1,8 @@
 import { ChevronLeft } from "lucide-react";
 import React from "react";
 import { useNavigate } from "react-router";
-import StartSimulationButton from "@/components/case/introduction/StartSimulationButton";
 
-const CaseHeader: React.FC<{ title?: string; startSimulation: () => void }> = ({
-  title,
-  startSimulation,
-}) => {
+const CaseHeader: React.FC<{ title?: string }> = ({ title }) => {
   const navigate = useNavigate();
 
   const goBack = React.useCallback(() => navigate("/"), [navigate]);
@@ -32,7 +28,6 @@ const CaseHeader: React.FC<{ title?: string; startSimulation: () => void }> = ({
           <p className="text-sm">Est. 10-15 mins</p>
         </div> */}
       </div>
-      <StartSimulationButton onClick={startSimulation} />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import cors from "cors";
 import express, { json } from "express";
 
 const app = express();
+
 const port = "5001";
 
 app.use(cors({ credentials: true, origin: true }));
@@ -12,6 +13,7 @@ app.use(clerkMiddleware());
 
 app.use("/api/v1/cases", routes.cases);
 app.use("/api/v1/chat", routes.chat);
+app.use("/api/v1/chat-v2", routes.chatV2);
 
 app.listen(port, () => {
   console.log(`Med Simulate Api listening on port ${port}`);
