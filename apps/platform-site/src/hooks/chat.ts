@@ -7,64 +7,107 @@ export const usePatientChat = (
   addMessage: (m: IChat.Message) => void,
 ) => {
   const [streamingText, setStreamingText] = useState("");
-  const isPlaying = useRef(false);
-  const audioQueue = useRef<HTMLAudioElement[] | null>(null);
+  const streamingTextRef = useRef("");
+  const audioQueue = useRef<HTMLAudioElement[]>([]);
+  const isAudioPlaying = useRef(false);
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  const playNext = useCallback(() => {
+    if (isAudioPlaying.current || audioQueue.current.length === 0) {
+      return;
+    }
+
+    const nextAudio = audioQueue.current.shift();
+    if (!nextAudio) return;
+
+    isAudioPlaying.current = true;
+    currentAudioRef.current = nextAudio;
+
+    nextAudio.onended = () => {
+      isAudioPlaying.current = false;
+      currentAudioRef.current = null;
+      playNext();
+    };
+
+    nextAudio.onerror = (err) => {
+      console.error("Audio playback error:", err);
+      isAudioPlaying.current = false;
+      playNext();
+    };
+
+    nextAudio.play().catch((err) => {
+      console.error("Auto-play blocked or failed:", err);
+      isAudioPlaying.current = false;
+      playNext();
+    });
+  }, []);
+
+  const stopAudio = useCallback(() => {
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current.currentTime = 0;
+      currentAudioRef.current = null;
+    }
+    audioQueue.current = [];
+    isAudioPlaying.current = false;
+  }, []);
 
   const streamMutation = useSendMessageStream((chunk) => {
     switch (chunk.type) {
       case "text":
+        streamingTextRef.current += chunk.content;
         setStreamingText((prev) => prev + chunk.content);
         break;
 
       case "audio":
         try {
-          console.log("audiotype: ", chunk.type);
-          console.log("audiocontent: ", chunk.content);
           const audio = new Audio(`data:audio/wav;base64,${chunk.content}`);
-          audio.play();
+          audioQueue.current.push(audio);
 
-          // const arrayBuffer = base64ToArrayBuffer(chunk.content);
-          // audioQueue.current.push(arrayBuffer);
-          // playNext();
+          playNext();
         } catch (err) {
           console.error("Failed to decode audio chunk:", err);
         }
         break;
 
       case "done":
-        setStreamingText((final) => {
-          if (final) addMessage({ text: final, sender: "patient" });
-          return "";
-        });
+        const finalText = streamingTextRef.current;
+
+        addMessage({ text: finalText, sender: "patient" });
+        streamingTextRef.current = "";
+        setStreamingText("");
         break;
 
       case "error":
         console.error("Streaming error:", chunk.message);
+        streamingTextRef.current = "";
         setStreamingText("");
+        stopAudio();
         break;
     }
   });
 
   const sendMessage = useCallback(
     (text: string, currentHistory: IChat.Message[]) => {
+      stopAudio();
+
       addMessage({ text, sender: "doctor" });
+      streamingTextRef.current = "";
       setStreamingText("");
-      audioQueue.current = []; // clear previous audio
-      isPlaying.current = false;
 
       streamMutation.mutate({
         caseId,
         chat: [...currentHistory, { text, sender: "doctor" }],
       });
     },
-    [caseId, addMessage, streamMutation],
+    [caseId, addMessage, streamMutation, stopAudio],
   );
 
   return {
     sendMessage,
     streamingText,
     isProcessing: streamMutation.isPending,
-    isResponding: !!streamingText || isPlaying.current,
+    isResponding: !!streamingText || isAudioPlaying.current,
     error: streamMutation.error,
   };
 };

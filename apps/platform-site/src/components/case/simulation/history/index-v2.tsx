@@ -6,7 +6,7 @@ import SendMessage from "@/components/case/simulation/history/SendMessage";
 import { IChat } from "@med-simulate/types";
 import { ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
-import VoiceMode from "./VoiceMode";
+import VoiceMode from "@/components/case/simulation/history/VoiceMode";
 import { usePatientChat } from "@/hooks/chat";
 
 const HistorySimulation: React.FC<{
@@ -66,14 +66,12 @@ const HistorySimulation: React.FC<{
                 <ChatMessage message={msg} key={idx} />
               ))}
 
-              {/* Show live stream bubble if streaming, otherwise show typing indicator */}
               {streamingText ? (
                 <ChatMessage
                   message={{ sender: "patient", text: streamingText }}
                 />
-              ) : isProcessing ? (
-                <TypingIndicator />
               ) : null}
+              {isProcessing ? <TypingIndicator /> : null}
             </div>
             <SendMessage handleSend={handleSendMessage} />
           </>
@@ -81,6 +79,7 @@ const HistorySimulation: React.FC<{
           <VoiceMode
             addMessage={(msg) => handleSendMessage(msg.text)}
             messages={messages}
+            streamingText={streamingText}
             patientName={patientName}
             onModeChange={setMode}
             isResponding={isProcessing || !!streamingText}

@@ -11,7 +11,6 @@ const Home: React.FC = () => {
   const cases = useFindCases({});
 
   if (cases.isPending) return <Loading text="Loading Cases..." />;
-  console.log(cases.data);
 
   return (
     <section className="flex-1 bg-secondary/15 h-full min-h-screen p-2 flex flex-col max-w-3xl mx-auto w-full items-center">

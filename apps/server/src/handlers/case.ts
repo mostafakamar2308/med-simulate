@@ -46,7 +46,6 @@ export async function findCaseById(
 
   const { id } = findCaseByIdQuery.parse(req.params);
   const result = await cases.findCaseById(id);
-  console.log("here");
 
   res.status(200).json(result);
 }

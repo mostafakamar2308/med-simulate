@@ -45,7 +45,6 @@ export async function sendMessageStream(
 
     let fullText = "";
     for await (const chunk of textResponse) {
-      console.log(chunk.text);
       fullText += chunk.text;
       const cleanText = chunk.text?.replace(/[\u064B-\u0652]/g, "");
       res.write(
@@ -76,7 +75,6 @@ export async function sendMessageStream(
         for await (const ttsChunk of ttsResponse) {
           const inlineData =
             ttsChunk.candidates?.[0]?.content?.parts?.[0]?.inlineData;
-          console.log(inlineData?.data?.slice(0, 50));
           if (inlineData) {
             const mimeOptions = parseMimeType(inlineData.mimeType || "");
 
