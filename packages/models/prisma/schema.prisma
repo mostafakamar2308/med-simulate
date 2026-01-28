@@ -8,31 +8,95 @@ datasource db {
 }
 
 model User {
-  id              String @id
-  name            String
-  whatsapp_number String
-  university      Int
+  id             String @id
+  name           String
+  whatsappNumber String
+  university     Int
 
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Case {
-  id            String @id @default(uuid())
-  title         String
-  complaint     String
-  difficulty    Int
-  category      Int
-  speciality    Int
-  name          String
-  age           Int
-  gender        Int
-  weight        Float
-  height        Float
-  brief_history String @default("")
-  objective     String @default("")
-  actor         String @default("")
+  id           String @id @default(uuid())
+  title        String
+  complaint    String
+  difficulty   Int
+  category     Int
+  speciality   Int
+  name         String
+  age          Int
+  gender       Int
+  weight       Float
+  height       Float
+  briefHistory String @default("")
+  objective    String @default("")
+  actor        String @default("")
 
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now()) @updatedAt
+  bodySystems BodySystem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model BodySystem {
+  id    String          @id @unique
+  label BodySystemLabel
+
+  caseId                String
+  case                  Case                   @relation(fields: [caseId], references: [id])
+  examinationTechniques ExaminationTechnique[]
+}
+
+model ExaminationTechnique {
+  id    String                    @id @unique
+  label ExaminationTechniqueLabel
+
+  bodySystemId     String
+  bodySystem       BodySystem        @relation(fields: [bodySystemId], references: [id])
+  examinationAreas ExaminationArea[]
+}
+
+model ExaminationArea {
+  id String @id @unique
+
+  label String
+
+  examinationTechniqueId String
+  examinationTecnique    ExaminationTechnique @relation(fields: [examinationTechniqueId], references: [id])
+  examinationFindings    ExaminationFinding[]
+}
+
+model ExaminationFinding {
+  id String @id @unique
+
+  type        ExaminationFindingType
+  normal      Boolean?
+  description String
+
+  examinationAreaId String
+  examinationArea   ExaminationArea @relation(references: [id], fields: [examinationAreaId])
+}
+
+enum BodySystemLabel {
+  General
+  Cardiovascular
+  Respiratory
+  Abdomen
+  Neurological
+  Extremities
+}
+
+enum ExaminationTechniqueLabel {
+  Inspect
+  Palpate
+  Auscultate
+  Percuss
+}
+
+enum ExaminationFindingType {
+  img
+  audio
+  video
+  text
 }

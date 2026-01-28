@@ -5,7 +5,7 @@ import { ICase } from "@med-simulate/types";
 import { AlertCircle } from "lucide-react";
 import React from "react";
 
-const PatientDetails: React.FC<{ medicalCase: ICase.Self }> = ({
+const PatientDetails: React.FC<{ medicalCase: ICase.FullCase }> = ({
   medicalCase,
 }) => {
   return (

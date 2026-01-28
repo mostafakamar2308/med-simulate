@@ -8,7 +8,7 @@ import React, { useCallback } from "react";
 import { Pressable, View } from "react-native";
 import { Button } from "@/components/ui/button";
 
-const MedicalCase: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => {
+const MedicalCase: React.FC<{ medicalCase: ICase.FullCase }> = ({ medicalCase }) => {
   const router = useRouter();
   const goToCase = useCallback(
     () =>

@@ -8,13 +8,13 @@ import SimulationActions, {
   FinishSimulation,
 } from "@/components/case/simulation/SimulationActions";
 
-const Simulation: React.FC<{ caseData: ICase.Self; finishSimulation: FinishSimulation }> = ({
+const Simulation: React.FC<{ caseData: ICase.FullCase; finishSimulation: FinishSimulation }> = ({
   caseData,
   finishSimulation,
 }) => {
   const environment = useMemo(() => {
-    if (caseData.category === ICase.CaseCategory.ER) return "bg-red-700/10";
-    if (caseData.category === ICase.CaseCategory.Inpatient) return "bg-blue-900/10";
+    if (caseData.category === ICase.Category.ER) return "bg-red-700/10";
+    if (caseData.category === ICase.Category.Inpatient) return "bg-blue-900/10";
     return "bg-green-500/10";
   }, [caseData]);
 

@@ -6,7 +6,7 @@ class Cases {
   constructor() {}
 
   async find(
-    payload: ICase.FindCasesApiQuery
+    payload: ICase.FindCasesApiQuery,
   ): Promise<ICase.FindCasesResponse> {
     const pagination = {
       size: payload.size || 10,
@@ -20,31 +20,37 @@ class Cases {
     });
 
     return {
-      list: cases.map(this.from),
+      list: cases,
       size: cases.length,
       page: pagination.page,
     };
   }
 
-  async findCaseById(id: string): Promise<ICase.Self | null> {
+  async findCaseById(id: string): Promise<ICase.FullCase | null> {
     const medicalCase = await db.case.findUnique({
       where: {
         id,
+      },
+      include: {
+        bodySystems: {
+          include: {
+            examinationTechniques: {
+              include: {
+                examinationAreas: {
+                  include: {
+                    examinationFindings: {},
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     });
 
     if (!medicalCase) return null;
 
-    return this.from(medicalCase);
-  }
-
-  from(caseItem: ICase.Row): ICase.Self {
-    return {
-      ...caseItem,
-      briefHistory: caseItem.brief_history,
-      createdAt: dayjs.utc(caseItem.created_at).toISOString(),
-      updatedAt: dayjs.utc(caseItem.updated_at).toISOString(),
-    };
+    return medicalCase;
   }
 }
 
