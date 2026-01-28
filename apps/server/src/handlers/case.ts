@@ -9,20 +9,16 @@ const findCasesApiQuery = z.object({
   search: z.string().optional(),
   filters: z
     .object({
-      speciality: z.array(z.nativeEnum(ICase.CaseSpeciality)).optional(),
-      difficulty: z.array(z.nativeEnum(ICase.CaseDifficulty)).optional(),
-      category: z.array(z.nativeEnum(ICase.CaseCategory)).optional(),
+      speciality: z.array(z.nativeEnum(ICase.Speciality)).optional(),
+      difficulty: z.array(z.nativeEnum(ICase.Difficulty)).optional(),
+      category: z.array(z.nativeEnum(ICase.Category)).optional(),
     })
     .optional(),
   page: z.number().optional(),
   size: z.number().optional(),
 });
 
-export async function findCases(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
+export async function findCases(req: Request, res: Response) {
   // const user = await getUser(req);
   // if (!user) return next(unauthenticated());
 
@@ -36,11 +32,7 @@ const findCaseByIdQuery = z.object({
   id: z.string(),
 });
 
-export async function findCaseById(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
+export async function findCaseById(req: Request, res: Response) {
   // const user = await getUser(req);
   // if (!user) return next(unauthenticated());
 

@@ -3,7 +3,7 @@ import { ICase } from "@med-simulate/types";
 import { AlertCircle, MapPin } from "lucide-react";
 import React from "react";
 
-const ScenarioDetails: React.FC<{ medicalCase: ICase.Self }> = ({
+const ScenarioDetails: React.FC<{ medicalCase: ICase.FullCase }> = ({
   medicalCase,
 }) => {
   return (
