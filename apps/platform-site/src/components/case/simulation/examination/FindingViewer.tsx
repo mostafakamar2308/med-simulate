@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 
-import { Finding } from "@med-simulate/types";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import {
@@ -9,9 +8,10 @@ import {
   TextViewer,
   // VideoViewer,
 } from "@/components/case/simulation/examination/Viewers";
+import { ICase } from "@med-simulate/types";
 
 const FindingViewer: React.FC<{
-  findings: Finding[];
+  findings: ICase.ExaminationFinding[];
 }> = ({ findings }) => {
   const [finding, setFinding] = useState<number>(0);
 

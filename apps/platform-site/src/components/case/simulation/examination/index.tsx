@@ -3,21 +3,19 @@ import React, { useEffect, useState } from "react";
 import ExaminationSuiteHeader from "@/components/case/simulation/examination/Header";
 import SystemSelector from "@/components/case/simulation/examination/SystemSelector";
 import { TechniqueSelector } from "@/components/case/simulation/examination/TechniqueSelector";
-import {
-  BodySystem,
-  ExaminationTechniqueType,
-  Finding,
-} from "@med-simulate/types";
+import { ICase } from "@med-simulate/types";
 import { cn } from "@/lib/utils";
 import { Stethoscope } from "lucide-react";
 
 const ExaminationSuite: React.FC<{
-  complaint: string;
-  onFinding: (finding: Finding) => void;
-}> = ({ onFinding, complaint }) => {
-  const [selectedSystem, setSelectedSystem] = useState<BodySystem | null>(null);
+  medicalCase: ICase.FullCase;
+  onFinding: (finding: ICase.ExaminationFinding) => void;
+}> = ({ onFinding, medicalCase }) => {
+  const [selectedSystem, setSelectedSystem] = useState<ICase.BodySystem | null>(
+    null,
+  );
   const [selectedTechnique, setSelectedTechnique] =
-    useState<ExaminationTechniqueType | null>(null);
+    useState<ICase.ExaminationTechnique | null>(null);
 
   useEffect(() => {
     setSelectedSystem(null);
@@ -44,7 +42,7 @@ const ExaminationSuite: React.FC<{
             setSelectedTechnique(null);
           }}
           onTechnique={!!selectedSystem}
-          complaint={complaint}
+          complaint={medicalCase.complaint}
         />
         {!selectedSystem ? (
           <SystemSelector
@@ -52,12 +50,14 @@ const ExaminationSuite: React.FC<{
               setSelectedSystem(system);
               setSelectedTechnique(null);
             }}
+            systems={medicalCase.bodySystems}
             selected={selectedSystem}
           />
         ) : null}
         {selectedSystem ? (
           <TechniqueSelector
             selectedSystem={selectedSystem}
+            techniques={selectedSystem.examinationTechniques}
             onChange={setSelectedTechnique}
             onFinding={onFinding}
             selectedTechnique={selectedTechnique}

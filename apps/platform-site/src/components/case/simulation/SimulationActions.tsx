@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import HistorySimulation from "@/components/case/simulation/history";
-import { Finding, ICase, IChat } from "@med-simulate/types";
+import { IExamination, ICase, IChat } from "@med-simulate/types";
 import ExaminationSuite from "@/components/case/simulation/examination";
 import UrgentManagement from "@/components/case/simulation/urgentManangement";
 import { ActionTaken } from "@/components/case/simulation/urgentManangement/types";
@@ -9,7 +9,7 @@ import Decision, { DecisionItem } from "@/components/case/decision";
 
 export type FinishSimulation = (payload: {
   chat: IChat.Chat;
-  findings: Finding[];
+  findings: IExamination.Finding[];
   actions: ActionTaken[];
   decision: DecisionItem;
 }) => void;
@@ -20,7 +20,7 @@ const SimulationActions: React.FC<{
 }> = ({ medicalCase, finishSimulation }) => {
   const [chatMessages, setChatMessages] = useState<IChat.Chat>([]);
   const [examinationFindings, setExaminationationFindings] = useState<
-    Finding[]
+    ICase.ExaminationFinding[]
   >([]);
   const [actionsTaken, setActionsTaken] = useState<ActionTaken[]>([]);
 
@@ -28,7 +28,7 @@ const SimulationActions: React.FC<{
     setActionsTaken((prev) => [...prev, action]);
   }, []);
 
-  const AddFinding = useCallback((finding: Finding) => {
+  const AddFinding = useCallback((finding: ICase.ExaminationFinding) => {
     setExaminationationFindings((prev) => [...prev, finding]);
   }, []);
 
@@ -61,10 +61,7 @@ const SimulationActions: React.FC<{
         messages={chatMessages}
         patientName={medicalCase.name}
       />
-      <ExaminationSuite
-        complaint={medicalCase.complaint}
-        onFinding={AddFinding}
-      />
+      <ExaminationSuite medicalCase={medicalCase} onFinding={AddFinding} />
       <UrgentManagement takenActions={actionsTaken} onActionTaken={AddAction} />
       <Decision onDecision={onDecision} patientName={medicalCase.name} />
     </div>

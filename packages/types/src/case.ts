@@ -15,6 +15,7 @@ export type Case = {
   briefHistory: string;
   objective: string;
   actor: string;
+  diagnosis: string;
 
   createdAt: Date;
   updatedAt: Date;
@@ -60,12 +61,13 @@ export type BodySystemLabel =
 export type BodySystem = {
   id: string;
   label: BodySystemLabel;
+  icon: string;
 
   caseId: string;
   examinationTechniques: ExaminationTechnique[];
 };
 
-// remember if changed to change prisma schema
+// remember if you changed this to change in prisma schema and vice versa
 export type ExaminationTechniqueLabel =
   | "Inspect"
   | "Palpate"
@@ -75,6 +77,7 @@ export type ExaminationTechniqueLabel =
 export type ExaminationTechnique = {
   id: string;
   label: ExaminationTechniqueLabel;
+  icon: string;
   bodySystemId: string;
   examinationAreas: ExaminationArea[];
 };

@@ -29,9 +29,10 @@ model Case {
   gender       Int
   weight       Float
   height       Float
-  briefHistory String @default("")
-  objective    String @default("")
-  actor        String @default("")
+  briefHistory String
+  objective    String
+  actor        String
+  diagnosis    String
 
   bodySystems BodySystem[]
 
@@ -42,6 +43,7 @@ model Case {
 model BodySystem {
   id    String          @id @unique
   label BodySystemLabel
+  icon  String
 
   caseId                String
   case                  Case                   @relation(fields: [caseId], references: [id])
@@ -51,6 +53,7 @@ model BodySystem {
 model ExaminationTechnique {
   id    String                    @id @unique
   label ExaminationTechniqueLabel
+  icon  String
 
   bodySystemId     String
   bodySystem       BodySystem        @relation(fields: [bodySystemId], references: [id])
