@@ -1,35 +1,37 @@
 import React, { useMemo } from "react";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Activity, X } from "lucide-react";
+import { Activity, ClipboardList, Search } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import InvestigationsToTake from "@/components/case/simulation/investigations/InvestigaionToTake";
-import { ICase } from "@med-simulate/types";
 import InvestigationsTaken from "./InvestigationsTaken";
 import { TakenInvestigation } from "./types";
+import { ICase } from "@med-simulate/types";
+import { Badge } from "@/components/ui/badge";
 
-interface UrgentManagementProps {
+interface InvestigationSuiteProps {
   onTakeInvestigation?: (inv: TakenInvestigation) => void;
   takenInvestigations: TakenInvestigation[];
   investigations: ICase.Investigation[];
 }
 
-const InvestigationsSuite: React.FC<UrgentManagementProps> = ({
+const InvestigationsSuite: React.FC<InvestigationSuiteProps> = ({
   onTakeInvestigation,
   takenInvestigations,
   investigations,
 }) => {
-  const InvestigationsSuiteTabs = useMemo(
+  const tabs = useMemo(
     () => [
       {
-        id: "investigations-to-take",
-        label: "Investigations To Take",
+        id: "order",
+        label: "Order Investigations",
+        icon: <Search className="mr-2 h-4 w-4" />,
         component: (
           <InvestigationsToTake
             investigations={investigations}
@@ -38,58 +40,75 @@ const InvestigationsSuite: React.FC<UrgentManagementProps> = ({
         ),
       },
       {
-        id: "investigations-taken",
-        label: `investigations Taken (${takenInvestigations.length})`,
+        id: "results",
+        label: "Results & History",
+        icon: <ClipboardList className="mr-2 h-4 w-4" />,
+        count: takenInvestigations.length,
         component: (
           <InvestigationsTaken takenInvestigations={takenInvestigations} />
         ),
       },
     ],
-    [onTakeInvestigation, takenInvestigations.length],
+    [onTakeInvestigation, takenInvestigations, investigations],
   );
 
   return (
     <Dialog>
       <DialogTrigger
         className={cn(
-          "items-center justify-center gap-2 rounded-2xl border p-4 shadow-sm transition-all",
-          "p-8 flex flex-col border-white/50 bg-white/90",
+          "group flex flex-col items-center justify-center gap-3 rounded-xl border border-border bg-card p-6 shadow-sm transition-all hover:border-primary/50 hover:shadow-md",
+          "h-32 w-full sm:w-40",
         )}
       >
-        <Activity className="h-6 w-6 opacity-80" />
-        <p className="line-clamp-2 text-center text-[11px] font-bold uppercase tracking-wider opacity-80">
-          Manage Patient
-        </p>
+        <div className="rounded-full bg-blue-50 p-3 text-blue-600 group-hover:bg-blue-100 transition-colors">
+          <Activity className="h-6 w-6" />
+        </div>
+        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground group-hover:text-primary">
+          Investigations
+        </span>
       </DialogTrigger>
-      <DialogContent className="h-3/4 flex flex-col" showCloseButton={false}>
-        <DialogHeader className="flex flex-row items-center justify-between p-6 pb-0">
-          <p className="text-2xl font-bold text-gray-900">
-            Get Investigations for The Patient
-          </p>
-          <DialogClose className="p-2">
-            <X size={24} color="#000" />
-          </DialogClose>
+
+      <DialogContent className="max-w-5xl h-[85vh] flex flex-col gap-0 p-0 overflow-hidden sm:rounded-2xl bg-slate-50">
+        <DialogHeader className="px-6 py-4 border-b bg-muted/30">
+          <DialogTitle className="flex items-center gap-2 text-xl">
+            <Activity className="h-5 w-5 text-blue-600" />
+            Patient Investigations
+          </DialogTitle>
         </DialogHeader>
-        {/* <Tabs changeTab={changeTab} activeTab={activeTab} tabs={InvestigationsSuiteTabs} /> */}
         <Tabs
-          className="p-6 pt-0 grow overflow-auto"
-          defaultValue={"investigations-to-take"}
+          defaultValue="order"
+          className="flex-1 flex flex-col overflow-hidden"
         >
-          <TabsList>
-            {InvestigationsSuiteTabs.map((tab) => (
-              <TabsTrigger className="p-6 border-2" value={tab.id}>
-                {tab.label}
-              </TabsTrigger>
+          <div className="px-6 pt-4">
+            <TabsList className="grid w-full grid-cols-2 max-w-[400px]">
+              {tabs.map((tab) => (
+                <TabsTrigger key={tab.id} value={tab.id} className="gap-2">
+                  {tab.icon}
+                  {tab.label}
+                  {tab.count !== undefined && tab.count > 0 && (
+                    <Badge
+                      variant="secondary"
+                      className="ml-1 h-5 px-1.5 text-[10px]"
+                    >
+                      {tab.count}
+                    </Badge>
+                  )}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
+
+          <div className="flex-1 overflow-hidden bg-white p-6">
+            {tabs.map((tab) => (
+              <TabsContent
+                key={tab.id}
+                value={tab.id}
+                className="h-full mt-0 data-[state=active]:flex flex-col"
+              >
+                {tab.component}
+              </TabsContent>
             ))}
-          </TabsList>
-          {InvestigationsSuiteTabs.map((tab) => (
-            <TabsContent
-              className="mt-2 h-full max-h-full overflow-auto"
-              value={tab.id}
-            >
-              {tab.component}
-            </TabsContent>
-          ))}
+          </div>
         </Tabs>
       </DialogContent>
     </Dialog>

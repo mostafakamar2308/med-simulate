@@ -114,8 +114,8 @@ export type InvestigationResult = {
   reference: string | null;
   value: string | null;
   imageUrl: string | null;
-  tableData: InvestigationTableData | null;
   description: string;
+  tableData: InvestigationTableData[] | null;
 };
 
 export type InvestigationTableData = {

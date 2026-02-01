@@ -41,14 +41,16 @@ const HistorySimulation: React.FC<{
     <Dialog>
       <DialogTrigger
         className={cn(
-          "items-center flex flex-col justify-center gap-2 rounded-2xl border p-4 shadow-sm transition-all",
-          "border-white/50 p-8 bg-white/90",
+          "group flex flex-col items-center justify-center gap-3 rounded-xl border border-border bg-white p-6 shadow-sm transition-all hover:shadow-md",
+          "h-32 w-full sm:w-40 hover:border-violet-200", // Specific hover border
         )}
       >
-        <ClipboardList className="h-6 w-6 opacity-80" />
-        <p className="line-clamp-2 text-center text-[11px] font-bold uppercase tracking-wider opacity-80">
+        <div className="rounded-full bg-violet-50 p-3 text-violet-600 transition-colors group-hover:bg-violet-100">
+          <ClipboardList className="h-6 w-6" />
+        </div>
+        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground transition-colors group-hover:text-violet-700">
           History
-        </p>
+        </span>
       </DialogTrigger>
       <DialogContent
         className="h-[calc(100vh-90px)]! md:min-h-5/6 md:max-h-5/6 flex flex-col"

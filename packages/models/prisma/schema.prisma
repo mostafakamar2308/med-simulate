@@ -96,26 +96,25 @@ model Investigation {
 }
 
 model InvestigationResult {
-  id            String         @id @unique
+  id            String         @id @default(cuid())
   investigation Investigation?
   reference     String?
   value         String?
   imageUrl      String?
   description   String
 
-  tableData   InvestigationTableData? @relation(fields: [tableDataId], references: [id])
-  tableDataId String                  @unique
+  tableData InvestigationTableData[]
 }
 
 model InvestigationTableData {
-  id        String @id @unique
+  id        String @id @default(cuid())
   name      String
-  value     Int
+  value     Float
   unit      String
   reference String
 
-  investigationResults  InvestigationResult?
-  investigationResultId String               @unique
+  investigationResult   InvestigationResult @relation(fields: [investigationResultId], references: [id])
+  investigationResultId String
 }
 
 enum BodySystemLabel {

@@ -1,5 +1,6 @@
 import { getUser } from "@/lib/auth";
-import { unauthenticated } from "@/lib/error";
+import { getFullPhysicalExam } from "@/lib/case";
+import { notFound, unauthenticated } from "@/lib/error";
 import { cases } from "@med-simulate/models";
 import { ICase } from "@med-simulate/types";
 import { NextFunction, Request, Response } from "express";
@@ -32,12 +33,24 @@ const findCaseByIdQuery = z.object({
   id: z.string(),
 });
 
-export async function findCaseById(req: Request, res: Response) {
+export async function findCaseById(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   // const user = await getUser(req);
   // if (!user) return next(unauthenticated());
 
   const { id } = findCaseByIdQuery.parse(req.params);
-  const result = await cases.findCaseById(id);
+  const medicalCase = await cases.findCaseById(id);
+  if (!medicalCase) return next(notFound());
+
+  const fullPhysicalExam = getFullPhysicalExam(medicalCase);
+
+  const result: ICase.FullCase = {
+    ...medicalCase,
+    bodySystems: fullPhysicalExam,
+  };
 
   res.status(200).json(result);
 }

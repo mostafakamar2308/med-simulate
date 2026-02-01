@@ -1,105 +1,187 @@
+import React, { useState } from "react";
+import {
+  AlertCircle,
+  DoorOpen,
+  X,
+  Plus,
+  Stethoscope,
+  ListRestart,
+  SendHorizontal,
+  Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { AlertCircle, Building2, DoorOpen, Home, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-
-export type DecisionItem = "admit" | "discharge";
 
 type DecisionProps = {
   patientName: string;
-  onDecision: (decision: DecisionItem) => void;
+  onSubmitDecision: (data: {
+    primary: string;
+    differentials: string[];
+  }) => void;
 };
 
-type Decision = {
-  id: DecisionItem;
-  label: string;
-  description: string;
-  icon: React.ReactNode;
-};
+const Decision: React.FC<DecisionProps> = ({
+  patientName,
+  onSubmitDecision,
+}) => {
+  const [primary, setPrimary] = useState("");
+  const [differentials, setDifferentials] = useState<string[]>([""]);
 
-const decisions: Decision[] = [
-  {
-    id: "discharge",
-    label: "Discharge",
-    description: "Send Patient Home",
-    icon: <Home width={24} height={24} color={"#16a34a"} />,
-  },
-  {
-    id: "admit",
-    label: "Admit",
-    description: "Admit to Hospital",
-    icon: <Building2 width={24} height={24} color={"#2563eb"} />,
-  },
-];
+  const addDifferential = () => setDifferentials([...differentials, ""]);
 
-const Decision: React.FC<DecisionProps> = ({ patientName, onDecision }) => {
+  const updateDifferential = (index: number, value: string) => {
+    const updated = [...differentials];
+    updated[index] = value;
+    setDifferentials(updated);
+  };
+
+  const removeDifferential = (index: number) => {
+    if (differentials.length > 1) {
+      setDifferentials(differentials.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleSubmit = () => {
+    // Filter out empty strings before submitting
+    const finalDiffs = differentials.filter((d) => d.trim() !== "");
+    onSubmitDecision({ primary, differentials: finalDiffs });
+  };
+
   return (
     <Dialog>
       <DialogTrigger
         className={cn(
-          "items-center justify-center gap-2 rounded-2xl border p-4 shadow-sm transition-all",
-          "p-8 flex flex-col border-white/50 bg-white/90",
+          "group flex flex-col items-center justify-center gap-3 rounded-xl border border-border bg-white p-6 shadow-sm transition-all hover:shadow-md",
+          "h-32 w-full sm:w-40 hover:border-green-200",
         )}
       >
-        <DoorOpen className="h-6 w-6 opacity-80" />
-        <p className="line-clamp-2 text-center text-[11px] font-bold uppercase tracking-wider opacity-80">
+        <div className="rounded-full bg-green-50 p-3 text-green-600 transition-colors group-hover:bg-green-100">
+          <DoorOpen className="h-6 w-6" />
+        </div>
+        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground transition-colors group-hover:text-green-700">
           Decide
-        </p>
+        </span>
       </DialogTrigger>
-      <DialogContent showCloseButton={false}>
-        <DialogHeader className="justify-between w-full flex  flex-row bg-slate-800 p-6">
-          <div className="flex flex-col gap-2">
-            <div className="flex-row flex items-center gap-2">
-              <AlertCircle color={"#fbbf24"} width={24} height={24} />
-              <p className="font-display text-xl font-bold text-white">
-                Final Decision
+
+      <DialogContent
+        className="max-w-2xl p-0 overflow-hidden sm:rounded-2xl"
+        showCloseButton={false}
+      >
+        {/* Header with high stakes styling */}
+        <DialogHeader className="bg-slate-900 p-6 text-white">
+          <div className="flex justify-between items-start">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <AlertCircle className="text-amber-400 h-5 w-5" />
+                <DialogTitle className="text-xl font-bold">
+                  Clinical Impression
+                </DialogTitle>
+              </div>
+              <p className="text-slate-400 text-sm">
+                Commit to a diagnosis for{" "}
+                <span className="text-white font-medium">{patientName}</span>
               </p>
             </div>
-            <p className="text-sm text-white/70">
-              Based on your assessment, what is your disposition for{" "}
-              <span className="font-bold text-white">{patientName}</span>?
-            </p>
+            <DialogClose className="rounded-full hover:bg-white/10 p-1">
+              <X className="h-5 w-5" />
+            </DialogClose>
           </div>
-          <DialogClose>
-            <X className="text-white" />
-          </DialogClose>
         </DialogHeader>
-        {decisions.map((item) => (
-          <Button
-            className="mb-2 h-full mx-4 cursor-pointer flex-1 flex items-center justify-center p-4"
-            variant={"outline"}
-            key={item.id}
-            onClick={() => onDecision(item.id)}
-          >
-            <div className="flex-1 flex-row flex items-center justify-center gap-3">
-              <div
-                className={cn(
-                  "h-12 w-12 items-center justify-center flex rounded-3xl",
-                  item.id === "admit" ? "bg-blue-100" : "bg-green-100",
-                )}
+
+        <div className="p-6 space-y-6">
+          {/* 1. Primary Diagnosis */}
+          <div className="space-y-3">
+            <Label className="text-sm font-bold uppercase tracking-widest text-slate-500 flex items-center gap-2">
+              <Stethoscope size={14} className="text-green-500" />
+              Primary Diagnosis
+            </Label>
+            <Input
+              placeholder="What is the most likely diagnosis?"
+              className="h-12 text-lg border-green-100 focus-visible:ring-green-500"
+              value={primary}
+              onChange={(e) => setPrimary(e.target.value)}
+            />
+          </div>
+
+          <Separator className="opacity-50" />
+
+          {/* 2. Differentials Section */}
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <Label className="text-sm font-bold uppercase tracking-widest text-slate-500 flex items-center gap-2">
+                <ListRestart size={14} className="text-blue-500" />
+                Differential Diagnoses
+              </Label>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={addDifferential}
+                className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 text-xs h-7"
               >
-                {item.icon}
-              </div>
-              <div className="gap-1">
-                <p className="text-lg font-bold text-foreground">
-                  {item.label}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  {item.description}
-                </p>
-              </div>
+                <Plus size={14} className="mr-1" /> Add Item
+              </Button>
             </div>
+
+            <ScrollArea className="max-h-[200px] pr-4">
+              <div className="space-y-3">
+                {differentials.map((diff, index) => (
+                  <div key={index} className="flex gap-2 group">
+                    <div className="flex-1 relative">
+                      <span className="absolute left-3 top-2.5 text-xs font-mono text-slate-400">
+                        {index + 1}.
+                      </span>
+                      <Input
+                        className="pl-8 bg-slate-50/50"
+                        placeholder="Alternative possibility..."
+                        value={diff}
+                        onChange={(e) =>
+                          updateDifferential(index, e.target.value)
+                        }
+                      />
+                    </div>
+                    {differentials.length > 1 && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-slate-400 hover:text-green-500"
+                        onClick={() => removeDifferential(index)}
+                      >
+                        <Trash2 size={16} />
+                      </Button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </ScrollArea>
+          </div>
+        </div>
+
+        {/* Footer / Submission */}
+        <div className="bg-slate-50 p-4 border-t flex items-center justify-between">
+          <p className="text-[10px] text-slate-400 uppercase font-semibold max-w-[200px]">
+            Submission is final and will conclude the clinical simulation.
+          </p>
+          <Button
+            onClick={handleSubmit}
+            disabled={!primary.trim()}
+            className="bg-green-600 hover:bg-green-700 px-8 shadow-lg shadow-green-200"
+          >
+            Submit Decision
+            <SendHorizontal size={16} className="ml-2" />
           </Button>
-        ))}{" "}
-        <p className="py-2 text-center text-xs text-muted-foreground">
-          This decision will affect your final score
-        </p>
+        </div>
       </DialogContent>
     </Dialog>
   );

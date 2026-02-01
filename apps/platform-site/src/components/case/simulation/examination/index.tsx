@@ -26,14 +26,16 @@ const ExaminationSuite: React.FC<{
     <Dialog>
       <DialogTrigger
         className={cn(
-          "items-center flex flex-col justify-center gap-2 rounded-2xl border p-4 shadow-sm transition-all",
-          "p-8 border-white/50 bg-white/90",
+          "group flex flex-col items-center justify-center gap-3 rounded-xl border border-border bg-white p-6 shadow-sm transition-all hover:shadow-md",
+          "h-32 w-full sm:w-40 hover:border-emerald-200",
         )}
       >
-        <Stethoscope className="h-6 w-6 opacity-80" />
-        <p className="line-clamp-2 text-center text-[11px] font-bold uppercase tracking-wider opacity-80">
+        <div className="rounded-full bg-emerald-50 p-3 text-emerald-600 transition-colors group-hover:bg-emerald-100">
+          <Stethoscope className="h-6 w-6" />
+        </div>
+        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground transition-colors group-hover:text-emerald-700">
           Exam
-        </p>
+        </span>
       </DialogTrigger>
       <DialogContent className="flex h-[90vh] w-screen flex-col gap-0 overflow-hidden bg-background p-0">
         <ExaminationSuiteHeader

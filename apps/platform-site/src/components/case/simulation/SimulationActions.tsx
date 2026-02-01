@@ -3,15 +3,14 @@ import { cn } from "@/lib/utils";
 import HistorySimulation from "@/components/case/simulation/history";
 import { IExamination, ICase, IChat } from "@med-simulate/types";
 import ExaminationSuite from "@/components/case/simulation/examination";
-import Decision, { DecisionItem } from "@/components/case/decision";
 import InvestigationsSuite from "./investigations";
 import { TakenInvestigation } from "./investigations/types";
+import Decision from "@/components/case/decision";
 
 export type FinishSimulation = (payload: {
   chat: IChat.Chat;
   findings: IExamination.Finding[];
   investigations: TakenInvestigation[];
-  decision: DecisionItem;
 }) => void;
 
 const SimulationActions: React.FC<{
@@ -38,17 +37,13 @@ const SimulationActions: React.FC<{
     setChatMessages((prev) => [...prev, message]);
   }, []);
 
-  const onDecision = useCallback(
-    (decision: DecisionItem) => {
-      finishSimulation({
-        decision,
-        chat: chatMessages,
-        investigations: investigationsTaken,
-        findings: examinationFindings,
-      });
-    },
-    [finishSimulation],
-  );
+  const onDecision = useCallback(() => {
+    finishSimulation({
+      chat: chatMessages,
+      investigations: investigationsTaken,
+      findings: examinationFindings,
+    });
+  }, [finishSimulation]);
 
   return (
     <div
@@ -69,7 +64,7 @@ const SimulationActions: React.FC<{
         onTakeInvestigation={addInvestigation}
         investigations={medicalCase.investigations}
       />
-      <Decision onDecision={onDecision} patientName={medicalCase.name} />
+      <Decision onSubmitDecision={onDecision} patientName={medicalCase.name} />
     </div>
   );
 };
