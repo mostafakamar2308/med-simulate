@@ -41,7 +41,7 @@ const ExaminationActionSelector: React.FC<ExaminationSelectorProps> = ({
             </button>
           ))}
         </div>
-        <div className="mt-2 flex items-center justify-center  h-full">
+        <div className="mt-2 w-full flex items-center justify-center  h-full">
           {selectedTechniqueAreaFindings ? (
             <FindingViewer findings={selectedTechniqueAreaFindings} />
           ) : null}

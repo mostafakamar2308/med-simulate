@@ -45,6 +45,13 @@ class Cases {
             },
           },
         },
+        investigations: {
+          include: {
+            investigationResult: {
+              include: { tableData: {} },
+            },
+          },
+        },
       },
     });
 

@@ -34,7 +34,8 @@ model Case {
   actor        String
   diagnosis    String
 
-  bodySystems BodySystem[]
+  bodySystems    BodySystem[]
+  investigations Investigation[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -74,11 +75,47 @@ model ExaminationFinding {
   id String @id @unique
 
   type        ExaminationFindingType
+  url         String?
   normal      Boolean?
   description String
 
   examinationAreaId String
   examinationArea   ExaminationArea @relation(references: [id], fields: [examinationAreaId])
+}
+
+model Investigation {
+  id       String  @id @unique
+  label    String
+  guidance String?
+
+  caseId String
+  case   Case   @relation(fields: [caseId], references: [id])
+
+  investigationResultId String              @unique
+  investigationResult   InvestigationResult @relation(fields: [investigationResultId], references: [id])
+}
+
+model InvestigationResult {
+  id            String         @id @unique
+  investigation Investigation?
+  reference     String?
+  value         String?
+  imageUrl      String?
+  description   String
+
+  tableData   InvestigationTableData? @relation(fields: [tableDataId], references: [id])
+  tableDataId String                  @unique
+}
+
+model InvestigationTableData {
+  id        String @id @unique
+  name      String
+  value     Int
+  unit      String
+  reference String
+
+  investigationResults  InvestigationResult?
+  investigationResultId String               @unique
 }
 
 enum BodySystemLabel {

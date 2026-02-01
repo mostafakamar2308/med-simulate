@@ -3,14 +3,14 @@ import { cn } from "@/lib/utils";
 import HistorySimulation from "@/components/case/simulation/history";
 import { IExamination, ICase, IChat } from "@med-simulate/types";
 import ExaminationSuite from "@/components/case/simulation/examination";
-import UrgentManagement from "@/components/case/simulation/urgentManangement";
-import { ActionTaken } from "@/components/case/simulation/urgentManangement/types";
 import Decision, { DecisionItem } from "@/components/case/decision";
+import InvestigationsSuite from "./investigations";
+import { TakenInvestigation } from "./investigations/types";
 
 export type FinishSimulation = (payload: {
   chat: IChat.Chat;
   findings: IExamination.Finding[];
-  actions: ActionTaken[];
+  investigations: TakenInvestigation[];
   decision: DecisionItem;
 }) => void;
 
@@ -22,10 +22,12 @@ const SimulationActions: React.FC<{
   const [examinationFindings, setExaminationationFindings] = useState<
     ICase.ExaminationFinding[]
   >([]);
-  const [actionsTaken, setActionsTaken] = useState<ActionTaken[]>([]);
+  const [investigationsTaken, setInvestigationsTaken] = useState<
+    TakenInvestigation[]
+  >([]);
 
-  const AddAction = useCallback((action: ActionTaken) => {
-    setActionsTaken((prev) => [...prev, action]);
+  const addInvestigation = useCallback((action: TakenInvestigation) => {
+    setInvestigationsTaken((prev) => [...prev, action]);
   }, []);
 
   const AddFinding = useCallback((finding: ICase.ExaminationFinding) => {
@@ -41,7 +43,7 @@ const SimulationActions: React.FC<{
       finishSimulation({
         decision,
         chat: chatMessages,
-        actions: actionsTaken,
+        investigations: investigationsTaken,
         findings: examinationFindings,
       });
     },
@@ -62,7 +64,11 @@ const SimulationActions: React.FC<{
         patientName={medicalCase.name}
       />
       <ExaminationSuite medicalCase={medicalCase} onFinding={AddFinding} />
-      <UrgentManagement takenActions={actionsTaken} onActionTaken={AddAction} />
+      <InvestigationsSuite
+        takenInvestigations={investigationsTaken}
+        onTakeInvestigation={addInvestigation}
+        investigations={medicalCase.investigations}
+      />
       <Decision onDecision={onDecision} patientName={medicalCase.name} />
     </div>
   );

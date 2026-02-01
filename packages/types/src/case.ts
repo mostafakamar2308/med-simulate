@@ -23,6 +23,7 @@ export type Case = {
 
 export type FullCase = Case & {
   bodySystems: BodySystem[];
+  investigations: Investigation[];
 };
 
 export enum Difficulty {
@@ -88,7 +89,6 @@ export type ExaminationArea = {
   examinationTechniqueId: string;
   examinationFindings: ExaminationFinding[];
 };
-// remember if changed to change prisma schema
 export type ExaminationFidningType = "img" | "audio" | "video" | "text";
 
 export type ExaminationFinding = {
@@ -96,7 +96,34 @@ export type ExaminationFinding = {
   type: ExaminationFidningType;
   normal?: boolean;
   description: string;
+  url?: string;
   examinationAreaId: string;
+};
+
+export type Investigation = {
+  id: string;
+  label: string;
+  guidance: string | null;
+  caseId: string;
+  investigationResultId: string;
+  investigationResult: InvestigationResult;
+};
+
+export type InvestigationResult = {
+  id: string;
+  reference: string | null;
+  value: string | null;
+  imageUrl: string | null;
+  tableData: InvestigationTableData | null;
+  description: string;
+};
+
+export type InvestigationTableData = {
+  id: string;
+  name: string;
+  value: number;
+  unit: string;
+  reference: string;
 };
 
 export type FindCasesApiQuery = IFilter.Pagination & {
