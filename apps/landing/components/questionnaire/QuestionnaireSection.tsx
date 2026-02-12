@@ -13,8 +13,11 @@ import ProgressBar from '@/components/questionnaire/ProgressBar';
 import ResultsDisplay from '@/components/questionnaire/ResultsDisplay';
 import BetaSignupForm from '@/components/questionnaire/BetaSignupForm';
 import ThankYouMessage from '@/components/questionnaire/ThankYouMessage';
+import { useFormatMessage } from '@/hooks/intl';
 
 const QuestionnaireSection = () => {
+  const intl = useFormatMessage();
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [responses, setResponses] = useState<QuestionnaireResponse[]>([]);
   const [showResults, setShowResults] = useState(false);
@@ -32,7 +35,7 @@ const QuestionnaireSection = () => {
   const canProceed = currentResponse !== undefined;
   const answeredCount = responses.length;
 
-  const handleSelectOption = (score: number) => {
+  const handleSelectOption = (idx: number) => {
     setResponses((prev) => {
       const existing = prev.findIndex(
         (r) => r.questionId === currentQuestion.id,
@@ -41,14 +44,11 @@ const QuestionnaireSection = () => {
         const updated = [...prev];
         updated[existing] = {
           questionId: currentQuestion.id,
-          selectedScore: score,
+          selectedIdx: idx,
         };
         return updated;
       }
-      return [
-        ...prev,
-        { questionId: currentQuestion.id, selectedScore: score },
-      ];
+      return [...prev, { questionId: currentQuestion.id, selectedIdx: idx }];
     });
   };
 
@@ -65,7 +65,7 @@ const QuestionnaireSection = () => {
   };
 
   const calculateResult = (): QuestionnaireResult => {
-    const totalScore = responses.reduce((sum, r) => sum + r.selectedScore, 0);
+    const totalScore = responses.reduce((sum, r) => sum + r.selectedIdx, 0);
 
     let category: 'high' | 'medium' | 'low';
     let feedback: string;
@@ -73,22 +73,16 @@ const QuestionnaireSection = () => {
 
     if (totalScore >= 14) {
       category = 'high';
-      feedback =
-        'نتيجتك تشير إلى أنك في الفئة التي ستستفيد بشكل كبير من Med Simulate! التفكير السريري يحتاج تطوير منهجي، ونحن هنا لمساعدتك.';
-      action =
-        'ستحصل على أولوية في القبول للنسخة التجريبية المغلقة. ابدأ التدريب وطوّر ثقتك قبل أول نبطشية.';
+      feedback = intl('quiz/result/high/feedback');
+      action = intl('quiz/result/high/action');
     } else if (totalScore >= 10) {
       category = 'medium';
-      feedback =
-        'لديك أساس جيد، لكن هناك مجال للتحسين في بعض جوانب التفكير السريري. Med Simulate سيساعدك على سد هذه الفجوات.';
-      action =
-        'سنخبرك عند فتح المقاعد في الموجة التالية. استعد لتطوير مهاراتك بشكل منهجي.';
+      feedback = intl('quiz/result/medium/feedback');
+      action = intl('quiz/result/medium/action');
     } else {
       category = 'low';
-      feedback =
-        'رائع! لديك أساس قوي في التفكير السريري. Med Simulate يمكن أن يساعدك على صقل مهاراتك وزيادة ثقتك أكثر.';
-      action =
-        'يمكنك الاستفادة من المنصة لتعزيز مهاراتك الحالية والوصول لمستوى متقدم.';
+      feedback = intl('quiz/result/low/feedback');
+      action = intl('quiz/result/low/action');
     }
 
     return { totalScore, category, feedback, action };
@@ -116,7 +110,6 @@ const QuestionnaireSection = () => {
     setShowThankYou(true);
   };
 
-  // Thank you screen
   if (showThankYou) {
     return (
       <section
@@ -131,7 +124,6 @@ const QuestionnaireSection = () => {
     );
   }
 
-  // Beta signup form
   if (showBetaForm && result) {
     return (
       <section
@@ -150,7 +142,6 @@ const QuestionnaireSection = () => {
     );
   }
 
-  // Newsletter signup (reuse beta form with different messaging)
   if (showNewsletter && result) {
     return (
       <section
@@ -169,7 +160,6 @@ const QuestionnaireSection = () => {
     );
   }
 
-  // Results display
   if (showResults && result) {
     return (
       <section
@@ -188,40 +178,34 @@ const QuestionnaireSection = () => {
     );
   }
 
-  // Questionnaire
   return (
     <section className="py-24 relative overflow-hidden" dir="rtl">
       <div className="absolute inset-0 bg-gradient-medical" />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto space-y-8">
-          {/* Header */}
           <div className="text-center space-y-4">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-              اختبار الجاهزية السريرية
+              {intl('quiz/header/title')}
             </h2>
             <p className="text-lg text-muted-foreground">
-              ٦ أسئلة فقط لتقييم مستوى استعدادك • ٥-٧ دقائق
+              {intl('quiz/header/subtitle')}
             </p>
           </div>
 
-          {/* Progress Bar */}
           <ProgressBar
-            currentQuestion={currentQuestionIndex + 1}
             totalQuestions={questions.length}
             answeredQuestions={answeredCount}
           />
 
-          {/* Question Card */}
           <QuestionCard
             question={currentQuestion}
-            selectedScore={currentResponse?.selectedScore ?? null}
+            selectedIdx={currentResponse?.selectedIdx ?? null}
             onSelect={handleSelectOption}
             questionNumber={currentQuestionIndex + 1}
             totalQuestions={questions.length}
           />
 
-          {/* Navigation Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-between">
             <Button
               variant="outline"
@@ -231,7 +215,7 @@ const QuestionnaireSection = () => {
               className="text-lg"
             >
               <ChevronRight className="w-5 h-5" />
-              <span>السابق</span>
+              <span>{intl('quiz/navigation/previous')}</span>
             </Button>
 
             {isLastQuestion ? (
@@ -242,7 +226,7 @@ const QuestionnaireSection = () => {
                 disabled={!canProceed || answeredCount !== questions.length}
                 className="text-lg px-8 group"
               >
-                <span>احصل على النتيجة</span>
+                <span>{intl('quiz/navigation/submit')}</span>
                 <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             ) : (
@@ -253,16 +237,15 @@ const QuestionnaireSection = () => {
                 disabled={!canProceed}
                 className="text-lg"
               >
-                <span>التالي</span>
+                <span>{intl('quiz/navigation/next')}</span>
                 <ChevronLeft className="w-5 h-5" />
               </Button>
             )}
           </div>
 
-          {/* Helper Text */}
           {!canProceed && (
             <p className="text-center text-sm text-muted-foreground">
-              اختر إجابة للمتابعة
+              {intl('quiz/validation/selectAnswer')}
             </p>
           )}
         </div>

@@ -2,13 +2,11 @@ import { Progress } from '@/components/ui/progress';
 import { CheckCircle2 } from 'lucide-react';
 
 interface ProgressBarProps {
-  currentQuestion: number;
   totalQuestions: number;
   answeredQuestions: number;
 }
 
 const ProgressBar = ({
-  currentQuestion,
   totalQuestions,
   answeredQuestions,
 }: ProgressBarProps) => {

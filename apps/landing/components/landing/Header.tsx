@@ -7,7 +7,7 @@ const Header: React.FC = () => {
   const intl = useFormatMessage();
 
   return (
-    <header className="p-4 flex items-center w-full justify-between">
+    <header className="p-4 flex items-center w-full justify-center lg:justify-between">
       <Link href="/" className="flex items-center gap-3">
         <div className="p-3 rounded-xl glass glow-medical">
           <Activity className="w-6 h-6 text-primary" />

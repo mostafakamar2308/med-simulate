@@ -1,11 +1,14 @@
 import { CheckCircle2, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useFormatMessage } from '@/hooks/intl';
 
 interface ThankYouMessageProps {
   isNewsletter?: boolean;
 }
 
 const ThankYouMessage = ({ isNewsletter = false }: ThankYouMessageProps) => {
+  const intl = useFormatMessage();
+
   return (
     <div
       className="max-w-2xl mx-auto text-center space-y-8 animate-fade-in"
@@ -18,12 +21,14 @@ const ThankYouMessage = ({ isNewsletter = false }: ThankYouMessageProps) => {
 
         <div className="space-y-4">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-            {isNewsletter ? 'شكراً لاهتمامك!' : 'تم التسجيل بنجاح! 🎉'}
+            {isNewsletter
+              ? intl('thank-you/header/newsletter')
+              : intl('thank-you/header/success')}
           </h2>
           <p className="text-xl text-muted-foreground leading-relaxed">
             {isNewsletter
-              ? 'سنبقيك على اطلاع بآخر التطورات والمميزات الجديدة'
-              : 'سنتواصل معك قريباً عبر الواتساب لترتيب الوصول للنسخة التجريبية'}
+              ? intl('thank-you/description/newsletter')
+              : intl('thank-you/description/success')}
           </p>
         </div>
 
@@ -31,7 +36,7 @@ const ThankYouMessage = ({ isNewsletter = false }: ThankYouMessageProps) => {
           <div className="flex items-center justify-center gap-2">
             <Sparkles className="w-5 h-5 text-primary" />
             <p className="text-lg font-semibold text-foreground">
-              ماذا يحدث الآن؟
+              {intl('thank-you/whatNow/title')}
             </p>
             <Sparkles className="w-5 h-5 text-primary" />
           </div>
@@ -44,8 +49,8 @@ const ThankYouMessage = ({ isNewsletter = false }: ThankYouMessageProps) => {
               <div className="flex-1">
                 <p className="text-sm text-foreground">
                   {isNewsletter
-                    ? 'تحقق من بريدك الإلكتروني للتأكيد'
-                    : 'سنراجع طلبك ونرتب الأولويات'}
+                    ? intl('thank-you/steps/newsletter/step1')
+                    : intl('thank-you/steps/success/step1')}
                 </p>
               </div>
             </div>
@@ -57,8 +62,8 @@ const ThankYouMessage = ({ isNewsletter = false }: ThankYouMessageProps) => {
               <div className="flex-1">
                 <p className="text-sm text-foreground">
                   {isNewsletter
-                    ? 'سنخبرك فوراً عند إطلاق مميزات جديدة'
-                    : 'سنرسل لك رابط الوصول + دليل البداية'}
+                    ? intl('thank-you/steps/newsletter/step2')
+                    : intl('thank-you/steps/success/step2')}
                 </p>
               </div>
             </div>
@@ -70,8 +75,8 @@ const ThankYouMessage = ({ isNewsletter = false }: ThankYouMessageProps) => {
               <div className="flex-1">
                 <p className="text-sm text-foreground">
                   {isNewsletter
-                    ? 'ابقَ متابعاً لآخر التحديثات'
-                    : 'ابدأ التدريب وطوّر مهاراتك السريرية'}
+                    ? intl('thank-you/steps/newsletter/step3')
+                    : intl('thank-you/steps/success/step3')}
                 </p>
               </div>
             </div>
@@ -85,15 +90,14 @@ const ThankYouMessage = ({ isNewsletter = false }: ThankYouMessageProps) => {
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="text-lg"
           >
-            العودة للأعلى
+            {intl('thank-you/backToTop')}
           </Button>
         </div>
       </div>
 
-      {/* Social Proof */}
       <div className="glass p-6 rounded-2xl">
         <p className="text-sm text-muted-foreground">
-          💙 انضممت لأكثر من 100 طبيب امتياز يستعدون لمستقبلهم المهني
+          {intl('thank-you/socialProof')}
         </p>
       </div>
     </div>

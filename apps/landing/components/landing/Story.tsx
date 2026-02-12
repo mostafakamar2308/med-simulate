@@ -73,7 +73,7 @@ const Header = () => {
         <Lightbulb className="w-4 h-4 text-destructive" />
       </div>
 
-      <h2 className="text-4xl md:text-5xl font-bold leading-tight">
+      <h2 className="text-2xl md:text-5xl font-bold leading-tight">
         <span className="text-foreground">
           {intl('home/story/header-title-1')}
         </span>
@@ -126,7 +126,7 @@ const SolutionStatement: React.FC<{ benefits: Benefit[] }> = ({ benefits }) => {
     <div className="glass p-8 md:p-12 rounded-3xl glow-medical border-2 border-primary/20">
       <div className="flex items-start gap-4 justify-end mb-6">
         <div className="flex-1 space-y-4">
-          <h3 className="text-2xl md:text-3xl font-bold text-primary leading-tight">
+          <h3 className="text-xl md:text-3xl font-bold text-primary leading-tight">
             {intl('home/story/solution-title')}
           </h3>
           <p className="text-xl text-foreground font-semibold">

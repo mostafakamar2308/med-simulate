@@ -156,5 +156,83 @@
   "register/benefits/practical/title": "🎯 تدريب عملي",
   "register/benefits/practical/description": "حالات واقعية تفاعلية",
   "register/benefits/support/title": "📱 دعم مباشر",
-  "register/benefits/support/description": "عبر الواتساب"
+  "register/benefits/support/description": "عبر الواتساب",
+
+  "register2/header/title-high": "أكمل التسجيل للنسخة التجريبية",
+  "register2/header/title-low": "سجّل اهتمامك",
+  "register2/header/description": "أدخل بياناتك وسنتواصل معك قريباً لترتيب وصولك",
+
+  "register2/form/name": "الاسم الكامل *",
+  "register2/form/name-placeholder": "أدخل اسمك الكامل",
+  "register2/form/university": "الجامعة *",
+  "register2/form/university-placeholder": "مثال: جامعة القاهرة",
+  "register2/form/whatsapp": "رقم الواتساب *",
+  "register2/form/whatsapp-placeholder": "+201234567890",
+  "register2/form/privacy": "بإتمام التسجيل، أنت توافق على استخدام بياناتك للتواصل معك بخصوص Med Simulate فقط",
+
+  "register2/errors/name-min": "الاسم يجب أن يكون حرفين على الأقل",
+  "register2/errors/university-min": "اسم الجامعة يجب أن يكون 3 أحرف على الأقل",
+  "register2/errors/university-max": "اسم الجامعة يجب أن يكون أقل من 150 حرف",
+  "register2/errors/whatsapp-invalid": "رقم واتساب غير صحيح (مثال: +201234567890)",
+  "register2/errors/title": "حدث خطأ",
+  "register2/errors/fallback": "الرجاء المحاولة مرة أخرى",
+
+  "register2/success/toast-title": "تم التسجيل بنجاح! 🎉",
+  "register2/success/toast-description": "سنتواصل معك قريباً عبر الواتساب",
+
+  "register2/form/submitting": "جارٍ التسجيل...",
+  "register2/form/submit": "أكمل التسجيل",
+
+  "register2/info/access-title": "📅 متى سأحصل على الوصول؟",
+  "register2/info/access-high": "خلال 3-5 أيام عمل (أولوية عالية)",
+  "register2/info/access-low": "خلال 1-2 أسبوع (الموجة التالية)",
+
+  "register2/info/next-title": "🎯 ماذا بعد؟",
+  "register2/info/next-description": "سنرسل لك رابط الوصول + دليل البداية السريعة عبر الواتساب",
+
+  "quiz/progress": "{current} من {total}",
+  "quiz/question-label": "السؤال {number}",
+
+  "quiz/header/title": "اختبار الجاهزية السريرية",
+  "quiz/header/subtitle": "٦ أسئلة فقط لتقييم مستوى استعدادك • ٥-٧ دقائق",
+  "quiz/navigation/previous": "السابق",
+  "quiz/navigation/next": "التالي",
+  "quiz/navigation/submit": "احصل على النتيجة",
+  "quiz/validation/selectAnswer": "اختر إجابة للمتابعة",
+  "quiz/result/high/feedback": "نتيجتك تشير إلى أنك في الفئة التي ستستفيد بشكل كبير من Med Simulate. التفكير السريري يحتاج تطوير منهجي، ونحن هنا لمساعدتك.",
+  "quiz/result/high/action": "ستحصل على أولوية في القبول للنسخة التجريبية المغلقة. ابدأ التدريب وطوّر ثقتك قبل أول نبطشية.",
+  "quiz/result/medium/feedback": "لديك أساس جيد، لكن هناك مجال للتحسين في بعض جوانب التفكير السريري. Med Simulate سيساعدك على سد هذه الفجوات.",
+  "quiz/result/medium/action": "سنخبرك عند فتح المقاعد في الموجة التالية. استعد لتطوير مهاراتك بشكل منهجي.",
+  "quiz/result/low/feedback": "رائع. لديك أساس قوي في التفكير السریري. Med Simulate يمكن أن يساعدك على صقل مهاراتك وزيادة ثقتك أكثر.",
+  "quiz/result/low/action": "يمكنك الاستفادة من المنصة لتعزيز مهاراتك الحالية والوصول لمستوى متقدم.",
+
+  "resultsDisplay/scoreCard/title": "نتيجتك: {totalScore} / 18",
+  "resultsDisplay/scoreCard/highTitle": "احتياج عالٍ للتدريب",
+  "resultsDisplay/scoreCard/mediumTitle": "احتياج متوسط للتدريب",
+  "resultsDisplay/scoreCard/lowTitle": "جاهزية جيدة",
+  "resultsDisplay/actionCard/high/medium/header": "أنت مؤهل للنسخة التجريبية المغلقة!",
+  "resultsDisplay/actionCard/high/medium/confirmButton": "نعم، أريد الانضمام",
+  "resultsDisplay/actionCard/high/medium/cancelButton": "لاحقاً، أخبروني بالتحديثات",
+  "resultsDisplay/actionCard/high/note": "🎯 ستحصل على الأولوية في القبول",
+  "resultsDisplay/actionCard/medium/note": "📧 سنخبرك عند فتح المقاعد التالية",
+  "resultsDisplay/actionCard/low/header": "رائع! لديك أساس جيد",
+  "resultsDisplay/actionCard/low/description": "يمكنك الاستفادة من Med Simulate لتعزيز مهاراتك أكثر. هل تريد البقاء على اطلاع؟",
+  "resultsDisplay/actionCard/low/button": "نعم، أبقني على اطلاع",
+  "resultsDisplay/insights/needPoints": "نقاط الاحتياج",
+  "resultsDisplay/insights/needPercentage": "نسبة الاحتياج",
+  "resultsDisplay/insights/category": "التصنيف",
+
+  "thank-you/header/success": "تم التسجيل بنجاح! 🎉",
+  "thank-you/header/newsletter": "شكراً لاهتمامك!",
+  "thank-you/description/success": "سنتواصل معك قريباً عبر الواتساب لترتيب الوصول للنسخة التجريبية",
+  "thank-you/description/newsletter": "سنبقيك على اطلاع بآخر التطورات والمميزات الجديدة",
+  "thank-you/whatNow/title": "ماذا يحدث الآن؟",
+  "thank-you/steps/success/step1": "سنراجع طلبك ونرتب الأولويات",
+  "thank-you/steps/success/step2": "سنرسل لك رابط الوصول + دليل البداية",
+  "thank-you/steps/success/step3": "ابدأ التدريب وطوّر مهاراتك السريرية",
+  "thank-you/steps/newsletter/step1": "تحقق من بريدك الإلكتروني للتأكيد",
+  "thank-you/steps/newsletter/step2": "سنخبرك فوراً عند إطلاق مميزات جديدة",
+  "thank-you/steps/newsletter/step3": "ابقَ متابعاً لآخر التحديثات",
+  "thank-you/backToTop": "العودة للأعلى",
+  "thank-you/socialProof": "💙 انضممت لأكثر من 100 طبيب امتياز يستعدون لمستقبلهم المهني"
 }

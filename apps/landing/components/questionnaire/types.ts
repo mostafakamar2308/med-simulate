@@ -11,7 +11,7 @@ export interface QuestionOption {
 
 export interface QuestionnaireResponse {
   questionId: number;
-  selectedScore: number;
+  selectedIdx: number;
 }
 
 export interface UserInfo {

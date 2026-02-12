@@ -109,7 +109,7 @@ const CTAButton = () => {
 
   return (
     <div className="pt-4">
-      <div className="flex gap-8 justify-center">
+      <div className="flex flex-wrap gap-8 justify-center">
         <Link href="/questionnaire">
           <Button
             variant="hero"
@@ -132,7 +132,7 @@ const CTAButton = () => {
         </Link>
       </div>
 
-      <div className="flex items-center justify-center gap-2 mt-6 text-muted-foreground">
+      <div className="hidden lg:flex items-center justify-center gap-2 mt-6 text-muted-foreground">
         <span className="text-sm">⏱️</span>
         <p className="text-sm">{intl('home/cta/time-info')}</p>
       </div>
