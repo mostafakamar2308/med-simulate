@@ -43,13 +43,12 @@ export default function SignIn() {
       // TODO: Handle other statuses
       console.error(JSON.stringify(signInAttempt, null, 2));
     } catch (err) {
-      // See https://go.clerk.com/mRUDrIe for more info on error handling
       if (err instanceof Error) {
         const isEmailMessage =
           err.message.toLowerCase().includes("identifier") ||
           err.message.toLowerCase().includes("email");
         setError(
-          isEmailMessage ? { email: err.message } : { password: err.message }
+          isEmailMessage ? { email: err.message } : { password: err.message },
         );
         return;
       }
