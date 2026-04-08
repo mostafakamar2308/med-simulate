@@ -11,7 +11,7 @@ import React, { useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
 
-const MedicalCase: React.FC<{ medicalCase: ICase.Self }> = ({
+const MedicalCase: React.FC<{ medicalCase: ICase.Case }> = ({
   medicalCase,
 }) => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const MedicalCase: React.FC<{ medicalCase: ICase.Self }> = ({
       navigate({
         pathname: `/case/${medicalCase.id}`,
       }),
-    [medicalCase.id, navigate]
+    [medicalCase.id, navigate],
   );
 
   return (

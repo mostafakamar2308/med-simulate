@@ -15,6 +15,7 @@ const Case: React.FC = () => {
   const [step, setStep] = useState<Step>("intro");
 
   const { data, isPending } = useFindCaseById({ id: id || "" });
+  console.log({ data });
 
   const startSimulation = useCallback(() => {
     setStep("simulation");

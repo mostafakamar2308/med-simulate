@@ -8,7 +8,6 @@ class Users {
     return await db.user.create({
       data: {
         ...payload,
-        whatsapp_number: payload.whatsappNumber,
       },
     });
   }

@@ -6,7 +6,7 @@ import ScenarioDetails from "@/components/case/introduction/ScenarioDetails";
 import StartSimulationButton from "@/components/case/introduction/StartSimulationButton";
 
 const CaseIntroduction: React.FC<{
-  data: ICase.Self;
+  data: ICase.FullCase;
   startSimulation: () => void;
 }> = ({ data, startSimulation }) => {
   return (

@@ -4,7 +4,7 @@ import { AlertCircle, MapPin } from "lucide-react-native";
 import React from "react";
 import { Text, View } from "react-native";
 
-const ScenarioDetails: React.FC<{ medicalCase: ICase.Self }> = ({ medicalCase }) => {
+const ScenarioDetails: React.FC<{ medicalCase: ICase.FullCase }> = ({ medicalCase }) => {
   return (
     <View className="mb-24 gap-4">
       <View className="px-4">

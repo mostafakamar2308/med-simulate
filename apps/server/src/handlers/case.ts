@@ -1,6 +1,7 @@
 import { getUser } from "@/lib/auth";
-import { unauthenticated } from "@/lib/error";
-import { cases } from "@med-simulate/models";
+import { getFullPhysicalExam } from "@/lib/case";
+import { notFound, unauthenticated } from "@/lib/error";
+import { cases, media } from "@med-simulate/models";
 import { ICase } from "@med-simulate/types";
 import { NextFunction, Request, Response } from "express";
 import z from "zod";
@@ -9,20 +10,16 @@ const findCasesApiQuery = z.object({
   search: z.string().optional(),
   filters: z
     .object({
-      speciality: z.array(z.nativeEnum(ICase.CaseSpeciality)).optional(),
-      difficulty: z.array(z.nativeEnum(ICase.CaseDifficulty)).optional(),
-      category: z.array(z.nativeEnum(ICase.CaseCategory)).optional(),
+      speciality: z.array(z.nativeEnum(ICase.Speciality)).optional(),
+      difficulty: z.array(z.nativeEnum(ICase.Difficulty)).optional(),
+      category: z.array(z.nativeEnum(ICase.Category)).optional(),
     })
     .optional(),
   page: z.number().optional(),
   size: z.number().optional(),
 });
 
-export async function findCases(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
+export async function findCases(req: Request, res: Response) {
   // const user = await getUser(req);
   // if (!user) return next(unauthenticated());
 
@@ -45,7 +42,47 @@ export async function findCaseById(
   // if (!user) return next(unauthenticated());
 
   const { id } = findCaseByIdQuery.parse(req.params);
-  const result = await cases.findCaseById(id);
+  const medicalCase = await cases.findCaseById(id);
+  if (!medicalCase) return next(notFound());
+
+  const fullPhysicalExam = getFullPhysicalExam(medicalCase);
+
+  const result: ICase.FullCase = {
+    ...medicalCase,
+    bodySystems: fullPhysicalExam,
+  };
 
   res.status(200).json(result);
+}
+
+export async function linkToFinding(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { mediaId, findingId } = req.params;
+    if (typeof mediaId !== "string" || typeof findingId !== "string")
+      throw new Error("invalid id");
+    const result = await media.linkToFinding(mediaId, findingId);
+    res.json({ success: true, data: result });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function linkToInvestigationResult(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { mediaId, resultId } = req.params;
+    if (typeof mediaId !== "string" || typeof resultId !== "string")
+      throw new Error("invalid id");
+    const result = await media.linkToInvestigationResult(mediaId, resultId);
+    res.json({ success: true, data: result });
+  } catch (err) {
+    next(err);
+  }
 }

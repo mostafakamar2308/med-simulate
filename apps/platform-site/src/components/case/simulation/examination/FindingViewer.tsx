@@ -1,17 +1,17 @@
 import { Button } from "@/components/ui/button";
 
-import { Finding } from "@med-simulate/types";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import {
-  // AudioViewer,
+  AudioViewer,
   ImageViewer,
   TextViewer,
-  // VideoViewer,
+  VideoViewer,
 } from "@/components/case/simulation/examination/Viewers";
+import { ICase } from "@med-simulate/types";
 
 const FindingViewer: React.FC<{
-  findings: Finding[];
+  findings: ICase.ExaminationFinding[];
 }> = ({ findings }) => {
   const [finding, setFinding] = useState<number>(0);
 
@@ -47,12 +47,12 @@ const FindingViewer: React.FC<{
       {findings[finding]?.type === "img" ? (
         <ImageViewer finding={findings[finding]} />
       ) : null}
-      {/* {findings[finding]?.type === "audio" ? (
+      {findings[finding]?.type === "audio" ? (
         <AudioViewer finding={findings[finding]} />
       ) : null}
       {findings[finding]?.type === "video" ? (
         <VideoViewer finding={findings[finding]} />
-      ) : null} */}
+      ) : null}
       {findings[finding]?.type === "text" ? (
         <TextViewer finding={findings[finding]} />
       ) : null}

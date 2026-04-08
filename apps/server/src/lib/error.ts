@@ -22,7 +22,7 @@ export class ResponseError extends Error {
 const error = (
   errorCode: IError.ApiError,
   statusCode: number,
-  message?: string
+  message?: string,
 ) =>
   new ResponseError({
     errorCode,
@@ -34,3 +34,4 @@ export const unauthenticated = () =>
   error(IError.ApiError.Unauthenticated, 401);
 
 export const bad = () => error(IError.ApiError.BadRequest, 400);
+export const notFound = () => error(IError.ApiError.NotFound, 404);
