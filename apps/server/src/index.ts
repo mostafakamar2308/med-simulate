@@ -9,7 +9,16 @@ const app = express();
 
 const port = "5001";
 
-app.use(cors({ credentials: true, origin: process.env.CORS_ORIGIN || "*" }));
+app.use(
+  cors({
+    credentials: true,
+    origin: [
+      "http://localhost:5173",
+      "http://192.168.1.9:5173",
+      "http://192.168.1.9:5001",
+    ],
+  }),
+);
 app.use(json());
 app.use(helmet());
 app.use(
@@ -19,6 +28,8 @@ app.use(
     immutable: true,
     index: false,
     setHeaders: (res, filePath) => {
+      res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+
       if (filePath.endsWith(".gif")) res.setHeader("Content-Type", "image/gif");
     },
   }),

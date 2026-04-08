@@ -8,6 +8,7 @@ const signatures: Record<string, string> = {
   "52494646": "image/webp",
   "000001ba": "video/mp4",
   "000001b3": "video/mp4",
+  "00000020": "video/mp4",
   "1a45dfa3": "video/webm",
   "6d6f6f76": "video/quicktime",
 };
