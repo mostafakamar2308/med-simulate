@@ -8,10 +8,11 @@ datasource db {
 }
 
 model User {
-  id             String @id
+  id             String      @id
   name           String
   whatsappNumber String
   university     Int
+  uploadedMedia  MediaFile[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -75,12 +76,13 @@ model ExaminationFinding {
   id String @id @unique
 
   type        ExaminationFindingType
-  url         String?
   normal      Boolean?
   description String
 
   examinationAreaId String
   examinationArea   ExaminationArea @relation(references: [id], fields: [examinationAreaId])
+  mediaFileId       String?
+  mediaFile         MediaFile?      @relation(fields: [mediaFileId], references: [id])
 }
 
 model Investigation {
@@ -100,10 +102,11 @@ model InvestigationResult {
   investigation Investigation?
   reference     String?
   value         String?
-  imageUrl      String?
   description   String
 
-  tableData InvestigationTableData[]
+  tableData   InvestigationTableData[]
+  mediaFile   MediaFile?               @relation(fields: [mediaFileId], references: [id])
+  mediaFileId String?
 }
 
 model InvestigationTableData {
@@ -115,6 +118,25 @@ model InvestigationTableData {
 
   investigationResult   InvestigationResult @relation(fields: [investigationResultId], references: [id])
   investigationResultId String
+}
+
+model MediaFile {
+  id           String  @id @default(uuid())
+  diskName     String  @unique
+  displayName  String
+  mimeType     String
+  size         Int
+  metadata     Json?
+  uploadedById String?
+  uploadedBy   User?   @relation(fields: [uploadedById], references: [id])
+
+  examinationFindings  ExaminationFinding[]
+  investigationResults InvestigationResult[]
+
+  createdAt  DateTime @default(now())
+  uploadedAt DateTime @default(now())
+
+  @@index([displayName])
 }
 
 enum BodySystemLabel {

@@ -96,7 +96,7 @@ export type ExaminationFinding = {
   type: ExaminationFidningType;
   normal?: boolean;
   description: string;
-  url?: string;
+  mediaFileId: string | null;
   examinationAreaId: string;
 };
 
@@ -113,9 +113,9 @@ export type InvestigationResult = {
   id: string;
   reference: string | null;
   value: string | null;
-  imageUrl: string | null;
   description: string;
   tableData: InvestigationTableData[] | null;
+  mediaFileId: string | null;
 };
 
 export type InvestigationTableData = {

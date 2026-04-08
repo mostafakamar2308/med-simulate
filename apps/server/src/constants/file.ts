@@ -1,0 +1,1 @@
+export const MAX_FILE_SIZE_GLOBAL = 100 * 1024 * 1024;

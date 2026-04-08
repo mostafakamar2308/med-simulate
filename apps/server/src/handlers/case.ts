@@ -1,7 +1,7 @@
 import { getUser } from "@/lib/auth";
 import { getFullPhysicalExam } from "@/lib/case";
 import { notFound, unauthenticated } from "@/lib/error";
-import { cases } from "@med-simulate/models";
+import { cases, media } from "@med-simulate/models";
 import { ICase } from "@med-simulate/types";
 import { NextFunction, Request, Response } from "express";
 import z from "zod";
@@ -53,4 +53,36 @@ export async function findCaseById(
   };
 
   res.status(200).json(result);
+}
+
+export async function linkToFinding(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { mediaId, findingId } = req.params;
+    if (typeof mediaId !== "string" || typeof findingId !== "string")
+      throw new Error("invalid id");
+    const result = await media.linkToFinding(mediaId, findingId);
+    res.json({ success: true, data: result });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function linkToInvestigationResult(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { mediaId, resultId } = req.params;
+    if (typeof mediaId !== "string" || typeof resultId !== "string")
+      throw new Error("invalid id");
+    const result = await media.linkToInvestigationResult(mediaId, resultId);
+    res.json({ success: true, data: result });
+  } catch (err) {
+    next(err);
+  }
 }
