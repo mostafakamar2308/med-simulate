@@ -6,7 +6,7 @@ import ScenarioDetails from "@/components/case/introduction/ScenarioDetails";
 import { ScrollView, View } from "react-native";
 import StartSimulationButton from "@/components/case/introduction/StartSimulationButton";
 
-const CaseIntroduction: React.FC<{ data: ICase.Self; startSimulation: () => void }> = ({
+const CaseIntroduction: React.FC<{ data: ICase.FullCase; startSimulation: () => void }> = ({
   data,
   startSimulation,
 }) => {

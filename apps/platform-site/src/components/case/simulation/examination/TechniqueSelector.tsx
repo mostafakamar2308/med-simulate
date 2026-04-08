@@ -1,40 +1,35 @@
 import { cn } from "@/lib/utils";
-import { getSystemLabel, TECHNIQUES } from "@/lib/examination";
 import { Button } from "@/components/ui/button";
 import ExaminationActionSelector from "@/components/case/simulation/examination/ExaminationActionSelector";
-import {
-  BodySystem,
-  ExaminationTechniqueType,
-  Finding,
-} from "@med-simulate/types";
+import { ICase } from "@med-simulate/types";
 
 type TechniqueSelectorProps = {
-  selectedTechnique: ExaminationTechniqueType | null;
-  selectedSystem: BodySystem;
-  onChange: (technique: ExaminationTechniqueType | "special") => void;
-  onFinding: (finding: Finding) => void;
+  selectedTechnique: ICase.ExaminationTechnique | null;
+  selectedSystem: ICase.BodySystem;
+  techniques: ICase.ExaminationTechnique[];
+  onChange: (technique: ICase.ExaminationTechnique) => void;
+  onFinding: (finding: ICase.ExaminationFinding) => void;
 };
 
 export function TechniqueSelector({
   selectedTechnique,
   selectedSystem,
+  techniques,
   onChange,
   onFinding,
 }: TechniqueSelectorProps) {
   return (
-    <div className="my-4 overflow-auto flex flex-col w-full items-center gap-3 px-2">
+    <div className="my-4 overflow-auto h-full flex flex-col w-full items-center gap-3 px-2">
       <p className="flex flex-row gap-2 text-2xl font-semibold text-foreground">
-        {getSystemLabel(selectedSystem).icon}{" "}
-        {getSystemLabel(selectedSystem).label}
+        {selectedSystem.icon} {selectedSystem.label}
       </p>
       <div className="my-4 grid grid-cols-2 gap-3 w-full px-2">
-        {TECHNIQUES.map((tech) => {
-          const Icon = tech.icon;
-          const isSelected = selectedTechnique === tech.id;
+        {techniques.map((tech) => {
+          const isSelected = selectedTechnique?.id === tech.id;
           return (
             <Button
               key={tech.id}
-              onClick={() => onChange(tech.id)}
+              onClick={() => onChange(tech)}
               className={cn(
                 "flex h-fit w-full flex-col items-center justify-center gap-2 rounded-2xl p-3",
                 isSelected
@@ -42,11 +37,8 @@ export function TechniqueSelector({
                   : "border border-border text-secondary-foreground bg-white",
               )}
             >
-              <Icon className="h-6 w-6" />
+              <span className="text-xl">{tech.icon}</span>
               <p className="font-display text-sm font-bold">{tech.label}</p>
-              <p className="w-full text-center text-sm opacity-75">
-                {tech.description}
-              </p>
             </Button>
           );
         })}

@@ -27,7 +27,7 @@ export type FinishSimulation = (payload: {
 }) => void;
 
 const SimulationActions: React.FC<{
-  medicalCase: ICase.Self;
+  medicalCase: ICase.FullCase;
   finishSimulation: FinishSimulation;
 }> = ({ medicalCase, finishSimulation }) => {
   const [actions, setActions] = useState(initialActions);
@@ -44,7 +44,7 @@ const SimulationActions: React.FC<{
   }, []);
 
   const isUrgent = useMemo(
-    () => medicalCase.category !== ICase.CaseCategory.Outpatient,
+    () => medicalCase.category !== ICase.Category.Outpatient,
     [medicalCase.category]
   );
 

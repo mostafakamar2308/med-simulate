@@ -9,6 +9,7 @@
   "description": "Med Simulate Data Access Layer",
   "scripts": {
     "migrate": "npx prisma migrate dev",
+    "prisma": "npx prisma",
     "generate": "npx prisma generate",
     "studio": "npx prisma studio --config ./prisma.config.ts",
     "build": "pnpm run generate && tsc",

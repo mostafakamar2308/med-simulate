@@ -57,4 +57,20 @@ export class Base {
     });
     return response.data;
   }
+
+  async put<T, R = void, P = object>(attr: HTTPMethodAttr<T, P>): Promise<R> {
+    return this.client
+      .put(attr.route, attr.payload ? JSON.stringify(attr.payload) : undefined)
+      .then((response) => response.data);
+  }
+
+  async delete<T, R = void, P = object>(
+    attr: HTTPMethodAttr<T, P>,
+  ): Promise<R> {
+    return this.client
+      .delete(attr.route, {
+        data: attr.payload ? JSON.stringify(attr.payload) : undefined,
+      })
+      .then((response) => response.data);
+  }
 }

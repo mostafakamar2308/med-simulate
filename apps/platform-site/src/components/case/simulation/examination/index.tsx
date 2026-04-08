@@ -3,21 +3,19 @@ import React, { useEffect, useState } from "react";
 import ExaminationSuiteHeader from "@/components/case/simulation/examination/Header";
 import SystemSelector from "@/components/case/simulation/examination/SystemSelector";
 import { TechniqueSelector } from "@/components/case/simulation/examination/TechniqueSelector";
-import {
-  BodySystem,
-  ExaminationTechniqueType,
-  Finding,
-} from "@med-simulate/types";
+import { ICase } from "@med-simulate/types";
 import { cn } from "@/lib/utils";
 import { Stethoscope } from "lucide-react";
 
 const ExaminationSuite: React.FC<{
-  complaint: string;
-  onFinding: (finding: Finding) => void;
-}> = ({ onFinding, complaint }) => {
-  const [selectedSystem, setSelectedSystem] = useState<BodySystem | null>(null);
+  medicalCase: ICase.FullCase;
+  onFinding: (finding: ICase.ExaminationFinding) => void;
+}> = ({ onFinding, medicalCase }) => {
+  const [selectedSystem, setSelectedSystem] = useState<ICase.BodySystem | null>(
+    null,
+  );
   const [selectedTechnique, setSelectedTechnique] =
-    useState<ExaminationTechniqueType | null>(null);
+    useState<ICase.ExaminationTechnique | null>(null);
 
   useEffect(() => {
     setSelectedSystem(null);
@@ -28,14 +26,16 @@ const ExaminationSuite: React.FC<{
     <Dialog>
       <DialogTrigger
         className={cn(
-          "items-center flex flex-col justify-center gap-2 rounded-2xl border p-4 shadow-sm transition-all",
-          "p-8 border-white/50 bg-white/90",
+          "group flex flex-col items-center justify-center gap-3 rounded-xl border border-border bg-white p-6 shadow-sm transition-all hover:shadow-md",
+          "h-32 w-full sm:w-40 hover:border-emerald-200",
         )}
       >
-        <Stethoscope className="h-6 w-6 opacity-80" />
-        <p className="line-clamp-2 text-center text-[11px] font-bold uppercase tracking-wider opacity-80">
+        <div className="rounded-full bg-emerald-50 p-3 text-emerald-600 transition-colors group-hover:bg-emerald-100">
+          <Stethoscope className="h-6 w-6" />
+        </div>
+        <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground transition-colors group-hover:text-emerald-700">
           Exam
-        </p>
+        </span>
       </DialogTrigger>
       <DialogContent className="flex h-[90vh] w-screen flex-col gap-0 overflow-hidden bg-background p-0">
         <ExaminationSuiteHeader
@@ -44,7 +44,7 @@ const ExaminationSuite: React.FC<{
             setSelectedTechnique(null);
           }}
           onTechnique={!!selectedSystem}
-          complaint={complaint}
+          complaint={medicalCase.complaint}
         />
         {!selectedSystem ? (
           <SystemSelector
@@ -52,12 +52,14 @@ const ExaminationSuite: React.FC<{
               setSelectedSystem(system);
               setSelectedTechnique(null);
             }}
+            systems={medicalCase.bodySystems}
             selected={selectedSystem}
           />
         ) : null}
         {selectedSystem ? (
           <TechniqueSelector
             selectedSystem={selectedSystem}
+            techniques={selectedSystem.examinationTechniques}
             onChange={setSelectedTechnique}
             onFinding={onFinding}
             selectedTechnique={selectedTechnique}
