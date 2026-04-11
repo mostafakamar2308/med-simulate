@@ -1,5 +1,9 @@
 import { getUser } from "@/lib/auth";
-import { createPatientPrompt, generateWithRetry } from "@/lib/chat";
+import {
+  createPatientInstructions,
+  createPatientPrompt,
+  generateWithRetry,
+} from "@/lib/chat";
 import { bad, unauthenticated } from "@/lib/error";
 import { cases } from "@med-simulate/models";
 import { NextFunction, Request, Response } from "express";
@@ -29,11 +33,15 @@ export async function sendMessage(
   if (!medicalCase) return next(bad());
 
   const prompt = createPatientPrompt({
+    chatHistory: chat,
+  });
+
+  const instructions = createPatientInstructions({
     medicalCase,
     chatHistory: chat,
   });
 
-  const result = await generateWithRetry(prompt, 10);
+  const result = await generateWithRetry(prompt, 10, instructions);
 
   res.status(200).json(result);
 }
