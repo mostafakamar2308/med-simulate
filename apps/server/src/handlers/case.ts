@@ -15,8 +15,8 @@ const findCasesApiQuery = z.object({
       category: z.array(z.nativeEnum(ICase.Category)).optional(),
     })
     .optional(),
-  page: z.number().optional(),
-  size: z.number().optional(),
+  page: z.coerce.number().optional(),
+  size: z.coerce.number().optional(),
 });
 
 export const idQuery = z.object({ id: z.string() });
