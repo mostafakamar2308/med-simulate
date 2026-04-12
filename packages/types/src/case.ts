@@ -138,3 +138,64 @@ export type FindCasesApiQuery = IFilter.Pagination & {
 export type FindCasesQuery = FindCasesApiQuery;
 
 export type FindCasesResponse = IFilter.Paginated<Case[]>;
+
+// Additional types for case creation/update
+export interface CreateCasePayload {
+  title: string;
+  complaint: string;
+  category: Category;
+  difficulty: Difficulty;
+  speciality: Speciality;
+  name: string;
+  age: number;
+  gender: Gender;
+  weight: number;
+  height: number;
+  briefHistory: string;
+  objective: string;
+  actor: string;
+  diagnosis: string;
+}
+
+export type UpdateCasePayload = Partial<CreateCasePayload>;
+
+export interface UpdateFindingPayload {
+  type?: ExaminationFidningType;
+  normal?: boolean;
+  description?: string;
+  mediaFileId?: string | null;
+}
+
+export interface AddInvestigationPayload {
+  label: string;
+  guidance?: string;
+  result?: {
+    reference?: string;
+    value?: string;
+    description?: string;
+  };
+}
+
+export interface UpdateInvestigationResultPayload {
+  reference?: string;
+  value?: string;
+  description?: string;
+  mediaFileId?: string | null;
+}
+
+export interface TableDataRow {
+  name: string;
+  value: number;
+  unit: string;
+  reference: string;
+}
+
+export interface AddTableDataPayload {
+  rows: TableDataRow[];
+}
+
+export interface ListCasesResponse {
+  list: Case[];
+  size: number;
+  page: number;
+}

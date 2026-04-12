@@ -15,9 +15,11 @@ const findCasesApiQuery = z.object({
       category: z.array(z.nativeEnum(ICase.Category)).optional(),
     })
     .optional(),
-  page: z.number().optional(),
-  size: z.number().optional(),
+  page: z.coerce.number().optional(),
+  size: z.coerce.number().optional(),
 });
+
+export const idQuery = z.object({ id: z.string() });
 
 export async function findCases(req: Request, res: Response) {
   // const user = await getUser(req);
@@ -82,6 +84,157 @@ export async function linkToInvestigationResult(
       throw new Error("invalid id");
     const result = await media.linkToInvestigationResult(mediaId, resultId);
     res.json({ success: true, data: result });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function createCase(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const caseData = req.body;
+    const newCase = await cases.createCase(caseData);
+    res.status(201).json({ success: true, data: newCase });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function listCases(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { page = 1, limit = 10 } = req.query;
+    const result = await cases.find({
+      page: Number(page),
+      size: Number(limit),
+    });
+    res.json({ success: true, ...result });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function getCase(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { id } = idQuery.parse(req.params);
+    const fullCase = await cases.findCaseById(id);
+    if (!fullCase)
+      return res.status(404).json({ success: false, error: "Case not found" });
+    res.json({ success: true, data: fullCase });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function updateCase(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { id } = idQuery.parse(req.params);
+    const updated = await cases.updateCase(id, req.body);
+    res.json({ success: true, data: updated });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function deleteCase(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { id } = idQuery.parse(req.params);
+    await cases.deleteCase(id);
+    res.json({ success: true, message: "Case deleted" });
+  } catch (err) {
+    next(err);
+  }
+}
+
+// Finding update
+export async function updateFinding(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { id } = idQuery.parse(req.params);
+    const { type, normal, description, mediaFileId } = req.body;
+    const updated = await cases.updateFinding(id, {
+      type,
+      normal,
+      description,
+      mediaFileId,
+    });
+    res.json({ success: true, data: updated });
+  } catch (err) {
+    next(err);
+  }
+}
+
+// Get or create finding for an area
+export async function getFindingForArea(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { id } = idQuery.parse(req.params);
+    const finding = await cases.getOrCreateFinding(id);
+    res.json({ success: true, data: finding });
+  } catch (err) {
+    next(err);
+  }
+}
+
+// Investigation routes
+export async function addInvestigation(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { id } = idQuery.parse(req.params);
+    const investigation = await cases.addInvestigation(id, req.body);
+    res.status(201).json({ success: true, data: investigation });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function updateInvestigationResult(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { id } = idQuery.parse(req.params);
+    const updated = await cases.updateInvestigationResult(id, req.body);
+    res.json({ success: true, data: updated });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function addTableData(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const { id } = idQuery.parse(req.params);
+    const { rows } = req.body;
+    await cases.addTableData(id, rows);
+    res.json({ success: true });
   } catch (err) {
     next(err);
   }
