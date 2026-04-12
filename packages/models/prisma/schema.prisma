@@ -19,7 +19,7 @@ model User {
 }
 
 model Case {
-  id           String @id @default(uuid())
+  id           String @id @default(cuid())
   title        String
   complaint    String
   difficulty   Int
@@ -43,7 +43,7 @@ model Case {
 }
 
 model BodySystem {
-  id    String          @id @unique
+  id    String          @id @unique @default(cuid())
   label BodySystemLabel
   icon  String
 
@@ -53,7 +53,7 @@ model BodySystem {
 }
 
 model ExaminationTechnique {
-  id    String                    @id @unique
+  id    String                    @id @unique @default(cuid())
   label ExaminationTechniqueLabel
   icon  String
 
@@ -63,7 +63,7 @@ model ExaminationTechnique {
 }
 
 model ExaminationArea {
-  id String @id @unique
+  id String @id @unique @default(cuid())
 
   label String
 
@@ -73,7 +73,7 @@ model ExaminationArea {
 }
 
 model ExaminationFinding {
-  id String @id @unique
+  id String @id @unique @default(cuid())
 
   type        ExaminationFindingType
   normal      Boolean?
@@ -86,7 +86,7 @@ model ExaminationFinding {
 }
 
 model Investigation {
-  id       String  @id @unique
+  id       String  @id @unique @default(cuid())
   label    String
   guidance String?
 
@@ -121,7 +121,7 @@ model InvestigationTableData {
 }
 
 model MediaFile {
-  id           String  @id @default(uuid())
+  id           String  @id @default(cuid())
   diskName     String  @unique
   displayName  String
   mimeType     String
