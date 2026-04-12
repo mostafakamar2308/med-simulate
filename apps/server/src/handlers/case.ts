@@ -28,7 +28,7 @@ export async function findCases(req: Request, res: Response) {
   const query = findCasesApiQuery.parse(req.query);
   const result: ICase.FindCasesResponse = await cases.find(query);
 
-  res.status(200).json(result);
+  return res.status(200).json(result);
 }
 
 const findCaseByIdQuery = z.object({
@@ -54,7 +54,7 @@ export async function findCaseById(
     bodySystems: fullPhysicalExam,
   };
 
-  res.status(200).json(result);
+  return res.status(200).json(result);
 }
 
 export async function linkToFinding(
@@ -67,7 +67,7 @@ export async function linkToFinding(
     if (typeof mediaId !== "string" || typeof findingId !== "string")
       throw new Error("invalid id");
     const result = await media.linkToFinding(mediaId, findingId);
-    res.json({ success: true, data: result });
+    return res.json({ success: true, data: result });
   } catch (err) {
     next(err);
   }
@@ -83,7 +83,7 @@ export async function linkToInvestigationResult(
     if (typeof mediaId !== "string" || typeof resultId !== "string")
       throw new Error("invalid id");
     const result = await media.linkToInvestigationResult(mediaId, resultId);
-    res.json({ success: true, data: result });
+    return res.json({ success: true, data: result });
   } catch (err) {
     next(err);
   }
@@ -114,7 +114,7 @@ export async function listCases(
       page: Number(page),
       size: Number(limit),
     });
-    res.json({ success: true, ...result });
+    return res.json({ success: true, ...result });
   } catch (err) {
     next(err);
   }
@@ -123,10 +123,14 @@ export async function listCases(
 export async function getCase(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = idQuery.parse(req.params);
+    console.log({ id });
+
     const fullCase = await cases.findCaseById(id);
     if (!fullCase)
       return res.status(404).json({ success: false, error: "Case not found" });
-    res.json({ success: true, data: fullCase });
+    console.log({ fullCase });
+
+    return res.json({ success: true, data: fullCase });
   } catch (err) {
     next(err);
   }
@@ -140,7 +144,7 @@ export async function updateCase(
   try {
     const { id } = idQuery.parse(req.params);
     const updated = await cases.updateCase(id, req.body);
-    res.json({ success: true, data: updated });
+    return res.json({ success: true, data: updated });
   } catch (err) {
     next(err);
   }
@@ -154,7 +158,7 @@ export async function deleteCase(
   try {
     const { id } = idQuery.parse(req.params);
     await cases.deleteCase(id);
-    res.json({ success: true, message: "Case deleted" });
+    return res.json({ success: true, message: "Case deleted" });
   } catch (err) {
     next(err);
   }
@@ -175,7 +179,7 @@ export async function updateFinding(
       description,
       mediaFileId,
     });
-    res.json({ success: true, data: updated });
+    return res.json({ success: true, data: updated });
   } catch (err) {
     next(err);
   }
@@ -190,7 +194,7 @@ export async function getFindingForArea(
   try {
     const { id } = idQuery.parse(req.params);
     const finding = await cases.getOrCreateFinding(id);
-    res.json({ success: true, data: finding });
+    return res.json({ success: true, data: finding });
   } catch (err) {
     next(err);
   }
@@ -204,6 +208,8 @@ export async function addInvestigation(
 ) {
   try {
     const { id } = idQuery.parse(req.params);
+    console.log({ id });
+
     const investigation = await cases.addInvestigation(id, req.body);
     res.status(201).json({ success: true, data: investigation });
   } catch (err) {
@@ -219,7 +225,7 @@ export async function updateInvestigationResult(
   try {
     const { id } = idQuery.parse(req.params);
     const updated = await cases.updateInvestigationResult(id, req.body);
-    res.json({ success: true, data: updated });
+    return res.json({ success: true, data: updated });
   } catch (err) {
     next(err);
   }
@@ -234,7 +240,7 @@ export async function addTableData(
     const { id } = idQuery.parse(req.params);
     const { rows } = req.body;
     await cases.addTableData(id, rows);
-    res.json({ success: true });
+    return res.json({ success: true });
   } catch (err) {
     next(err);
   }

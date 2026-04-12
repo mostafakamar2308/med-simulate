@@ -1,12 +1,13 @@
 export type Self = {
   id: string;
+  createdAt: Date;
+  size: number;
   diskName: string;
   displayName: string;
   mimeType: string;
-  size: number;
-  uploadedById: string;
-  uploadedAt: string;
-  url: string;
+  metadata?: any;
+  uploadedById: string | null;
+  uploadedAt: Date;
 };
 
 export type IMediaListQuery = {

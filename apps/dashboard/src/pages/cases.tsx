@@ -53,6 +53,8 @@ export const CasesList = () => {
   const limit = 10;
 
   const { data, isLoading, refetch } = useListCases({});
+  console.log({ data });
+
   const deleteCase = useDeleteCase();
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);

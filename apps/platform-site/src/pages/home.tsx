@@ -9,6 +9,7 @@ import { useState } from "react";
 const Home: React.FC = () => {
   const [search, setSearch] = useState<string>("");
   const cases = useFindCases({});
+  console.log(cases.data);
 
   if (cases.isPending) return <Loading text="Loading Cases..." />;
 
