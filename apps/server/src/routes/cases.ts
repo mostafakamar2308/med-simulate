@@ -27,7 +27,7 @@ router.delete("/:id", deleteCase);
 router.get("/areas/:id/finding", getFindingForArea);
 router.put("/findings/:id", updateFinding);
 
-router.post("/cases/:id/investigations", addInvestigation);
+router.post("/:id/investigations", addInvestigation);
 router.put("/investigation-results/:id", updateInvestigationResult);
 router.post("/investigation-results/:id/table-data", addTableData);
 

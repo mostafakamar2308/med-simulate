@@ -1,4 +1,4 @@
-import { IFilter } from "@/index";
+import { IFilter, IMedia } from "@/index";
 
 export type Case = {
   id: string;
@@ -98,6 +98,7 @@ export type ExaminationFinding = {
   description: string;
   mediaFileId: string | null;
   examinationAreaId: string;
+  mediaFile?: IMedia.Self | null;
 };
 
 export type Investigation = {
@@ -116,6 +117,7 @@ export type InvestigationResult = {
   description: string;
   tableData: InvestigationTableData[] | null;
   mediaFileId: string | null;
+  mediaFile?: IMedia.Self | null;
 };
 
 export type InvestigationTableData = {
@@ -198,4 +200,5 @@ export interface ListCasesResponse {
   list: Case[];
   size: number;
   page: number;
+  total: number;
 }

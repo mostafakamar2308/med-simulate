@@ -1,10 +1,6 @@
 // src/pages/CaseDetail.tsx
 import { useParams, useNavigate } from "react-router";
-import {
-  useGetCase,
-  useUpdateFinding,
-  useLinkMediaToFinding,
-} from "@med-simulate/api/hooks";
+import { useGetCase } from "@med-simulate/api/hooks";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";

@@ -1,10 +1,11 @@
-import { createPatientPrompt } from "@/lib/chat";
+import { createPatientInstructions, createPatientPrompt } from "@/lib/chat";
 import { bad } from "@/lib/error";
 import { cases } from "@med-simulate/models";
 import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
 import { GoogleGenAI } from "@google/genai";
 import { parseMimeType, pcmToWavBuffer } from "@/lib/audio";
+import { getAiConfig } from "@/lib/aiConstants";
 
 if (!process.env.GOOGLE_AI_KEY) throw Error("Please Provide the api key");
 const genAI = new GoogleGenAI({ apiKey: process.env.GOOGLE_AI_KEY });
@@ -36,17 +37,26 @@ export async function sendMessageStream(
     const medicalCase = await cases.findCaseById(caseId);
     if (!medicalCase) return next(bad());
 
-    const prompt = createPatientPrompt({ medicalCase, chatHistory: chat });
+    const prompt = createPatientPrompt({ chatHistory: chat });
+    const instructions = createPatientInstructions({
+      medicalCase,
+      chatHistory: chat,
+    });
 
     const textResponse = await genAI.models.generateContentStream({
       model: "gemini-2.5-flash",
       contents: [prompt],
+      config: getAiConfig(instructions),
     });
 
     let fullText = "";
     for await (const chunk of textResponse) {
       fullText += chunk.text;
+      console.log(fullText);
+
       const cleanText = chunk.text?.replace(/[\u064B-\u0652]/g, "");
+      console.log(cleanText);
+
       res.write(
         `data: ${JSON.stringify({ type: "text", content: cleanText })} \n\n\n`,
       );

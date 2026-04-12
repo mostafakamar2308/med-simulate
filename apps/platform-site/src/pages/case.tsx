@@ -16,13 +16,10 @@ const Case: React.FC = () => {
 
   const { data, isPending } = useFindCaseById({ id: id || "" });
   console.log({ data });
+  console.log(data?.data);
 
   const startSimulation = useCallback(() => {
     setStep("simulation");
-  }, []);
-
-  const completeSimulation = useCallback(() => {
-    setStep("feedback");
   }, []);
 
   const finishSimulation: FinishSimulation = useCallback((payload) => {}, []);
@@ -30,7 +27,7 @@ const Case: React.FC = () => {
   if (isPending || data === undefined)
     return <Loading text="Loading Case..." />;
 
-  if (data === null) {
+  if (data.data === null) {
     navigate("/");
     return;
   }
@@ -38,10 +35,10 @@ const Case: React.FC = () => {
   return (
     <div className="relative flex flex-col flex-1 h-full min-h-screen max-w-3xl mx-auto">
       {step === "intro" ? (
-        <CaseIntroduction data={data} startSimulation={startSimulation} />
+        <CaseIntroduction data={data.data} startSimulation={startSimulation} />
       ) : null}
       {step === "simulation" ? (
-        <Simulation finishSimulation={finishSimulation} caseData={data} />
+        <Simulation finishSimulation={finishSimulation} caseData={data.data} />
       ) : null}
       {step === "feedback" ? <Feedback /> : null}
     </div>

@@ -40,7 +40,9 @@ class Cases {
               include: {
                 examinationAreas: {
                   include: {
-                    examinationFindings: {},
+                    examinationFindings: {
+                      include: { mediaFile: true },
+                    },
                   },
                 },
               },
@@ -50,7 +52,7 @@ class Cases {
         investigations: {
           include: {
             investigationResult: {
-              include: { tableData: {} },
+              include: { tableData: true, mediaFile: true },
             },
           },
         },
@@ -171,15 +173,21 @@ class Cases {
   }
   // Get or create finding for an area (if not exists)
   async getOrCreateFinding(areaId: string) {
-    let finding = await db.examinationFinding.findFirst({
+    const finding = await db.examinationFinding.findFirst({
       where: { examinationAreaId: areaId },
+      include: {
+        mediaFile: true,
+      },
     });
     if (!finding) {
-      finding = await db.examinationFinding.create({
+      return await db.examinationFinding.create({
         data: {
           type: "text",
           description: "",
           examinationAreaId: areaId,
+        },
+        include: {
+          mediaFile: true,
         },
       });
     }

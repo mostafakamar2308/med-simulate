@@ -50,18 +50,6 @@ Vital signs (do not reveal unless examined or directly asked):
 
 CONVERSATION HISTORY:
 ${chatHistory.map((m) => `${m.sender.toUpperCase()}: ${m.text}`).join("\n")}
-
-INSTRUCTION:
-Respond to the last doctor message as the patient in Egyptian Arabic dialect (Ammiya). 
-IMPORTANT: You MUST provide the response with full Arabic diacritics (Tashkeel) specifically on vowels to ensure correct pronunciation (e.g., use كُحّة instead of كحة). 
-Do not use Modern Standard Arabic; stay in the Egyptian dialect.
-تحدث بالعامية المصرية كشخص مريض.
-يجب وضع التشكيل (الحركات) بدقة شديدة مع مراعاة نطق العامية:
-- كلمة (كحة) تشكل هكذا: كُحَّة (بضمة على الكاف وليس فتحة).
-- كلمة (مش) تشكل هكذا: مِش (بكسرة تحت الميم وليس فتحة).
-- كلمة (أوي) تشكل هكذا: أَوِي.
-
-هذا التشكيل حيوي جداً لأنني أستخدمه لمحرك نطق آلي.
 `;
 };
 export async function generateWithRetry(
