@@ -52,7 +52,7 @@ export const responseSchema = z.object({
   emotion: z.enum(emotions),
 });
 
-export const AI_CONFIG: GenerateContentConfig = {
+export const BASE_AI_CONFIG: GenerateContentConfig = {
   responseMimeType: "application/json",
   responseJsonSchema: zodToJsonSchema(responseSchema),
   systemInstruction: SYSTEM_INSTRUCTION,
@@ -74,4 +74,10 @@ export const AI_CONFIG: GenerateContentConfig = {
       threshold: HarmBlockThreshold.BLOCK_NONE,
     },
   ],
+};
+
+export const getAiConfig = (instructions?: string) => {
+  const config = BASE_AI_CONFIG;
+  if (instructions) config.systemInstruction = instructions;
+  return config;
 };

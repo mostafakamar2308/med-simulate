@@ -1,6 +1,11 @@
 import { GoogleGenAI } from "@google/genai";
-import { AI_CONFIG, emotions, responseSchema } from "@/lib/aiConstants";
-import { PromptProps } from "@/types/ai";
+import {
+  BASE_AI_CONFIG,
+  emotions,
+  getAiConfig,
+  responseSchema,
+} from "@/lib/aiConstants";
+import { InstructionsProps, PromptProps } from "@/types/ai";
 import { Element } from "@med-simulate/types";
 
 if (!process.env.GOOGLE_AI_KEY) throw Error("Please Provide the api key");
@@ -8,11 +13,15 @@ if (!process.env.GOOGLE_AI_KEY) throw Error("Please Provide the api key");
 export const AI_MODEL = new GoogleGenAI({ apiKey: process.env.GOOGLE_AI_KEY })
   .models;
 
-export const createPatientPrompt = ({
+export const createPatientPrompt = ({ chatHistory }: PromptProps) => {
+  return `the doctor asked you this: "${chatHistory.at(-1)?.text}"`;
+};
+
+export const createPatientInstructions = ({
   medicalCase,
   chatHistory,
   vitals,
-}: PromptProps) => {
+}: InstructionsProps) => {
   const genderText = medicalCase.gender === 0 ? "male" : "female";
 
   return `
@@ -55,10 +64,10 @@ Do not use Modern Standard Arabic; stay in the Egyptian dialect.
 هذا التشكيل حيوي جداً لأنني أستخدمه لمحرك نطق آلي.
 `;
 };
-
 export async function generateWithRetry(
   prompt: string,
   maxRetries = 1,
+  instructions?: string,
 ): Promise<{ text: string; emotion: Element<typeof emotions> }> {
   let response, parsedData;
   let retries = 0;
@@ -68,7 +77,7 @@ export async function generateWithRetry(
       response = await AI_MODEL.generateContent({
         model: "gemini-2.5-flash",
         contents: prompt,
-        config: AI_CONFIG,
+        config: instructions ? getAiConfig(instructions) : BASE_AI_CONFIG,
       });
 
       if (!response) throw new Error("No Response");

@@ -4,6 +4,7 @@ import type React from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Library from "@/pages/mediaLibrary";
 import { ApiAuthProvider } from "@/components/providers/apiProvider";
+import Home from "@/pages/home";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,6 +30,7 @@ const RoutesContainer: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/library" element={<Library />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );
