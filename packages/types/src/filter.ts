@@ -12,7 +12,6 @@ export type SkippablePagination = Pagination & {
 };
 
 export type Paginated<T> = {
-  page: number;
   size: number;
   list: T;
 };

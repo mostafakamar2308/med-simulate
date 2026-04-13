@@ -1,49 +1,67 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { cn } from "@/lib/utils";
 import HistorySimulation from "@/components/case/simulation/history";
-import { IExamination, ICase, IChat } from "@med-simulate/types";
 import ExaminationSuite from "@/components/case/simulation/examination";
 import InvestigationsSuite from "./investigations";
-import { TakenInvestigation } from "./investigations/types";
 import Decision from "@/components/case/decision";
+import { ICase, IChat } from "@med-simulate/types";
+import { TakenInvestigation } from "./investigations/types";
 
-export type FinishSimulation = (payload: {
-  chat: IChat.Chat;
-  findings: IExamination.Finding[];
+export type FinishSimulationPayload = {
+  chat: IChat.Message[];
+  findings: ICase.UserFinding[];
   investigations: TakenInvestigation[];
-}) => void;
+  diagnosis: { primary: string; differentials: string[] };
+};
 
-const SimulationActions: React.FC<{
+interface Props {
   medicalCase: ICase.FullCase;
-  finishSimulation: FinishSimulation;
-}> = ({ medicalCase, finishSimulation }) => {
-  const [chatMessages, setChatMessages] = useState<IChat.Chat>([]);
-  const [examinationFindings, setExaminationationFindings] = useState<
-    ICase.ExaminationFinding[]
-  >([]);
-  const [investigationsTaken, setInvestigationsTaken] = useState<
-    TakenInvestigation[]
-  >([]);
+  onFinish: (payload: FinishSimulationPayload) => void;
+  // Pass down collected data and setters
+  chatMessages: IChat.Message[];
+  setChatMessages: React.Dispatch<React.SetStateAction<IChat.Message[]>>;
+  examinationFindings: ICase.UserFinding[];
+  setExaminationFindings: (payload: ICase.UserFinding) => void;
+  investigationsTaken: TakenInvestigation[];
+  setInvestigationsTaken: React.Dispatch<
+    React.SetStateAction<TakenInvestigation[]>
+  >;
+}
 
-  const addInvestigation = useCallback((action: TakenInvestigation) => {
+const SimulationActions: React.FC<Props> = ({
+  medicalCase,
+
+  onFinish,
+  chatMessages,
+  setChatMessages,
+  examinationFindings,
+  setExaminationFindings,
+  investigationsTaken,
+  setInvestigationsTaken,
+}) => {
+  const addInvestigation = (action: TakenInvestigation) => {
     setInvestigationsTaken((prev) => [...prev, action]);
-  }, []);
+  };
 
-  const AddFinding = useCallback((finding: ICase.ExaminationFinding) => {
-    setExaminationationFindings((prev) => [...prev, finding]);
-  }, []);
+  const addFinding = (finding: ICase.UserFinding) => {
+    setExaminationFindings(finding);
+  };
 
-  const addMessage = useCallback((message: IChat.Message) => {
+  const addMessage = (message: IChat.Message) => {
     setChatMessages((prev) => [...prev, message]);
-  }, []);
+  };
 
-  const onDecision = useCallback(() => {
-    finishSimulation({
+  const onDecision = (diagnosis: {
+    primary: string;
+    differentials: string[];
+  }) => {
+    onFinish({
       chat: chatMessages,
-      investigations: investigationsTaken,
       findings: examinationFindings,
+      investigations: investigationsTaken,
+      diagnosis,
     });
-  }, [finishSimulation]);
+  };
 
   return (
     <div
@@ -58,7 +76,11 @@ const SimulationActions: React.FC<{
         messages={chatMessages}
         patientName={medicalCase.name}
       />
-      <ExaminationSuite medicalCase={medicalCase} onFinding={AddFinding} />
+      <ExaminationSuite
+        medicalCase={medicalCase}
+        userFindings={examinationFindings}
+        onFinding={addFinding}
+      />
       <InvestigationsSuite
         takenInvestigations={investigationsTaken}
         onTakeInvestigation={addInvestigation}

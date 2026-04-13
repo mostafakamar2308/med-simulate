@@ -40,6 +40,7 @@ app.use("/api/v1/cases", routes.cases);
 app.use("/api/v1/chat", routes.chat);
 app.use("/api/v1/chat-v2", routes.chatV2);
 app.use("/api/v1/media", routes.media);
+app.use("/api/v1/grading", routes.grading);
 
 app.use(errorHandler);
 

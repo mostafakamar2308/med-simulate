@@ -1,16 +1,36 @@
 import React, { useMemo } from "react";
 import SimulationVitals from "@/components/case/simulation/SimulationVitals";
 import PatientAvatar from "@/components/case/PatientAvatar";
-import { ICase } from "@med-simulate/types";
+import { ICase, IChat } from "@med-simulate/types";
 import { cn } from "@/lib/utils";
 import SimulationActions, {
-  FinishSimulation,
-} from "@/components/case/simulation/SimulationActions";
+  FinishSimulationPayload,
+} from "./SimulationActions";
+import { TakenInvestigation } from "./investigations/types";
 
-const Simulation: React.FC<{
+interface Props {
   caseData: ICase.FullCase;
-  finishSimulation: FinishSimulation;
-}> = ({ caseData, finishSimulation }) => {
+  onFinish: (payload: FinishSimulationPayload) => void;
+  chatMessages: IChat.Message[];
+  setChatMessages: React.Dispatch<React.SetStateAction<IChat.Message[]>>;
+  examinationFindings: ICase.UserFinding[];
+  setExaminationFindings: (payload: ICase.UserFinding) => void;
+  investigationsTaken: TakenInvestigation[];
+  setInvestigationsTaken: React.Dispatch<
+    React.SetStateAction<TakenInvestigation[]>
+  >;
+}
+
+const Simulation: React.FC<Props> = ({
+  caseData,
+  onFinish,
+  chatMessages,
+  setChatMessages,
+  examinationFindings,
+  setExaminationFindings,
+  investigationsTaken,
+  setInvestigationsTaken,
+}) => {
   const environment = useMemo(() => {
     if (caseData.category === ICase.Category.ER) return "bg-red-700/10";
     if (caseData.category === ICase.Category.Inpatient) return "bg-blue-900/10";
@@ -33,8 +53,14 @@ const Simulation: React.FC<{
           <PatientAvatar feelings="😣" />
         </div>
         <SimulationActions
-          finishSimulation={finishSimulation}
           medicalCase={caseData}
+          onFinish={onFinish}
+          chatMessages={chatMessages}
+          setChatMessages={setChatMessages}
+          examinationFindings={examinationFindings}
+          setExaminationFindings={setExaminationFindings}
+          investigationsTaken={investigationsTaken}
+          setInvestigationsTaken={setInvestigationsTaken}
         />
       </div>
       <SimulationVitals />

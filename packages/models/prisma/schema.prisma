@@ -34,6 +34,7 @@ model Case {
   objective    String
   actor        String
   diagnosis    String
+  differential String @default("")
 
   bodySystems    BodySystem[]
   investigations Investigation[]
@@ -76,7 +77,7 @@ model ExaminationFinding {
   id String @id @unique @default(cuid())
 
   type        ExaminationFindingType
-  normal      Boolean?
+  normal      Boolean?               @default(true)
   description String
 
   examinationAreaId String
@@ -137,6 +138,29 @@ model MediaFile {
   uploadedAt DateTime @default(now())
 
   @@index([displayName])
+}
+
+model GradingAttempt {
+  id           String         @id @default(cuid())
+  studentId    String
+  caseId       String
+  section      GradingSection
+  score        Float
+  feedback     String
+  rawResponse  Json?
+  missingItems String[]
+  isCorrect    Boolean?
+  createdAt    DateTime       @default(now())
+
+  @@unique([studentId, caseId, section]) // one attempt per section per student per case
+  @@index([id, caseId])
+}
+
+enum GradingSection {
+  HISTORY
+  EXAM
+  INVESTIGATIONS
+  DIAGNOSIS
 }
 
 enum BodySystemLabel {

@@ -16,6 +16,7 @@ export type Case = {
   objective: string;
   actor: string;
   diagnosis: string;
+  differential: string;
 
   createdAt: Date;
   updatedAt: Date;
@@ -109,6 +110,8 @@ export type Investigation = {
   investigationResultId: string;
   investigationResult: InvestigationResult;
 };
+
+export type TakenInvestigation = Investigation & { timeStamp: string };
 
 export type InvestigationResult = {
   id: string;

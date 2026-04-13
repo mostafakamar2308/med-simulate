@@ -7,24 +7,11 @@ import type { Prisma } from "generated/prisma/client";
 class Cases {
   constructor() {}
 
-  async find(
-    payload: ICase.FindCasesApiQuery,
-  ): Promise<ICase.FindCasesResponse> {
-    const pagination = {
-      size: payload.size || 10,
-      page: payload.page || 0,
-    };
-
-    // TODO: implement case filtering
-    const cases = await db.case.findMany({
-      take: pagination.size,
-      skip: pagination.size * pagination.page,
-    });
-
+  async find(): Promise<ICase.FindCasesResponse> {
+    const cases = await db.case.findMany();
     return {
       list: cases,
       size: cases.length,
-      page: pagination.page,
     };
   }
 
@@ -60,7 +47,7 @@ class Cases {
     });
 
     if (!medicalCase) return null;
-
+    medicalCase.differential;
     return medicalCase;
   }
 
@@ -120,7 +107,6 @@ class Cases {
     });
   }
 
-  // Helper to get icon for technique (optional)
   private getIconForTechnique(tech: string): string {
     const icons: Record<string, string> = {
       Inspect: "👁️",

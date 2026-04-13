@@ -4,15 +4,15 @@ import { ICase } from "@med-simulate/types";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
 
-export const useFindCases = (filter: ICase.FindCasesApiQuery) => {
+export const useFindCases = () => {
   const api = useApi();
 
   const findCases = useCallback(async () => {
-    return api.case.findCases(filter);
-  }, [api, filter]);
+    return api.case.findCases();
+  }, [api]);
 
   return useQuery({
-    queryKey: [QueryKey.FindCases, filter],
+    queryKey: [QueryKey.FindCases],
     queryFn: findCases,
   });
 };
@@ -31,12 +31,12 @@ export const useFindCaseById = ({ id }: { id: string }) => {
   });
 };
 
-export const useListCases = (params: { page?: number; limit?: number }) => {
+export const useListCases = () => {
   const api = useApi();
 
   return useQuery({
-    queryKey: [QueryKey.ListCases, params],
-    queryFn: () => api.case.listCases(params),
+    queryKey: [QueryKey.ListCases],
+    queryFn: () => api.case.listCases(),
   });
 };
 

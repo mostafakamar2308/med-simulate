@@ -32,6 +32,7 @@ const caseSchema = z.object({
   objective: z.string().min(1, "Objective is required"),
   actor: z.string().min(1, "Actor instructions are required"),
   diagnosis: z.string().min(1, "Diagnosis is required"),
+  differential: z.string().min(1, "DDx is required"),
 });
 
 type CaseFormValues = z.infer<typeof caseSchema>;
@@ -74,6 +75,7 @@ export const CaseForm = ({
       objective: "",
       actor: "",
       diagnosis: "",
+      differential: "",
       ...initialValues,
     },
   });
@@ -266,6 +268,17 @@ export const CaseForm = ({
         {errors.diagnosis && (
           <p className="text-red-500 text-sm mt-1">
             {errors.diagnosis.message}
+          </p>
+        )}
+      </div>
+      <div>
+        <label className="block text-sm font-medium mb-1">
+          Differntial Diagnosis
+        </label>
+        <Textarea {...register("differential")} rows={2} />
+        {errors.differential && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.differential.message}
           </p>
         )}
       </div>
