@@ -10,5 +10,6 @@ export * as IConsultation from "@/consultation";
 export * as ITreatment from "@/treatement";
 export * as IFeedback from "@/feedback";
 export * as IMedia from "@/media";
+export * as IGrading from "@/grading";
 export * from "@/utils";
 export * from "@/examination";

@@ -3,12 +3,14 @@ import { Case } from "@/requests/case";
 import { Chat } from "@/requests/chat";
 import { ChatV2 } from "@/requests/chat-v2";
 import { Media } from "@/requests/media";
+import { Grading } from "@/requests/grading";
 
 export class Api {
   public readonly case: Case;
   public readonly chat: Chat;
   public readonly chatV2: ChatV2;
   public readonly media: Media;
+  public readonly grading: Grading;
 
   constructor(config: {
     baseURL: string;
@@ -19,5 +21,6 @@ export class Api {
     this.chat = new Chat(client);
     this.chatV2 = new ChatV2(client);
     this.media = new Media(client);
+    this.grading = new Grading(client);
   }
 }

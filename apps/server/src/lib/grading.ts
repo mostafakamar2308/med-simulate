@@ -82,7 +82,7 @@ export async function callGeminiGrading<T>(
   schema: z.ZodSchema<T>,
 ): Promise<T> {
   const response = await genAI.models.generateContent({
-    model: "gemini-1.5-flash", // cheapest model
+    model: "gemini-1.5-flash",
     contents: [{ role: "user", parts: [{ text: userPrompt }] }],
     config: {
       systemInstruction,
