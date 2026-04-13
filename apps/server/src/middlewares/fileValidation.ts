@@ -5,11 +5,12 @@ import path from "path";
 import { generateSafeFilename } from "@/lib/sanitize";
 import { MAX_FILE_SIZE_GLOBAL } from "@/constants/file";
 
-type FileCategory = "image" | "video";
+type FileCategory = "image" | "video" | "audio";
 
 function getFileCategory(mimeType: string): FileCategory | null {
   if (ALLOWED_MIME_TYPES.image.includes(mimeType as any)) return "image";
   if (ALLOWED_MIME_TYPES.video.includes(mimeType as any)) return "video";
+  if (ALLOWED_MIME_TYPES.audio.includes(mimeType as any)) return "audio";
   return null;
 }
 
@@ -22,7 +23,7 @@ const fileFilter = (
   if (!category) {
     return cb(
       new Error(
-        "Invalid file type. Only images, videos, and GIFs are allowed.",
+        "Invalid file type. Only images, audios ,videos, and GIFs are allowed.",
       ),
     );
   }

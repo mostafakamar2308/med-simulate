@@ -30,6 +30,8 @@ import {
   AlertCircle,
   Play,
   Image as ImageIcon,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 import { resolveBaseUrl } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
@@ -41,29 +43,61 @@ export const ExaminationTree = ({
   caseId: string;
   bodySystems: any[];
 }) => {
+  const [expandedSystems, setExpandedSystems] = useState<Set<string>>(
+    () => new Set(),
+  );
+
+  const toggleSystem = (systemId: string) => {
+    setExpandedSystems((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(systemId)) {
+        newSet.delete(systemId);
+      } else {
+        newSet.add(systemId);
+      }
+      return newSet;
+    });
+  };
+
   return (
     <div className="space-y-6">
-      {bodySystems.map((system) => (
-        <Card key={system.id}>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <span>{system.icon}</span> {system.label}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {system.examinationTechniques.map((technique: any) => (
-              <div key={technique.id}>
-                <h3 className="font-semibold text-lg">{technique.label}</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-2">
-                  {technique.examinationAreas.map((area: any) => (
-                    <FindingCard key={area.id} area={area} />
-                  ))}
+      {bodySystems.map((system) => {
+        const isExpanded = expandedSystems.has(system.id);
+        return (
+          <Card key={system.id}>
+            <CardHeader
+              className="cursor-pointer select-none"
+              onClick={() => toggleSystem(system.id)}
+            >
+              <CardTitle className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span>{system.icon}</span>
+                  <span>{system.label}</span>
                 </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      ))}
+                {isExpanded ? (
+                  <ChevronDown className="h-5 w-5 text-muted-foreground" />
+                ) : (
+                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
+                )}
+              </CardTitle>
+            </CardHeader>
+            {isExpanded && (
+              <CardContent className="space-y-4">
+                {system.examinationTechniques.map((technique: any) => (
+                  <div key={technique.id}>
+                    <h3 className="font-semibold text-lg">{technique.label}</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-2">
+                      {technique.examinationAreas.map((area: any) => (
+                        <FindingCard key={area.id} area={area} />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </CardContent>
+            )}
+          </Card>
+        );
+      })}
     </div>
   );
 };

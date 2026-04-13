@@ -1,3 +1,4 @@
+// src/components/case/simulation/investigations/InvestigationsTab.tsx
 import { useState } from "react";
 import {
   useAddInvestigation,
@@ -38,13 +39,15 @@ import {
   FileText,
   Activity,
   Table as TableIcon,
+  ChevronDown,
+  ChevronRight,
 } from "lucide-react";
 import { resolveBaseUrl } from "@/lib/api";
 
 export const InvestigationsTab = ({
   caseId,
   investigations,
-  refetchCase, // optional: to refresh after adding investigation
+  refetchCase,
 }: {
   caseId: string;
   investigations: any[];
@@ -142,6 +145,7 @@ export const InvestigationsTab = ({
   );
 };
 
+// Enhanced Investigation Card with collapse and conditional table editing
 const InvestigationCard = ({
   investigation,
   refetchCase,
@@ -149,6 +153,7 @@ const InvestigationCard = ({
   investigation: any;
   refetchCase?: () => void;
 }) => {
+  const [expanded, setExpanded] = useState(true);
   const updateResult = useUpdateInvestigationResult();
   const addTableData = useAddTableData();
   const linkMedia = useLinkMediaToInvestigationResult();
@@ -165,8 +170,6 @@ const InvestigationCard = ({
     unit: "",
     reference: "",
   });
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewUrl, setPreviewUrl] = useState("");
 
   const handleSaveResult = async () => {
     try {
@@ -207,94 +210,84 @@ const InvestigationCard = ({
     }
   };
 
-  const openPreview = (url: string) => {
-    setPreviewUrl(url);
-    setPreviewOpen(true);
-  };
-
   return (
-    <>
-      <Card className="overflow-hidden transition-all hover:shadow-md">
-        <CardHeader className="bg-muted/30 border-b p-4">
-          <div className="flex justify-between items-center">
-            <CardTitle className="text-lg font-semibold flex items-center gap-2">
-              <Activity className="h-5 w-5 text-primary" />
+    <Card className="overflow-hidden transition-all hover:shadow-md">
+      {/* Clickable Header to toggle collapse */}
+      <div
+        className="cursor-pointer select-none hover:bg-muted/30 transition-colors"
+        onClick={() => setExpanded(!expanded)}
+      >
+        <CardHeader className="p-4 border-b bg-muted/30 flex flex-row items-center justify-between space-y-0">
+          <div className="flex items-center gap-2">
+            <Activity className="h-5 w-5 text-primary" />
+            <CardTitle className="text-lg font-semibold">
               {investigation.label}
             </CardTitle>
+          </div>
+          <div className="flex items-center gap-2">
             {!editing && (
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => setEditing(true)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEditing(true);
+                }}
               >
                 <Pencil className="h-4 w-4 mr-1" /> Edit
               </Button>
             )}
+            {expanded ? (
+              <ChevronDown className="h-5 w-5 text-muted-foreground" />
+            ) : (
+              <ChevronRight className="h-5 w-5 text-muted-foreground" />
+            )}
           </div>
+        </CardHeader>
+      </div>
+
+      {expanded && (
+        <CardContent className="p-4 space-y-5">
           {investigation.guidance && (
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-sm text-muted-foreground">
               {investigation.guidance}
             </p>
           )}
-        </CardHeader>
 
-        <CardContent className="p-4 space-y-5">
-          {/* Media Preview - always visible when media exists */}
+          {/* Media Preview */}
           {result.mediaFile && (
             <div className="rounded-lg overflow-hidden border bg-muted/20">
               <div className="p-2 bg-muted/30 text-xs font-medium flex items-center justify-between">
                 <span className="flex items-center gap-1">
                   <Image className="h-3 w-3" /> Attached Media
                 </span>
-                <div className="flex gap-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-6 px-2 text-xs"
-                    onClick={() =>
-                      openPreview(
-                        `${resolveBaseUrl()}/assets/${result.mediaFile.diskName}`,
-                      )
-                    }
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-6 px-2 text-xs"
+                  asChild
+                >
+                  <a
+                    href={`${resolveBaseUrl()}/assets/${result.mediaFile.diskName}`}
+                    target="_blank"
+                    rel="noreferrer"
                   >
-                    <Eye className="h-3 w-3 mr-1" /> Preview
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-6 px-2 text-xs"
-                    asChild
-                  >
-                    <a
-                      href={`${resolveBaseUrl()}/assets/${result.mediaFile.diskName}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Open in new tab
-                    </a>
-                  </Button>
-                </div>
+                    <Eye className="h-3 w-3 mr-1" /> Open
+                  </a>
+                </Button>
               </div>
-              <div
-                className="p-2 flex justify-center bg-black/5 cursor-pointer"
-                onClick={() =>
-                  openPreview(
-                    `${resolveBaseUrl()}/assets/${result.mediaFile.diskName}`,
-                  )
-                }
-              >
+              <div className="p-2 flex justify-center bg-black/5">
                 {result.mediaFile.mimeType?.startsWith("image/") ? (
                   <img
                     src={`${resolveBaseUrl()}/assets/${result.mediaFile.diskName}`}
                     alt={result.mediaFile.displayName}
-                    className="max-h-48 rounded object-contain hover:opacity-90 transition-opacity"
+                    className="max-h-48 rounded object-contain"
                   />
                 ) : result.mediaFile.mimeType?.startsWith("video/") ? (
                   <video
                     src={`${resolveBaseUrl()}/assets/${result.mediaFile.diskName}`}
                     controls
                     className="max-h-48 rounded"
-                    onClick={(e) => e.stopPropagation()}
                   />
                 ) : (
                   <div className="text-center p-4 text-muted-foreground">
@@ -396,7 +389,7 @@ const InvestigationCard = ({
             </div>
           )}
 
-          {/* Table Data Section */}
+          {/* Table Data Section – only show editing form when in edit mode, otherwise read‑only */}
           <div className="mt-4 pt-2 border-t">
             <div className="flex items-center gap-2 mb-3">
               <TableIcon className="h-4 w-4 text-muted-foreground" />
@@ -433,88 +426,63 @@ const InvestigationCard = ({
               </p>
             )}
 
-            {/* Add new row form */}
-            <div className="mt-3 p-3 bg-muted/20 rounded-lg">
-              <p className="text-xs font-medium mb-2">Add new row</p>
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-2">
-                <Input
-                  placeholder="Name"
-                  value={newTableRow.name}
-                  onChange={(e) =>
-                    setNewTableRow({ ...newTableRow, name: e.target.value })
-                  }
-                  className="h-8 text-sm"
-                />
-                <Input
-                  placeholder="Value"
-                  type="number"
-                  value={newTableRow.value}
-                  onChange={(e) =>
-                    setNewTableRow({
-                      ...newTableRow,
-                      value: parseFloat(e.target.value) || 0,
-                    })
-                  }
-                  className="h-8 text-sm"
-                />
-                <Input
-                  placeholder="Unit"
-                  value={newTableRow.unit}
-                  onChange={(e) =>
-                    setNewTableRow({ ...newTableRow, unit: e.target.value })
-                  }
-                  className="h-8 text-sm"
-                />
-                <Input
-                  placeholder="Reference"
-                  value={newTableRow.reference}
-                  onChange={(e) =>
-                    setNewTableRow({
-                      ...newTableRow,
-                      reference: e.target.value,
-                    })
-                  }
-                  className="h-8 text-sm"
-                />
+            {/* Add new row form – only visible when editing */}
+            {editing && (
+              <div className="mt-3 p-3 bg-muted/20 rounded-lg">
+                <p className="text-xs font-medium mb-2">Add new row</p>
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                  <Input
+                    placeholder="Name"
+                    value={newTableRow.name}
+                    onChange={(e) =>
+                      setNewTableRow({ ...newTableRow, name: e.target.value })
+                    }
+                    className="h-8 text-sm"
+                  />
+                  <Input
+                    placeholder="Value"
+                    type="number"
+                    value={newTableRow.value}
+                    onChange={(e) =>
+                      setNewTableRow({
+                        ...newTableRow,
+                        value: parseFloat(e.target.value) || 0,
+                      })
+                    }
+                    className="h-8 text-sm"
+                  />
+                  <Input
+                    placeholder="Unit"
+                    value={newTableRow.unit}
+                    onChange={(e) =>
+                      setNewTableRow({ ...newTableRow, unit: e.target.value })
+                    }
+                    className="h-8 text-sm"
+                  />
+                  <Input
+                    placeholder="Reference"
+                    value={newTableRow.reference}
+                    onChange={(e) =>
+                      setNewTableRow({
+                        ...newTableRow,
+                        reference: e.target.value,
+                      })
+                    }
+                    className="h-8 text-sm"
+                  />
+                </div>
+                <Button
+                  onClick={handleAddRow}
+                  size="sm"
+                  className="mt-2 w-full sm:w-auto"
+                >
+                  Add Row
+                </Button>
               </div>
-              <Button
-                onClick={handleAddRow}
-                size="sm"
-                className="mt-2 w-full sm:w-auto"
-              >
-                Add Row
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Media Preview Dialog */}
-      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
-        <DialogContent className="max-w-4xl">
-          <DialogHeader>
-            <DialogTitle>Media Preview</DialogTitle>
-          </DialogHeader>
-          <div className="flex justify-center">
-            {previewUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i) ? (
-              <img
-                src={previewUrl}
-                alt="Preview"
-                className="max-w-full max-h-[70vh] object-contain"
-              />
-            ) : previewUrl.match(/\.(mp4|webm|mov)$/i) ? (
-              <video
-                src={previewUrl}
-                controls
-                autoPlay
-                className="max-w-full max-h-[70vh]"
-              />
-            ) : (
-              <p>Unsupported media type</p>
             )}
           </div>
-        </DialogContent>
-      </Dialog>
-    </>
+        </CardContent>
+      )}
+    </Card>
   );
 };
