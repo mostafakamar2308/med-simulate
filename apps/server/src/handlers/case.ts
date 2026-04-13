@@ -1,5 +1,3 @@
-import { getUser } from "@/lib/auth";
-import { getFullPhysicalExam } from "@/lib/case";
 import { notFound, unauthenticated } from "@/lib/error";
 import { cases, media } from "@med-simulate/models";
 import { ICase } from "@med-simulate/types";
@@ -43,15 +41,8 @@ export async function findCaseById(
   // if (!user) return next(unauthenticated());
 
   const { id } = findCaseByIdQuery.parse(req.params);
-  const medicalCase = await cases.findCaseById(id);
-  if (!medicalCase) return next(notFound());
-
-  const fullPhysicalExam = getFullPhysicalExam(medicalCase);
-
-  const result: ICase.FullCase = {
-    ...medicalCase,
-    bodySystems: fullPhysicalExam,
-  };
+  const result = await cases.findCaseById(id);
+  if (!result) return next(notFound());
 
   return res.status(200).json(result);
 }

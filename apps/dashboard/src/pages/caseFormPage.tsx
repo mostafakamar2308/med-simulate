@@ -24,7 +24,7 @@ export const CaseFormPage = () => {
         {id ? "Edit Case" : "Create New Case"}
       </h1>
       <CaseForm
-        initialValues={caseData ? { id: caseData.id, ...caseData } : undefined}
+        initialValues={caseData ? { ...caseData, id: caseData.id } : undefined}
         onSuccess={() => navigate(id ? `/cases/${id}` : "/cases")}
         onCancel={() => navigate(id ? `/cases/${id}` : "/cases")}
       />

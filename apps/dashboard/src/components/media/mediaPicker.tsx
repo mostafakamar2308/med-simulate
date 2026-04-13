@@ -54,7 +54,7 @@ export const MediaPicker = ({ children, onSelect }: MediaPickerProps) => {
                 </div>
                 {file.mimeType.startsWith("image/") && (
                   <img
-                    src={`${resolveBaseUrl()}${file.url}`}
+                    src={`${resolveBaseUrl()}assets/${file.diskName}`}
                     className="h-20 w-full object-cover mt-1"
                     alt=""
                   />

@@ -37,7 +37,6 @@ import { resolveBaseUrl } from "@/lib/api";
 import { Badge } from "@/components/ui/badge";
 
 export const ExaminationTree = ({
-  caseId,
   bodySystems,
 }: {
   caseId: string;
