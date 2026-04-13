@@ -2,10 +2,8 @@ import { Base } from "@/requests/lib/base";
 import { ICase, ApiResponse } from "@med-simulate/types";
 
 export class Case extends Base {
-  async findCases(
-    params: ICase.FindCasesApiQuery,
-  ): Promise<ICase.FindCasesResponse> {
-    return this.get({ route: "/api/v1/cases/", params });
+  async findCases(): Promise<ICase.FindCasesResponse> {
+    return this.get({ route: "/api/v1/cases/" });
   }
 
   async findCaseById({
@@ -23,11 +21,8 @@ export class Case extends Base {
     return this.post({ route: "/api/v1/cases", payload });
   }
 
-  async listCases(params: {
-    page?: number;
-    limit?: number;
-  }): Promise<ICase.ListCasesResponse> {
-    return this.get({ route: "/api/v1/cases", params });
+  async listCases(): Promise<ICase.ListCasesResponse> {
+    return this.get({ route: "/api/v1/cases" });
   }
 
   async getCase(id: string): Promise<ApiResponse<ICase.FullCase>> {

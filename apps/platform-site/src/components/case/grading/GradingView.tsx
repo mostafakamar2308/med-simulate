@@ -13,17 +13,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, RefreshCw, Award } from "lucide-react";
+import { Loader2, RefreshCw, Award, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Props {
   caseData: ICase.FullCase;
   submissionData: IGrading.SubmissionData;
+  onRetry: () => void;
 }
 
 type SectionStatus = "idle" | "loading" | "success" | "error";
 
-const GradingView: React.FC<Props> = ({ caseData, submissionData }) => {
+const GradingView: React.FC<Props> = ({
+  caseData,
+  submissionData,
+  onRetry,
+}) => {
   // Results
   const [historyResult, setHistoryResult] =
     useState<IGrading.HistoryGradingResponse | null>(null);
@@ -504,6 +509,12 @@ const GradingView: React.FC<Props> = ({ caseData, submissionData }) => {
             </Card>
           </TabsContent>
         </Tabs>
+        <div className="flex justify-center pt-8 border-t">
+          <Button variant="outline" onClick={onRetry} className="gap-2">
+            <RotateCcw className="h-4 w-4" />
+            Retry Case
+          </Button>
+        </div>
       </div>
     </div>
   );

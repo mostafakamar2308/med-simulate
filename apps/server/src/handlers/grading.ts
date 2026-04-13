@@ -44,7 +44,7 @@ const diagnosisInputSchema = z.object({
 
 // ---------- System instructions (with placeholders for checklist) ----------
 const getHistorySystemInstruction = (context: any) => `
-You are an expert medical educator. Grade the student's history‑taking skills.
+You are an expert medical educator. Grade the student's history‑taking skills and give him feedback as if you are talking to him directly.
 
 CASE CONTEXT:
 - Complaint: ${context.complaint}
@@ -57,6 +57,17 @@ GRADING RUBRIC (0-10):
 - 7-8: Good, most relevant questions asked
 - 9-10: Excellent, comprehensive and empathetic
 
+History Grading Item Checklist: 
+For a complete Full History the student should ask about every item.
+If the objective isn't a full history just check against the section needed.
+- Complaint: Ask about complaints, when did it start, where it started.
+- Present History: Analysis of each Complaint (where, when, what relieves or increases it, course of each complaint), Any other symptoms related to complaint, Any other system affection, Any drugs or medications taken.
+- Past History: Surgical History, Blood Transfusion history, Similar Conditions, other diseases he had in the past.
+- Familly History: Diseases like this in the family, Consanguinity, other familial Disorders.
+- Obstetric History: Type of delivery, Delivery complications, Time of Delivery.
+- Explain the situation to the patient
+
+
 EVALUATION CRITERIA:
 1. Questions asked: completeness and relevance (based on case)
 2. Communication skills: clarity, rapport, empathy
@@ -67,16 +78,17 @@ Return JSON with: score, feedback, missingQuestions (list of important questions
 
 const getExamSystemInstruction = (context: any) => `
 Official findings per area:
-${context.examinationFindings.map((f: { areaLabel: string; officialDescription: string }) => `- ${f.areaLabel}: ${f.officialDescription}`).join("\n")}
+${context.examinationFindings.map((f: { areaLabel: string; officialDescription: string; normal: boolean }) => `- ${f.areaLabel}: ${f.officialDescription}, this is ${f.normal ? "normal" : "not normal, user should comment on this"}`).join("\n")}
 
-Grade the student's physical examination:
+Grade the student's physical examination and give him feedback as if you are talking to him directly:
 - Which areas were examined vs. missed?
+  if the areas missed are normal don't focus too much on it in the score
 - How well does the student's interpretation match the official finding?
 - Score (0-10), feedback, count of correct interpretations, list of missed areas.
 `;
 
 const getInvestigationsSystemInstruction = (context: any) => `
-Available investigations:
+Available investigations and give him feedback as if you are talking to him directly:
 ${context.investigations.map((inv: { label: string }) => `- ${inv.label}`).join("\n")}
 
 Grade the student's choice of investigations:
@@ -87,8 +99,9 @@ Grade the student's choice of investigations:
 
 const getDiagnosisSystemInstruction = (context: any) => `
 Official diagnosis: ${context.diagnosis}
+Official differential: ${context.differential}
 
-Grade the student's final diagnosis and differentials:
+Grade the student's final diagnosis and differentials and give him feedback as if you are talking to him directly:
 - Is the final diagnosis correct (exact or acceptably close)?
 - Quality of differentials (relevance, completeness).
 - Score (0-10), feedback, boolean isCorrect, differentialsQuality string.
@@ -107,7 +120,7 @@ export async function gradeHistory(
 
     const context = await getCaseContext(caseId);
     const systemInstruction = getHistorySystemInstruction(context);
-    const userPrompt = `CHAT TRANSCRIPT (student vs patient/guardian):\n${chatHistory.map((m) => `${m.role.toUpperCase()}: ${m.message}`).join("\n")}`;
+    const userPrompt = `CHAT TRANSCRIPT (doctor vs patient/guardian):\n${chatHistory.map((m) => `${m.role.toUpperCase()}: ${m.message}`).join("\n")}`;
 
     const result = await callGeminiGrading(
       systemInstruction,
@@ -143,6 +156,7 @@ export async function gradeExam(
 
     const context = await getCaseContext(caseId);
     const systemInstruction = getExamSystemInstruction(context);
+
     const userPrompt = `Student examined these areas:\n${examinedAreas.map((a) => `${a.areaLabel}: "${a.userInterpretation}"`).join("\n")}`;
 
     const result = await callGeminiGrading(

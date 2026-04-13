@@ -1,4 +1,3 @@
-// src/pages/Case.tsx
 import { useFindCaseById } from "@med-simulate/api/hooks";
 import React, { useState, useCallback } from "react";
 import Simulation from "@/components/case/simulation";
@@ -54,6 +53,15 @@ const Case: React.FC = () => {
     setStep("grading");
   }, []);
 
+  const handleRetry = useCallback(() => {
+    setChatMessages([]);
+    setUserFindings([]);
+    setInvestigationsTaken([]);
+    setUserFindings([]);
+    setSubmissionData(null);
+    setStep("intro");
+  }, []);
+
   if (isPending || data === undefined)
     return <Loading text="Loading Case..." />;
   if (data.data === null) {
@@ -79,7 +87,11 @@ const Case: React.FC = () => {
         />
       )}
       {step === "grading" && submissionData && (
-        <GradingView caseData={data.data} submissionData={submissionData} />
+        <GradingView
+          onRetry={handleRetry}
+          caseData={data.data}
+          submissionData={submissionData}
+        />
       )}
     </div>
   );

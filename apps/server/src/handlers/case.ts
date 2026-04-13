@@ -25,8 +25,7 @@ export async function findCases(req: Request, res: Response) {
   // const user = await getUser(req);
   // if (!user) return next(unauthenticated());
 
-  const query = findCasesApiQuery.parse(req.query);
-  const result: ICase.FindCasesResponse = await cases.find(query);
+  const result: ICase.FindCasesResponse = await cases.find();
 
   return res.status(200).json(result);
 }
@@ -109,11 +108,7 @@ export async function listCases(
   next: NextFunction,
 ) {
   try {
-    const { page = 1, limit = 10 } = req.query;
-    const result = await cases.find({
-      page: Number(page),
-      size: Number(limit),
-    });
+    const result = await cases.find();
     return res.json({ success: true, ...result });
   } catch (err) {
     next(err);
@@ -123,12 +118,10 @@ export async function listCases(
 export async function getCase(req: Request, res: Response, next: NextFunction) {
   try {
     const { id } = idQuery.parse(req.params);
-    console.log({ id });
 
     const fullCase = await cases.findCaseById(id);
     if (!fullCase)
       return res.status(404).json({ success: false, error: "Case not found" });
-    console.log({ fullCase });
 
     return res.json({ success: true, data: fullCase });
   } catch (err) {
@@ -208,7 +201,6 @@ export async function addInvestigation(
 ) {
   try {
     const { id } = idQuery.parse(req.params);
-    console.log({ id });
 
     const investigation = await cases.addInvestigation(id, req.body);
     res.status(201).json({ success: true, data: investigation });

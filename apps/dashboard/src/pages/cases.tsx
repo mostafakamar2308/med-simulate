@@ -1,4 +1,3 @@
-// src/pages/CasesList.ts
 import { useState } from "react";
 import { useListCases, useDeleteCase } from "@med-simulate/api/hooks";
 import { Button } from "@/components/ui/button";
@@ -19,13 +18,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -39,21 +31,18 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
-import { Eye, Edit, Trash2, Plus } from "lucide-react";
+import { Eye, Edit, Plus } from "lucide-react";
 import { CaseForm } from "@/components/cases/caseForm";
 import { formatDate } from "@/lib/utils";
 
 export const CasesList = () => {
   const navigate = useNavigate();
-  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [speciality, setSpeciality] = useState<string>("");
-  const [difficulty, setDifficulty] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
-  const limit = 10;
+  // const [speciality, setSpeciality] = useState<string>("");
+  // const [difficulty, setDifficulty] = useState<string>("");
+  // const [category, setCategory] = useState<string>("");
 
-  const { data, isLoading, refetch } = useListCases({});
-  console.log({ data });
+  const { data, isLoading, refetch } = useListCases();
 
   const deleteCase = useDeleteCase();
 
@@ -74,8 +63,6 @@ export const CasesList = () => {
       setCaseToDelete(null);
     }
   };
-
-  const totalPages = data ? Math.ceil((data.total || 10) / limit) : 0;
 
   // Filter cases client‑side if needed, or pass filters to API
   const cases = data?.list || [];
@@ -105,14 +92,13 @@ export const CasesList = () => {
         </Dialog>
       </div>
 
-      {/* Filters */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Input
           placeholder="Search by title/name..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Select
+        {/* <Select
           value={speciality}
           onValueChange={(val) => setSpeciality(val === "all" ? "" : val)}
         >
@@ -154,7 +140,7 @@ export const CasesList = () => {
             <SelectItem value="1">Inpatient</SelectItem>
             <SelectItem value="2">Outpatient</SelectItem>
           </SelectContent>
-        </Select>
+        </Select> */}
       </div>
 
       {/* Table */}
@@ -235,7 +221,7 @@ export const CasesList = () => {
                     >
                       <Edit className="h-4 w-4" />
                     </Button>
-                    <Button
+                    {/* <Button
                       variant="ghost"
                       size="icon"
                       className="text-destructive"
@@ -246,7 +232,7 @@ export const CasesList = () => {
                       title="Delete"
                     >
                       <Trash2 className="h-4 w-4" />
-                    </Button>
+                    </Button> */}
                   </TableCell>
                 </TableRow>
               ))}
@@ -260,29 +246,6 @@ export const CasesList = () => {
           </TableBody>
         </Table>
       </div>
-
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex justify-center gap-2">
-          <Button
-            variant="outline"
-            disabled={page === 1}
-            onClick={() => setPage((p) => p - 1)}
-          >
-            Previous
-          </Button>
-          <span className="py-2 px-4">
-            Page {page} of {totalPages}
-          </span>
-          <Button
-            variant="outline"
-            disabled={page === totalPages}
-            onClick={() => setPage((p) => p + 1)}
-          >
-            Next
-          </Button>
-        </div>
-      )}
 
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>

@@ -89,6 +89,9 @@ export const CaseDetail = () => {
               <div className="col-span-2">
                 <strong>Diagnosis:</strong> {caseData.diagnosis}
               </div>
+              <div className="col-span-2">
+                <strong>Differential Diagnosis:</strong> {caseData.differential}
+              </div>
             </CardContent>
           </Card>
         </TabsContent>

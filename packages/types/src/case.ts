@@ -16,6 +16,7 @@ export type Case = {
   objective: string;
   actor: string;
   diagnosis: string;
+  differential: string;
 
   createdAt: Date;
   updatedAt: Date;

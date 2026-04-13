@@ -52,10 +52,8 @@ export async function sendMessageStream(
     let fullText = "";
     for await (const chunk of textResponse) {
       fullText += chunk.text;
-      console.log(fullText);
 
       const cleanText = chunk.text?.replace(/[\u064B-\u0652]/g, "");
-      console.log(cleanText);
 
       res.write(
         `data: ${JSON.stringify({ type: "text", content: cleanText })} \n\n\n`,
