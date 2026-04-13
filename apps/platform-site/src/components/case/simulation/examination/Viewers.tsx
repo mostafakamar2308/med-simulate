@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ICase } from "@med-simulate/types";
+import { resolveBaseUrl } from "@/lib/api";
 // import AudioPlayer from "@/components/ui/audio";
 // import VideoPlayer from "@/components/ui/video";
 
@@ -9,12 +10,12 @@ export const ImageViewer: React.FC<{
 }> = ({ finding }) => {
   const [showDescription, setShowDescription] = useState(false);
 
-  if (!finding.url) return null;
+  if (!finding.mediaFile) return null;
 
   return (
     <div className="w-full flex-1 space-y-4">
       <img
-        src={finding.url}
+        src={`${resolveBaseUrl()}/assets/${finding.mediaFile.diskName}`}
         className="min-h-40 w-full rounded-lg object-contain"
       />
 
@@ -41,11 +42,16 @@ export const AudioViewer: React.FC<{ finding: ICase.ExaminationFinding }> = ({
 }) => {
   const [showDescription, setShowDescription] = useState(false);
 
-  if (!finding.url) return null;
+  if (!finding.mediaFile) return null;
 
   return (
     <div className="w-full flex flex-col items-center space-y-4 rounded-lg border border-primary px-4 py-2">
-      <audio src={finding.url} className="w-full" autoPlay controls />
+      <audio
+        src={`${resolveBaseUrl()}/assets/${finding.mediaFile.diskName}`}
+        className="w-full"
+        autoPlay
+        controls
+      />
 
       <Button
         variant="outline"
@@ -70,11 +76,16 @@ export const VideoViewer: React.FC<{ finding: ICase.ExaminationFinding }> = ({
 }) => {
   const [showDescription, setShowDescription] = useState(false);
 
-  if (!finding.url) return null;
+  if (!finding.mediaFile) return null;
 
   return (
     <div className="w-full flex items-center flex-col flex-1 space-y-4 rounded-lg border border-primary px-4 py-2">
-      <video src={"/video.mp4"} className="w-full" controls autoPlay />
+      <video
+        src={`${resolveBaseUrl()}/assets/${finding.mediaFile.diskName}`}
+        className="w-full"
+        controls
+        autoPlay
+      />
 
       <Button
         variant="outline"

@@ -128,6 +128,29 @@ export type InvestigationTableData = {
   reference: string;
 };
 
+export type UserFindingSubmission = {
+  areaId: string;
+  areaLabel: string;
+  techniqueLabel: string;
+  systemLabel: string;
+  userInterpretation: string;
+  officialDescription: string;
+  hasMedia: boolean;
+  mediaUrl?: string;
+};
+
+export type UserFinding = {
+  areaId: string;
+  areaLabel: string;
+  techniqueLabel: string;
+  systemLabel: string;
+  userInterpretation: string;
+  officialDescription: string;
+  hasMedia: boolean;
+  mediaUrl?: string;
+  submittedAt: Date;
+};
+
 export type FindCasesApiQuery = IFilter.Pagination & {
   search?: string;
   filters?: {
@@ -141,8 +164,7 @@ export type FindCasesQuery = FindCasesApiQuery;
 
 export type FindCasesResponse = IFilter.Paginated<Case[]>;
 
-// Additional types for case creation/update
-export interface CreateCasePayload {
+export type CreateCasePayload = {
   title: string;
   complaint: string;
   category: Category;
@@ -157,18 +179,18 @@ export interface CreateCasePayload {
   objective: string;
   actor: string;
   diagnosis: string;
-}
+};
 
 export type UpdateCasePayload = Partial<CreateCasePayload>;
 
-export interface UpdateFindingPayload {
+export type UpdateFindingPayload = {
   type?: ExaminationFidningType;
   normal?: boolean;
   description?: string;
   mediaFileId?: string | null;
-}
+};
 
-export interface AddInvestigationPayload {
+export type AddInvestigationPayload = {
   label: string;
   guidance?: string;
   result?: {
@@ -176,29 +198,29 @@ export interface AddInvestigationPayload {
     value?: string;
     description?: string;
   };
-}
+};
 
-export interface UpdateInvestigationResultPayload {
+export type UpdateInvestigationResultPayload = {
   reference?: string;
   value?: string;
   description?: string;
   mediaFileId?: string | null;
-}
+};
 
-export interface TableDataRow {
+export type TableDataRow = {
   name: string;
   value: number;
   unit: string;
   reference: string;
-}
+};
 
-export interface AddTableDataPayload {
+export type AddTableDataPayload = {
   rows: TableDataRow[];
-}
+};
 
-export interface ListCasesResponse {
+export type ListCasesResponse = {
   list: Case[];
   size: number;
   page: number;
   total: number;
-}
+};
