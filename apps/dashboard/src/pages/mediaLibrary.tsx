@@ -51,6 +51,7 @@ import {
   Eye,
   Image as ImageIcon,
   Video,
+  AudioLines,
   FileQuestion,
 } from "lucide-react";
 
@@ -213,7 +214,7 @@ const MediaLibrary = () => {
                   <Input
                     id="file"
                     type="file"
-                    accept="image/*,video/*,image/gif"
+                    accept="image/*,video/*,image/gif,audio/*"
                     onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
                     className="mt-1.5"
                   />
@@ -324,13 +325,16 @@ const MediaLibrary = () => {
                     className="font-medium text-primary cursor-pointer hover:underline flex items-center gap-2"
                     onClick={() =>
                       openPreview(
-                        `${resolveBaseUrl()}${file.url}`,
+                        `${resolveBaseUrl()}/assets/${file.diskName}`,
                         file.mimeType,
                       )
                     }
                   >
                     {file.mimeType.startsWith("image/") && (
                       <ImageIcon className="h-4 w-4 text-muted-foreground" />
+                    )}
+                    {file.mimeType.startsWith("audio/") && (
+                      <AudioLines className="h-4 w-4 text-muted-foreground" />
                     )}
                     {file.mimeType.startsWith("video/") && (
                       <Video className="h-4 w-4 text-muted-foreground" />
@@ -373,7 +377,7 @@ const MediaLibrary = () => {
                       className="h-8 w-8"
                       onClick={() =>
                         openPreview(
-                          `${resolveBaseUrl()}${file.url}`,
+                          `${resolveBaseUrl()}assets/${file.diskName}`,
                           file.mimeType,
                         )
                       }
@@ -485,6 +489,16 @@ const MediaLibrary = () => {
               >
                 Your browser does not support the video tag.
               </video>
+            ) : previewType.startsWith("audio/") ? (
+              <audio
+                src={previewUrl}
+                controls
+                autoPlay
+                className="max-w-full max-h-[70vh] rounded-lg"
+                onError={() => toast.error("Failed to load audio")}
+              >
+                Your browser does not support the audio tag.
+              </audio>
             ) : (
               <div className="text-center text-muted-foreground">
                 <FileQuestion className="h-12 w-12 mx-auto mb-2" />

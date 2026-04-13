@@ -19,6 +19,7 @@ import {
   TakenInvestigation,
 } from "@/components/case/simulation/investigations/types";
 import { ICase } from "@med-simulate/types";
+import { resolveBaseUrl } from "@/lib/api";
 
 // Helper to track status of each card
 type CardStatus = "hidden" | "revealed" | "ordered";
@@ -311,14 +312,25 @@ export const ResultContent: React.FC<{ result: ICase.InvestigationResult }> = ({
         </div>
       )}
 
-      {/* 3. Images (X-Rays, ECGs) */}
-      {result.imageUrl && (
+      {result.mediaFile && (
         <div className="rounded-xl overflow-hidden border shadow-inner bg-slate-100">
-          <img
-            src={result.imageUrl}
-            alt="Lab Result"
-            className="w-full h-auto object-contain max-h-[400px]"
-          />
+          {result.mediaFile.mimeType.startsWith("audio") ? (
+            <audio
+              src={`${resolveBaseUrl()}/assets/${result.mediaFile.diskName}`}
+            />
+          ) : null}
+          {result.mediaFile.mimeType.startsWith("video") ? (
+            <video
+              controls
+              src={`${resolveBaseUrl()}/assets/${result.mediaFile.diskName}`}
+            />
+          ) : null}
+          {result.mediaFile.mimeType.startsWith("image") ? (
+            <img
+              className="w-full h-auto"
+              src={`${resolveBaseUrl()}/assets/${result.mediaFile.diskName}`}
+            />
+          ) : null}
         </div>
       )}
 

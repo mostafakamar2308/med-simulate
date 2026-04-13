@@ -17,7 +17,7 @@ export async function uploadFile(
       return;
     }
 
-    const category = (req as any).fileCategory as "image" | "video";
+    const category = (req as any).fileCategory as "audio" | "image" | "video";
     const maxSizeForCategory = MAX_SIZES[category];
 
     if (file.size > maxSizeForCategory) {
@@ -75,6 +75,7 @@ export async function listFiles(
     let mimeTypePrefix: string | undefined;
     if (type === "image") mimeTypePrefix = "image/";
     if (type === "video") mimeTypePrefix = "video/";
+    if (type === "audio") mimeTypePrefix = "audio/";
 
     const result = await media.findMany({
       search: search as string,

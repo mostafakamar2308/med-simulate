@@ -12,7 +12,7 @@ export type Self = {
 
 export type IMediaListQuery = {
   search?: string;
-  type?: "image" | "video";
+  type?: "image" | "video" | "audio";
   page?: number;
   limit?: number;
 };
