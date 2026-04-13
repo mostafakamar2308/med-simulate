@@ -110,6 +110,8 @@ export type Investigation = {
   investigationResult: InvestigationResult;
 };
 
+export type TakenInvestigation = Investigation & { timeStamp: string };
+
 export type InvestigationResult = {
   id: string;
   reference: string | null;

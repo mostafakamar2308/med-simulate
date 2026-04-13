@@ -10,6 +10,7 @@ import VerifyEmail from "@/pages/verifyEmail";
 // import Protected from "@/components/common/protected";
 // import NonProtected from "./components/common/nonProtected";
 import Case from "./pages/case";
+import { Toaster } from "sonner";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -30,6 +31,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ApiAuthProvider>
+        <Toaster />
         <RoutesContainer />
       </ApiAuthProvider>
     </QueryClientProvider>

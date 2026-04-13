@@ -8,7 +8,6 @@ type Props = {
   selectedSystem: ICase.BodySystem;
   techniques: ICase.ExaminationTechnique[];
   onChange: (technique: ICase.ExaminationTechnique) => void;
-  onFinding: (finding: ICase.ExaminationFinding) => void;
   onUserFinding: (finding: ICase.UserFinding) => void;
   userFindings: ICase.UserFinding[];
 };
@@ -18,7 +17,6 @@ export function TechniqueSelector({
   selectedSystem,
   techniques,
   onChange,
-  onFinding,
   onUserFinding,
   userFindings,
 }: Props) {
@@ -49,7 +47,6 @@ export function TechniqueSelector({
       </div>
       {selectedTechnique && selectedSystem ? (
         <ExaminationActionSelector
-          onFinding={onFinding}
           onUserFinding={onUserFinding}
           selectedSystem={selectedSystem}
           selectedTechnique={selectedTechnique}

@@ -11,32 +11,22 @@ import { FindingsReviewDialog } from "./FindingsReviewDialog";
 
 interface Props {
   medicalCase: ICase.FullCase;
-  onFinding: (finding: ICase.ExaminationFinding) => void;
+  userFindings: ICase.UserFinding[];
+  onFinding: (finding: ICase.UserFinding) => void;
 }
 
-const ExaminationSuite: React.FC<Props> = ({ medicalCase, onFinding }) => {
+const ExaminationSuite: React.FC<Props> = ({
+  medicalCase,
+  userFindings,
+  onFinding,
+}) => {
   const [open, setOpen] = useState(false);
   const [selectedSystem, setSelectedSystem] = useState<ICase.BodySystem | null>(
     null,
   );
   const [selectedTechnique, setSelectedTechnique] =
     useState<ICase.ExaminationTechnique | null>(null);
-  const [userFindings, setUserFindings] = useState<ICase.UserFinding[]>([]);
   const [reviewOpen, setReviewOpen] = useState(false);
-
-  const addOrUpdateFinding = (newFinding: ICase.UserFinding) => {
-    setUserFindings((prev) => {
-      const existingIndex = prev.findIndex(
-        (f) => f.areaId === newFinding.areaId,
-      );
-      if (existingIndex !== -1) {
-        const updated = [...prev];
-        updated[existingIndex] = newFinding;
-        return updated;
-      }
-      return [...prev, newFinding];
-    });
-  };
 
   const reset = () => {
     setSelectedSystem(null);
@@ -82,9 +72,8 @@ const ExaminationSuite: React.FC<Props> = ({ medicalCase, onFinding }) => {
               selectedSystem={selectedSystem}
               techniques={selectedSystem.examinationTechniques}
               onChange={setSelectedTechnique}
-              onFinding={onFinding}
               selectedTechnique={selectedTechnique}
-              onUserFinding={addOrUpdateFinding}
+              onUserFinding={onFinding}
               userFindings={userFindings}
             />
           ) : null}

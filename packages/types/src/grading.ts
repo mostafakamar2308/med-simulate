@@ -1,8 +1,8 @@
-// packages/types/src/grading.ts
+import { ICase, IChat } from ".";
 
 export type HistoryGradingInput = {
   caseId: string;
-  chatHistory: { role: "student" | "patient"; message: string }[];
+  chatHistory: { role: "doctor" | "patient"; message: string }[];
 };
 
 export type HistoryGradingResponse = {
@@ -51,3 +51,13 @@ export type DiagnosisGradingResponse = {
   isCorrect: boolean;
   differentialsQuality: string;
 };
+
+export interface SubmissionData {
+  chat: IChat.Message[];
+  examinedAreas: ICase.UserFinding[];
+  orderedInvestigations: ICase.TakenInvestigation[];
+  diagnosis: {
+    primary: string;
+    differentials: string[];
+  };
+}

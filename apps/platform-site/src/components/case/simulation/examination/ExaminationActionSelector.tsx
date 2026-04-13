@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 interface Props {
   selectedTechnique: ICase.ExaminationTechnique;
   selectedSystem: ICase.BodySystem;
-  onFinding: (finding: ICase.ExaminationFinding) => void;
   onUserFinding: (finding: ICase.UserFinding) => void;
   userFindings: ICase.UserFinding[];
 }
@@ -14,7 +13,6 @@ interface Props {
 const ExaminationActionSelector: React.FC<Props> = ({
   selectedSystem,
   selectedTechnique,
-  onFinding,
   onUserFinding,
   userFindings,
 }) => {
@@ -52,7 +50,6 @@ const ExaminationActionSelector: React.FC<Props> = ({
       submittedAt: new Date(),
     };
     onUserFinding(userFinding);
-    if (finding && !finding.normal) onFinding(finding);
     setDialogOpen(false);
   };
 
