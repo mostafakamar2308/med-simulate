@@ -1,14 +1,16 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import ExaminationActionSelector from "@/components/case/simulation/examination/ExaminationActionSelector";
 import { ICase } from "@med-simulate/types";
+import ExaminationActionSelector from "./ExaminationActionSelector";
 
-type TechniqueSelectorProps = {
+type Props = {
   selectedTechnique: ICase.ExaminationTechnique | null;
   selectedSystem: ICase.BodySystem;
   techniques: ICase.ExaminationTechnique[];
   onChange: (technique: ICase.ExaminationTechnique) => void;
   onFinding: (finding: ICase.ExaminationFinding) => void;
+  onUserFinding: (finding: ICase.UserFinding) => void;
+  userFindings: ICase.UserFinding[];
 };
 
 export function TechniqueSelector({
@@ -17,7 +19,9 @@ export function TechniqueSelector({
   techniques,
   onChange,
   onFinding,
-}: TechniqueSelectorProps) {
+  onUserFinding,
+  userFindings,
+}: Props) {
   return (
     <div className="my-4 overflow-auto h-full flex flex-col w-full items-center gap-3 px-2">
       <p className="flex flex-row gap-2 text-2xl font-semibold text-foreground">
@@ -46,8 +50,10 @@ export function TechniqueSelector({
       {selectedTechnique && selectedSystem ? (
         <ExaminationActionSelector
           onFinding={onFinding}
+          onUserFinding={onUserFinding}
           selectedSystem={selectedSystem}
           selectedTechnique={selectedTechnique}
+          userFindings={userFindings}
         />
       ) : null}
     </div>
